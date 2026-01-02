@@ -11,6 +11,7 @@
 	--gray: 96, 115, 159;
 	--gray-light: 229, 233, 240;
 	--gray-dark: 34, 41, 57;
+	--white: 255, 255, 255;
 	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
 	--box-shadow:
 		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
@@ -39,9 +40,15 @@ body {
 	background-size: 100% 600px;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
+	color: rgb(var(--white));
 	font-size: 20px;
 	line-height: 1.7;
+}
+.header_body {
+	color: rgb(var(--white));
+}
+.header_body a {
+	color: rgb(var(--white));
 }
 main {
 	width: 720px;
@@ -56,7 +63,7 @@ h4,
 h5,
 h6 {
 	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
+	color: rgb(var(--white));
 	line-height: 1.2;
 }
 h1 {
@@ -79,10 +86,10 @@ b {
 	font-weight: 700;
 }
 a {
-	color: var(--accent);
+	color: var(--grey-light);
 }
 a:hover {
-	color: var(--accent);
+	color: var(--grey-light);
 }
 p {
 	margin-bottom: 1em;

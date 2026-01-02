@@ -3,48 +3,224 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { Image } from 'astro:assets';
+import Logo from '../assets/logo/QECDTlogo.webp';
+import bg from '../assets/background/bg.webp';
+import LTP from '../assets/sponsor_logos/LTP.webp';
+import sparrow from '../assets/sponsor_logos/sparrow.webp';
+import quantinuum from '../assets/sponsor_logos/quantinuum.webp';
+import phasecraft from '../assets/sponsor_logos/phasecraft.webp';
+import QETLabs from '../assets/sponsor_logos/QETLabs.png';
+import QECDT from '../assets/sponsor_logos/QECDTlogo.webp';
+import UKRI from '../assets/sponsor_logos/UKRI.webp';
+import IOP from '../assets/sponsor_logos/IOP.webp';
+import UoB from '../assets/sponsor_logos/UoB.svg';
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+
+  <body>
+    <div
+      class="index-bg"
+      style={`background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url(${bg.src});
+      `}
+    >
+      <Header />
+
+      <main class="hero-content">
+		<center>
+			<h1>Careers in Quantum</h1>
+			<h5>A student-led quantum careers fair</h5>
+			<p>Organised by the Quantum Engineering Centre for Doctoral Training</p>
+			<p>📅 5 March 2026, 9am to 5pm</p>
+			<p>📌 Richmond Building, Queen’s Road, Bristol, BS8 1LN</p>
+
 			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
+			<a href="/" class="logo-link">
+				<Image src={Logo} alt="Site logo" class="logo" />
+			</a>
 			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+		</center>
+      </main>
+    </div>
+
+    <section class="content-section">
+      <div class="content-inner">
+        <h2>About the Event</h2>
+        <p>
+			Every year <b>Careers in Quantum</b> brings together professionals from industry and academia to engage with students and early-stage researchers on the variety and types of careers available in the quantum industry. 
+			<br/>
+			We aim to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to the opportunities within the rapidly growing quantum technology sector.
+			<br/>
+			The event focuses around a careers fair with a breakout room for more in-depth talks and panel discussions.
+			<br/>
+			This year, <b>Careers in Quantum</b> will be held from 9am to 5pm on <b>Thursday 5 March 2026</b> at <b>Richmond Building, Queen’s Road, Bristol, BS8 1LN</b>.
+        </p>
+      </div>
+    </section>
+
+	<section class="content-section2">
+      <div class="content-inner">
+        <h2>Sponsorship</h2>
+		<p>
+			Do you work in quantum technologies? 
+			<br/>
+			Are you interested in connecting with potential future employees from a broad range of disciplines? 
+			<br/>
+			Do you want to showcase your company?
+			<br/>
+			Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for further information.
+      </div>
+    </section>
+
+	<section class="content-section3">
+		<div class="content-inner">
+			<h2>Previous Sponsors</h2>
+
+			<div class="sponsor-grid" aria-label="Previous sponsors">
+			<div class="sponsor-item">
+				<Image src={LTP} alt="Light Trace Photonics logo" class="sponsor-logo" />
+			</div>
+
+			<div class="sponsor-item">
+				<Image src={sparrow} alt="Sparrow logo" class="sponsor-logo" />
+			</div>
+
+			<div class="sponsor-item">
+				<Image src={quantinuum} alt="Quantinuum logo" class="sponsor-logo" />
+			</div>
+
+			<div class="sponsor-item">
+				<Image src={phasecraft} alt="Phasecraft logo" class="sponsor-logo" />
+			</div>
+
+			<div class="sponsor-item">
+				<Image src={QETLabs} alt="QETLabs logo" class="sponsor-logo" />
+			</div>
+
+			<div class="sponsor-item">
+				<Image
+				src={QECDT}
+				alt="Centre for Doctoral Training in Quantum Engineering logo"
+				class="sponsor-logo"
+				/>
+			</div>
+
+			<div class="sponsor-item">
+				<Image src={UKRI} alt="UKRI logo" class="sponsor-logo" />
+			</div>
+
+			<div class="sponsor-item">
+				<Image src={IOP} alt="IOP Publishing logo" class="sponsor-logo" />
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="content-section4">
+		<div class="content-inner">
+			<h2>Affiliations</h2>
+
+			<div class="sponsor-grid" aria-label="Affiliations">
+				<div class="sponsor-item">
+					<Image src={QECDT} alt="Centre for Doctoral Training in Quantum Engineering logo" class="sponsor-logo" />
+				</div>
+
+				<div class="sponsor-item">
+					<Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" />
+				</div>
+			</div>
+		</div>
+	</section>
+
+    <Footer />
+
+    <style>
+      .index-bg {
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .content-section {
+        background-color: hsl(192, 100%, 15%); /* change as desired */
+        padding: 4rem 1.5rem;
+      }
+
+	  .content-section2 {
+        background-color: #87a5ad; /* change as desired */
+        padding: 4rem 1.5rem;
+      }
+
+	  .content-section3 {
+        background-color: #00bcae; /* change as desired */
+        padding: 4rem 1.5rem;
+      }
+
+	  .content-section4 {
+		background-color: #000000ff; /* change as desired */
+		padding: 4rem 1.5rem;
+	  }
+
+      .content-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+	  /* Sponsor logo grid */
+	.sponsor-grid {
+	display: grid;
+	gap: 1.5rem;
+	margin-top: 2rem;
+
+	/* Responsive columns: grows/shrinks automatically */
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	align-items: center;
+	}
+
+	.sponsor-item {
+	/* Center each logo in its cell */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	/* Give consistent vertical space per logo */
+	height: 110px;            /* adjust to taste */
+	padding: 0.5rem 0.75rem;
+	}
+
+	.sponsor-logo {
+	/* Constrain vertical size, preserve aspect ratio */
+	max-height: 100%;
+	width: 100%;
+	object-fit: contain;
+
+	/* Optional: prevent huge logos from stretching too wide */
+	max-width: 240px;
+	}
+
+	/* Slightly taller rows on larger screens (optional) */
+	@media (min-width: 768px) {
+	.sponsor-item {
+		height: 130px;
+	}
+	}
+
+    </style>
+  </body>
 </html>
