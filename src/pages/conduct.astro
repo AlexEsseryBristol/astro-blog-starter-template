@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Image } from 'astro:assets';
 import Logo from '../assets/logo/QECDTlogo.webp';
-import bg from '../assets/background/bg.webp';
+import bg from '../assets/background/richmond_building.webp';
 import LTP from '../assets/sponsor_logos/LTP.webp';
 import sparrow from '../assets/sponsor_logos/sparrow.webp';
 import quantinuum from '../assets/sponsor_logos/quantinuum.webp';
@@ -35,92 +35,47 @@ import UoB from '../assets/sponsor_logos/UoB.svg';
 
       <main class="hero-content">
 		<center>
-			<h1>Careers in Quantum</h1>
-			<h5>A student-led quantum careers fair</h5>
-			<p>Organised by the Quantum Engineering Centre for Doctoral Training</p>
-			<p>📅 5 March 2026, 9am to 5pm</p>
-			<p>📌 Richmond Building, Queen’s Road, Bristol, BS8 1LN</p>
-
-			<p class="partner-line">
-				<span>In partnership with</span>
-				<a href="/" class="logo-link">
-					<Image src={Logo} alt="Site logo" class="logo" />
-				</a>
-			</p>
+			<h1>Code of Conduct</h1>
 		</center>
       </main>
     </div>
 
     <section class="content-section">
       <div class="content-inner">
-        <h2>About the Event</h2>
+        <h2>The Short Version</h2>
         <p>
-			Every year <b>Careers in Quantum</b> brings together professionals from industry and academia to engage with students and early-stage researchers on the variety and types of careers available in the quantum industry. 
-			<br/>
-			We aim to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to the opportunities within the rapidly growing quantum technology sector.
-			<br/>
-			The event focuses around a careers fair with a breakout room for more in-depth talks and panel discussions.
-			<br/>
-			This year, <b>Careers in Quantum</b> will be held from 9am to 5pm on <b>Thursday 5 March 2026</b> at <b>Richmond Building, Queen’s Road, Bristol, BS8 1LN</b>.
+            Careers in Quantum is dedicated to providing a harassment-free experience for everyone, regardless of gender, gender identity and expression, age, sexual orientation, disability, physical appearance, body size, race, ethnicity, religion (or lack thereof), or technology choices. We do not tolerate harassment of participants in any form. Sexual language and imagery is not appropriate for any conference venue, including talks, workshops, parties, Twitter and other online media. Participants violating these rules may be sanctioned or expelled from the conference at the discretion of the conference organisers.
         </p>
       </div>
     </section>
 
 	<section class="content-section2">
       <div class="content-inner">
-        <h2>Sponsorship</h2>
+        <h2>The Long Version</h2>
 		<p>
-			Do you work in quantum technologies? 
-			<br/>
-			Are you interested in connecting with potential future employees from a broad range of disciplines? 
-			<br/>
-			Do you want to showcase your company?
-			<br/>
-			Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for further information.
+			Harassment includes offensive verbal comments related to gender, gender identity and expression, age, sexual orientation, disability, physical appearance, body size, race, ethnicity, religion, technology choices, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention.
+            <br/>
+            Participants asked to stop any harassing behavior are expected to comply immediately.
+            <br/>
+            Sponsors and attending companies are also subject to the anti-harassment policy. In particular, sponsors and attending companies should not use sexualised images, activities, or other material. Booth staff (including volunteers) should not use sexualised clothing/uniforms/costumes, or otherwise create a sexualised environment.
+            <br/>
+            If a participant engages in harassing behavior, the event organisers may take any action they deem appropriate, including warning the offender or expulsion from the event.
+            <br/>
+            If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact a member of event staff immediately. Event staff can be identified as they'll be wearing branded clothing and/or badges.
+            <br/>
+            Event staff will be happy to help participants contact hotel/venue security or local law enforcement, provide escorts, or otherwise assist those experiencing harassment to feel safe for the duration of the conference. We value your attendance.
+            <br/>
+            We expect participants to follow these rules at conference and workshop venues and conference-related social events.
       </div>
     </section>
 
 	<section class="content-section3">
 		<div class="content-inner">
-			<h2>Previous Sponsors</h2>
+			<h2>Attribution</h2>
 
-			<div class="sponsor-grid" aria-label="Previous sponsors">
-			<div class="sponsor-item">
-				<Image src={LTP} alt="Light Trace Photonics logo" class="sponsor-logo" />
-			</div>
-
-			<div class="sponsor-item">
-				<Image src={sparrow} alt="Sparrow logo" class="sponsor-logo" />
-			</div>
-
-			<div class="sponsor-item">
-				<Image src={quantinuum} alt="Quantinuum logo" class="sponsor-logo" />
-			</div>
-
-			<div class="sponsor-item">
-				<Image src={phasecraft} alt="Phasecraft logo" class="sponsor-logo" />
-			</div>
-
-			<div class="sponsor-item">
-				<Image src={QETLabs} alt="QETLabs logo" class="sponsor-logo" />
-			</div>
-
-			<div class="sponsor-item">
-				<Image
-				src={QECDT}
-				alt="Centre for Doctoral Training in Quantum Engineering logo"
-				class="sponsor-logo"
-				/>
-			</div>
-
-			<div class="sponsor-item">
-				<Image src={UKRI} alt="UKRI logo" class="sponsor-logo" />
-			</div>
-
-			<div class="sponsor-item">
-				<Image src={IOP} alt="IOP Publishing logo" class="sponsor-logo" />
-			</div>
-			</div>
+			<p>
+                This Code of Conduct was adapted from <a href="confcodeofconduct.com">confcodeofconduct.com</a>.
+            </p>
 		</div>
 	</section>
 
@@ -144,7 +99,7 @@ import UoB from '../assets/sponsor_logos/UoB.svg';
 
     <style>
       .index-bg {
-        min-height: 100vh;
+        min-height: 60vh;
         background-size: cover;
         background-position: center;
         display: flex;
@@ -220,12 +175,6 @@ import UoB from '../assets/sponsor_logos/UoB.svg';
 	.sponsor-item {
 		height: 130px;
 	}
-	}
-	.partner-line {
-		margin-top: -0.5rem;
-		display: inline-flex;
-		align-items: center;   /* vertical centering */
-		gap: 0.8rem;           /* space between text and logo */
 	}
 
     </style>

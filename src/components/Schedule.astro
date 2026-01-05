@@ -1,0 +1,417 @@
+---
+/**
+ * <ScheduleGrid days={days} />
+ *
+ * days: Array<{
+ *   dateLabel: string;   // e.g. "Thursday 5 March 2026"
+ *   items: Array<{
+ *     start: string;     // "09:00"
+ *     end?: string;      // "09:30"
+ *     title: string;
+ *     type?: "Talk" | "Panel" | "Break" | "Workshop" | "Keynote" | "Registration" | "Other";
+ *     location?: string;
+ *     speakers?: string; // short list: "Alice Example; Ben Example"
+ *     description?: string;
+ *     links?: { label: string; href: string }[];
+ *     companyLogo?: { src: string; alt: string };
+ *   }>;
+ * }>
+ */
+
+type ScheduleItemType =
+  | "Talk"
+  | "Panel"
+  | "Break"
+  | "Workshop"
+  | "Keynote"
+  | "Registration"
+  | "Other";
+
+type LogoRef = {
+  src: string;   // e.g. SomeLogo.src
+  alt: string;   // e.g. "Company name logo"
+};
+
+type ScheduleItem = {
+  start: string;
+  end?: string;
+  title: string;
+  type?: ScheduleItemType;
+  location?: string;
+  speakers?: string;
+  description?: string;
+  links?: { label: string; href: string }[];
+  companyLogo?: LogoRef;
+};
+
+type ScheduleDay = {
+  dateLabel: string;
+  items: ScheduleItem[];
+};
+
+type Props = {
+  days: ScheduleDay[];
+  sort?: boolean;
+};
+
+const { days, sort = true } = Astro.props as Props;
+
+const sortedDays = sort
+  ? days.map((d) => ({
+      ...d,
+      items: [...d.items].sort((a, b) => a.start.localeCompare(b.start)),
+    }))
+  : days;
+---
+
+<section class="schedule" aria-label="Event schedule">
+  {sortedDays.map((day) => (
+    <div class="day">
+      <h2 class="day-title">{day.dateLabel}</h2>
+
+      <!-- Desktop table -->
+      <div class="table-wrap" role="region" aria-label={`Schedule for ${day.dateLabel}`}>
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th class="col-time">Time</th>
+              <th>Session</th>
+              <th class="col-location">Location</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {day.items.map((item) => (
+              <tr>
+                <td class="time">
+                  <span class="t">{item.start}</span>
+                  {item.end ? <span class="dash">–</span> : null}
+                  {item.end ? <span class="t">{item.end}</span> : null}
+                </td>
+
+                <td class="session">
+                  <div class="session-top">
+                    <!-- Header: left text, right logo (same outer padding) -->
+                    <div class="session-head">
+                      <div class="session-left">
+                        <div class="title-row">
+                          <span class="title">{item.title}</span>
+                          {item.type ? (
+                            <span class={`pill pill--${item.type.toLowerCase()}`}>{item.type}</span>
+                          ) : null}
+                        </div>
+
+                        {item.speakers ? <div class="speakers">{item.speakers}</div> : null}
+                      </div>
+
+                      {item.companyLogo ? (
+                        <div class="logo-slot" aria-label="Company logo">
+                          <img
+                            class="company-logo"
+                            src={item.companyLogo.src}
+                            alt={item.companyLogo.alt}
+                            loading="lazy"
+                          />
+                        </div>
+                      ) : null}
+                    </div>
+
+                    {item.description ? <div class="desc">{item.description}</div> : null}
+
+                    {item.links?.length ? (
+                      <div class="links">
+                        {item.links.map((l) => (
+                          <a class="link" href={l.href}>{l.label}</a>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                </td>
+
+                <td class="location">{item.location ?? "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile cards (left-justified) -->
+      <div class="cards" aria-label={`Schedule cards for ${day.dateLabel}`}>
+        {day.items.map((item) => (
+          <article class="card">
+            <div class="card-head">
+              <div class="card-time">
+                <span class="t">{item.start}</span>
+                {item.end ? <span class="dash">–</span> : null}
+                {item.end ? <span class="t">{item.end}</span> : null}
+              </div>
+
+              {item.type ? (
+                <span class={`pill pill--${item.type.toLowerCase()}`}>{item.type}</span>
+              ) : null}
+            </div>
+
+            <!-- Header inside card: left text, right logo (same outer padding) -->
+            <div class="card-top">
+              <div class="card-top-left">
+                <div class="card-title">{item.title}</div>
+                {item.speakers ? <div class="speakers">{item.speakers}</div> : null}
+              </div>
+
+              {item.companyLogo ? (
+                <div class="logo-slot" aria-label="Company logo">
+                  <img
+                    class="company-logo"
+                    src={item.companyLogo.src}
+                    alt={item.companyLogo.alt}
+                    loading="lazy"
+                  />
+                </div>
+              ) : null}
+            </div>
+
+            {item.location ? <div class="card-meta"><b>Location:</b> {item.location}</div> : null}
+            {item.description ? <div class="card-desc">{item.description}</div> : null}
+
+            {item.links?.length ? (
+              <div class="links">
+                {item.links.map((l) => (
+                  <a class="link" href={l.href}>{l.label}</a>
+                ))}
+              </div>
+            ) : null}
+          </article>
+        ))}
+      </div>
+    </div>
+  ))}
+</section>
+
+<style>
+  .schedule {
+    --schedule-surface: transparent;
+    --schedule-surface-header: transparent;
+    --schedule-border: rgba(255, 255, 255, 0.14);
+    --schedule-row-border: rgba(255, 255, 255, 0.10);
+    --schedule-pill-bg: rgba(255, 255, 255, 0.10);
+    --schedule-pill-border: rgba(255, 255, 255, 0.18);
+    --schedule-link-bg: rgba(255, 255, 255, 0.08);
+    --schedule-link-border: rgba(255, 255, 255, 0.18);
+
+    display: grid;
+    gap: 2rem;
+    text-align: left;
+  }
+
+  .day-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.35rem;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  /* Desktop table */
+  .table-wrap {
+    overflow-x: auto;
+    border-radius: 14px;
+    border: 1px solid var(--schedule-border);
+    background: var(--schedule-surface);
+  }
+
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 720px;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    text-align: left;
+    vertical-align: top;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--schedule-row-border);
+  }
+
+  .schedule-table thead th {
+    font-weight: 700;
+    opacity: 0.95;
+    background: var(--schedule-surface-header);
+  }
+
+  .col-time { width: 140px; }
+  .col-location { width: 180px; }
+
+  .time {
+    white-space: nowrap;
+    font-weight: 650;
+  }
+
+  .t { font-variant-numeric: tabular-nums; }
+  .dash { margin: 0 0.35rem; opacity: 0.8; }
+
+  /* Header split (desktop) */
+  .session-head {
+    display: grid;
+    grid-template-columns: 1fr max-content; /* tight logo column */
+    align-items: start;
+    column-gap: 0.75rem;
+  }
+
+  .session-left {
+    min-width: 0;
+  }
+
+  .title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .title {
+    font-weight: 750;
+    line-height: 1.25;
+  }
+
+  .speakers {
+    margin-top: 0.1rem;
+    opacity: 0.95;
+    font-weight: 600;
+    min-width: 0;
+  }
+
+  /* Logo slot: guarantees same outer padding as text because it's in same grid row.
+     Removes baseline whitespace so it sits snug to the grid cell edges. */
+  .logo-slot {
+    justify-self: end;
+    align-self: start;
+    display: block;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .company-logo {
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 80px;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
+  }
+
+  .desc {
+    margin-top: 0.35rem;
+    opacity: 0.95;
+    line-height: 1.45;
+  }
+
+  .location {
+    opacity: 0.95;
+  }
+
+  /* Pills */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border: 1px solid var(--schedule-pill-border);
+    background: var(--schedule-pill-bg);
+    white-space: nowrap;
+  }
+
+  /* Links */
+  .links {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.6rem;
+    border-radius: 10px;
+    border: 1px solid var(--schedule-link-border);
+    background: var(--schedule-link-bg);
+    text-decoration: none;
+    color: inherit;
+    font-weight: 650;
+    font-size: 0.92rem;
+  }
+
+  .link:hover {
+    background: color-mix(in srgb, var(--schedule-link-bg) 60%, white 10%);
+  }
+
+  /* Mobile cards */
+  .cards { display: none; }
+
+  .card {
+    padding: 1rem;
+    border-radius: 14px;
+    border: 1px solid var(--schedule-border);
+    background: var(--schedule-surface);
+    display: grid;
+    gap: 0.55rem;
+    text-align: left;
+    justify-items: start;
+  }
+
+  .card-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .card-time {
+    font-weight: 750;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Header split (mobile) */
+  .card-top {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    align-items: start;
+    column-gap: 0.75rem;
+  }
+
+  .card-top-left {
+    min-width: 0;
+  }
+
+  .card-title {
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .card-meta {
+    opacity: 0.95;
+    line-height: 1.35;
+  }
+
+  .card-desc {
+    opacity: 0.95;
+    line-height: 1.45;
+    margin-top: 0.15rem;
+  }
+
+  @media (max-width: 800px) {
+    .table-wrap { display: none; }
+    .cards { display: grid; gap: 0.75rem; }
+
+    .company-logo {
+      height: 44px;
+      max-width: 140px;
+    }
+  }
+</style>

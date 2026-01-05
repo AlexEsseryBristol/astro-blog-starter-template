@@ -1,0 +1,142 @@
+---
+import { Image } from "astro:assets";
+
+type Speaker = {
+  name: string;
+  company: string;
+  role?: string;
+  bio: string;
+  photo: ImageMetadata;
+  alt?: string;
+};
+
+type Props = {
+  speakers?: Speaker[];
+};
+
+const { speakers: speakersProp } = Astro.props as Props;
+const speakers: Speaker[] = speakersProp ?? [];
+---
+
+<section class="panel-grid" aria-label="Panel speakers">
+  {speakers.map((s) => (
+    <article class="speaker-card">
+      <div class="speaker-photo">
+        <Image
+          src={s.photo}
+          alt={s.alt ?? `${s.name} headshot`}
+          class="speaker-img"
+          loading="lazy"
+        />
+      </div>
+
+      <div class="speaker-meta">
+        <header class="speaker-header">
+          <h2 class="speaker-name">{s.name}</h2>
+          <p class="speaker-company">{s.company}</p>
+          <p class="speaker-role">{s.role}</p>
+        </header>
+
+        <p class="speaker-bio">{s.bio}</p>
+      </div>
+    </article>
+  ))}
+</section>
+
+<style>
+  .panel-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* Top-left alignment */
+  .speaker-card {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 0.9rem;
+
+    align-items: start; /* key: top-align photo + text */
+
+    padding: 1rem;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .speaker-photo {
+    width: 96px;
+    height: 96px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    align-self: start; /* ensure photo sits at upper-left of the card */
+  }
+
+  :global(.speaker-img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .speaker-meta {
+    min-width: 0;
+  }
+
+  /* Tighten vertical spacing in the header */
+  .speaker-header {
+    display: grid;
+    gap: 0.1rem;      /* tighter than before */
+    margin: 0 0 0.35rem 0;
+  }
+
+  /* Make name the most prominent */
+  .speaker-name {
+    margin: 0;
+    font-size: 1.4rem;   /* larger */
+    font-weight: 850;     /* stronger */
+    line-height: 1.15;    /* tighter */
+  }
+
+  .speaker-company,
+  .speaker-role {
+    margin: 0;
+    line-height: 1.2;     /* tighter */
+    opacity: 1;
+  }
+
+  .speaker-company {
+    font-weight: 650;
+  }
+
+  .speaker-role {
+    font-weight: 650;
+    opacity: 1;
+  }
+
+  /* Tighten bio spacing */
+  .speaker-bio {
+    margin: 0;
+    line-height: 1.35;    /* slightly tighter */
+    opacity: 0.95;
+  }
+
+  /* Mobile: keep top-left alignment; do NOT center text */
+  @media (max-width: 600px) {
+    .speaker-card {
+      grid-template-columns: 80px 1fr;
+      gap: 0.75rem;
+    }
+
+    .speaker-photo {
+      width: 80px;
+      height: 80px;
+    }
+
+    .speaker-meta {
+      text-align: left;
+    }
+  }
+</style>
