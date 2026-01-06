@@ -11,17 +11,23 @@ import QECDT from "../assets/company_logos/QECDTlogo.webp";
 import UoB from "../assets/company_logos/UoB.svg";
 
 // Meta JSON
-import sponsorsMeta from "../content/sponsors/2025sponsors.json";
+import partnersMeta from "../content/attending/2025partners.json";
+import sponsorsMeta from "../content/attending/2025sponsors.json";
 import attendingMeta from "../content/attending/2025attending.json";
 
 // Folder-driven logos
-const sponsorModules = import.meta.glob(
+const sponsorsModules = import.meta.glob(
   "../assets/2025/sponsors/*.{avif,webp,png,jpg,jpeg,svg}",
   { eager: true, import: "default" }
 );
 
 const attendingModules = import.meta.glob(
   "../assets/2025/attending/*.{avif,webp,png,jpg,jpeg,svg}",
+  { eager: true, import: "default" }
+);
+
+const partnersModules = import.meta.glob(
+  "../assets/2025/partners/*.{avif,webp,png,jpg,jpeg,svg}",
   { eager: true, import: "default" }
 );
 
@@ -44,30 +50,6 @@ function normalizeHref(href?: string) {
   return v.replace(/^https?:\/\/www\.careers-in-quantum\.com/i, "");
 }
 
-// Sponsors
-type SponsorMeta = { name?: string; href?: string };
-type SponsorMetaMap = Record<string, SponsorMeta>;
-const sponsorMetaMap = sponsorsMeta as SponsorMetaMap;
-
-const sponsors = Object.entries(sponsorModules)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([path, mod]) => {
-    const stem = basenameNoExt(path);
-    const fallbackName = humanizeFromFilename(stem);
-    const m = sponsorMetaMap[stem] ?? {};
-
-    const name = (m.name?.trim() || fallbackName).trim();
-    const href = normalizeHref(m.href);
-
-  return {
-    key: stem,
-    src: mod as unknown as AssetModule,
-    name,
-    url: normalizeHref(m.href),
-  };
-
-  });
-
 // Attending
 type AttendingMeta = { name: string; url?: string };
 type AttendingMetaMap = Record<string, AttendingMeta>;
@@ -78,6 +60,44 @@ const attendingItems = Object.entries(attendingModules)
   .map(([path, mod]) => {
     const slug = basenameNoExt(path);
     const m = attendingMetaMap[slug] ?? { name: humanizeFromFilename(slug) };
+
+    return {
+      key: slug,
+      src: mod as unknown as AssetModule,
+      name: m.name,
+      url: m.url,
+    };
+  });
+
+// Sponsors
+type SponsorsMeta = { name: string; url?: string };
+type SponsorsMetaMap = Record<string, SponsorsMeta>;
+const sponsorsMetaMap = sponsorsMeta as SponsorsMetaMap;
+
+const sponsorsItems = Object.entries(sponsorsModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => {
+    const slug = basenameNoExt(path);
+    const m = sponsorsMetaMap[slug] ?? { name: humanizeFromFilename(slug) };
+
+    return {
+      key: slug,
+      src: mod as unknown as AssetModule,
+      name: m.name,
+      url: m.url,
+    };
+  });
+
+// Partners
+type PartnersMeta = { name: string; url?: string };
+type PartnersMetaMap = Record<string, PartnersMeta>;
+const partnersMetaMap = partnersMeta as PartnersMetaMap;
+
+const partnersItems = Object.entries(partnersModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => {
+    const slug = basenameNoExt(path);
+    const m = partnersMetaMap[slug] ?? { name: humanizeFromFilename(slug) };
 
     return {
       key: slug,
@@ -108,13 +128,14 @@ const attendingItems = Object.entries(attendingModules)
 
     <section class="content-section2">
       <div class="content-inner">
-        <SponsorGrid title="CiQ 2025 Sponsors" ariaLabel="CiQ 2025 sponsors" items={sponsors} />
+        <SponsorGrid title="CiQ 2025 Partners" ariaLabel="CiQ 2025 partners" items={partnersItems} />
+        <SponsorGrid title="CiQ 2025 Sponsors" ariaLabel="CiQ 2025 sponsors" items={sponsorsItems} />
       </div>
     </section>
 
     <section class="content-section3">
       <div class="content-inner">
-        <SponsorGrid title="CiQ 2025 Attending Companies" ariaLabel="Attending companies" items={attendingItems} />
+        <SponsorGrid title="CiQ 2025 Exhibitors" ariaLabel="CiQ 2025 exhibitors" items={attendingItems} />
       </div>
     </section>
 
@@ -170,55 +191,6 @@ const attendingItems = Object.entries(attendingModules)
         margin: 0;
         max-width: 900px;
       }
-
-      .sponsor-grid {
-        display: grid;
-        gap: 1.5rem;
-        margin-top: 0rem;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        align-items: center;
-      }
-
-      .sponsor-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 110px;
-        padding: 0.5rem 0.75rem;
-      }
-
-      .sponsor-logo {
-        max-height: 100%;
-        width: 100%;
-        object-fit: contain;
-        max-width: 240px;
-      }
-
-      .sponsor-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        border-radius: 12px;
-        text-decoration: none;
-        outline: none;
-      }
-
-      .sponsor-link:focus-visible {
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45);
-      }
-
-      .sponsor-link:hover .sponsor-logo {
-        filter: brightness(0.95);
-      }
-
-      @media (min-width: 768px) {
-        .sponsor-item {
-          height: 130px;
-        }
-      }
-
       .btn {
         display: inline-flex;
         align-items: center;

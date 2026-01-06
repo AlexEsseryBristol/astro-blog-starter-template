@@ -1,0 +1,98 @@
+{
+  "iop-publishing": {
+    "name": "IOP Publishing",
+    "url": "https://ioppublishing.org/"
+  },
+  "quantum-engineering-centre-for-doctoral-training": {
+    "name": "Quantum Engineering Centre for Doctoral Training",
+    "url": "https://www.bristol.ac.uk/quantum-engineering/"
+  },
+  "sparrow-quantum": {
+    "name": "Sparrow Quantum",
+    "url": "https://sparrowquantum.com/"
+  },
+  "light-trace-photonics": {
+    "name": "Light Trace Photonics",
+    "url": "https://www.ltphotonics.co.uk/"
+  },
+  "physics-world": {
+    "name": "Physics World",
+    "url": "https://physicsworld.com/"
+  },
+  "quantum-information-science-and-technologies-centre-for-doctoral-training": {
+    "name": "Quantum Information Science and Technologies Centre for Doctoral Training",
+    "url": "https://www.qist-cdt.info/"
+  },
+  "quantinuum": {
+    "name": "Quantinuum",
+    "url": "https://www.quantinuum.com/company/careers"
+  },
+  "phasecraft": {
+    "name": "Phasecraft",
+    "url": "https://www.phasecraft.io/careers"
+  },
+  "innovate-uk": {
+    "name": "Innovate UK",
+    "url": "https://www.ukri.org/councils/innovate-uk/"
+  },
+  "bt": {
+    "name": "BT",
+    "url": "https://www.bt.com/"
+  },
+  "kets-quantum-security": {
+    "name": "KETS Quantum Security",
+    "url": "https://kets-quantum.com/"
+  },
+  "toshiba-europe": {
+    "name": "Toshiba Europe",
+    "url": "http://www.toshiba.eu/crl"
+  },
+  "riverlane": {
+    "name": "Riverlane",
+    "url": "https://www.riverlane.com/"
+  },
+  "applied-quantum-computing": {
+    "name": "Applied Quantum Computing",
+    "url": "https://appliedquantumcomputing.co.uk/"
+  },
+  "qphox": {
+    "name": "QphoX",
+    "url": "https://qphox.eu/"
+  },
+  "quantum-motion": {
+    "name": "Quantum Motion",
+    "url": "https://quantummotion.tech/"
+  },
+  "qontrol": {
+    "name": "Qontrol",
+    "url": "https://qontrol.co.uk/"
+  },
+  "department-for-science-innovation-and-technology": {
+    "name": "Department for Science, Innovation and Technology",
+    "url": "https://www.gov.uk/government/organisations/department-for-science-innovation-and-technology"
+  },
+  "nu-quantum": {
+    "name": "Nu Quantum",
+    "url": "https://www.nu-quantum.com/"
+  },
+  "qureca": {
+    "name": "Qureca",
+    "url": "https://www.qureca.com/"
+  },
+  "duality": {
+    "name": "Duality",
+    "url": "https://www.dualityqp.com/"
+  },
+  "zero-point-motion": {
+    "name": "Zero Point Motion",
+    "url": "https://www.zeropointmotion.com/joinus"
+  },
+  "siloton": {
+    "name": "Siloton",
+    "url": "https://www.siloton.com/"
+  },
+  "orca-computing": {
+    "name": "ORCA Computing",
+    "url": "https://orcacomputing.com/"
+  }
+}
