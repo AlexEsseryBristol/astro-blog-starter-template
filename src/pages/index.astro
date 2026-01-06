@@ -1,20 +1,67 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { Image } from 'astro:assets';
-import Logo from '../assets/logo/QECDTlogo.webp';
-import bg from '../assets/background/bg.webp';
-import LTP from '../assets/sponsor_logos/LTP.webp';
-import sparrow from '../assets/sponsor_logos/sparrow.webp';
-import quantinuum from '../assets/sponsor_logos/quantinuum.webp';
-import phasecraft from '../assets/sponsor_logos/phasecraft.webp';
-import QETLabs from '../assets/sponsor_logos/QETLabs.png';
-import QECDT from '../assets/sponsor_logos/QECDTlogo.webp';
-import UKRI from '../assets/sponsor_logos/UKRI.webp';
-import IOP from '../assets/sponsor_logos/IOP.webp';
-import UoB from '../assets/sponsor_logos/UoB.svg';
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { Image } from "astro:assets";
+
+import Logo from "../assets/logo/QECDTlogo.webp";
+import bg from "../assets/background/bg.webp";
+
+// Affiliations (keep explicit, or folder-drive later if you want)
+import QECDT from "../assets/company_logos/QECDTlogo.webp";
+import UoB from "../assets/company_logos/UoB.svg";
+
+// Previous sponsors metadata (name + optional url)
+import sponsorsMeta from "../content/sponsors/2025sponsors.json";
+
+// Folder-driven previous sponsors
+const sponsorModules = import.meta.glob(
+  "../assets/sponsor_logos/*.{avif,webp,png,jpg,jpeg,svg}",
+  { eager: true, import: "default" }
+);
+
+type AssetModule = {
+  src: string;
+  width: number;
+  height: number;
+  format?: string;
+};
+
+type SponsorMeta = { name?: string; url?: string };
+type SponsorMetaMap = Record<string, SponsorMeta>;
+
+const meta = sponsorsMeta as SponsorMetaMap;
+
+function basenameNoExt(path: string) {
+  const file = path.split("/").pop() ?? "";
+  return file.replace(/\.[^.]+$/, "");
+}
+
+function humanizeFromFilename(stem: string) {
+  // Removes leading "01_", "02-", etc; then replaces separators with spaces
+  const noPrefix = stem.replace(/^\d+[-_ ]*/, "");
+  return noPrefix.replace(/[-_]+/g, " ").trim();
+}
+
+const previousSponsors = Object.entries(sponsorModules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => {
+    const stem = basenameNoExt(path);
+    const fallbackName = humanizeFromFilename(stem);
+    const m = meta[stem] ?? {};
+
+    const name = m.name?.trim() || fallbackName;
+    const url = m.url?.trim();
+
+    return {
+      key: stem,
+      src: mod as unknown as AssetModule,
+      name,
+      alt: `${name} logo`,
+      url: url && url.length ? url : undefined,
+    };
+  });
 ---
 
 <!doctype html>
@@ -34,20 +81,20 @@ import UoB from '../assets/sponsor_logos/UoB.svg';
       <Header />
 
       <main class="hero-content">
-		<center>
-			<h1>Careers in Quantum</h1>
-			<h5>A student-led quantum careers fair</h5>
-			<p>Organised by the Quantum Engineering Centre for Doctoral Training</p>
-			<p>📅 5 March 2026, 9am to 5pm</p>
-			<p>📌 Richmond Building, Queen’s Road, Bristol, BS8 1LN</p>
+        <center>
+          <h1>Careers in Quantum</h1>
+          <h5>A student-led quantum careers fair</h5>
+          <p>Organised by the Quantum Engineering Centre for Doctoral Training</p>
+          <p>📅 5 March 2026, 9am to 5pm</p>
+          <p>📌 Richmond Building, Queen’s Road, Bristol, BS8 1LN</p>
 
-			<p class="partner-line">
-				<span>In partnership with</span>
-				<a href="/" class="logo-link">
-					<Image src={Logo} alt="Site logo" class="logo" />
-				</a>
-			</p>
-		</center>
+          <p class="partner-line">
+            <span>In partnership with</span>
+            <a href="/" class="logo-link">
+              <Image src={Logo} alt="Site logo" class="logo" />
+            </a>
+          </p>
+        </center>
       </main>
     </div>
 
@@ -55,90 +102,85 @@ import UoB from '../assets/sponsor_logos/UoB.svg';
       <div class="content-inner">
         <h2>About the Event</h2>
         <p>
-			Every year <b>Careers in Quantum</b> brings together professionals from industry and academia to engage with students and early-stage researchers on the variety and types of careers available in the quantum industry. 
-			<br/>
-			We aim to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to the opportunities within the rapidly growing quantum technology sector.
-			<br/>
-			The event focuses around a careers fair with a breakout room for more in-depth talks and panel discussions.
-			<br/>
-			This year, <b>Careers in Quantum</b> will be held from 9am to 5pm on <b>Thursday 5 March 2026</b> at <b>Richmond Building, Queen’s Road, Bristol, BS8 1LN</b>.
+          Every year <b>Careers in Quantum</b> brings together professionals from industry and
+          academia to engage with students and early-stage researchers on the variety and types of
+          careers available in the quantum industry.
+          <br />
+          We aim to introduce undergraduate students, career-minded PhD students and postdoctoral
+          researchers to the opportunities within the rapidly growing quantum technology sector.
+          <br />
+          The event focuses around a careers fair with a breakout room for more in-depth talks and
+          panel discussions.
+          <br />
+          This year, <b>Careers in Quantum</b> will be held from 9am to 5pm on <b>Thursday 5 March 2026</b> at
+          <b>Richmond Building, Queen’s Road, Bristol, BS8 1LN</b>.
         </p>
       </div>
     </section>
 
-	<section class="content-section2">
+    <section class="content-section2">
       <div class="content-inner">
         <h2>Sponsorship</h2>
-		<p>
-			Do you work in quantum technologies? 
-			<br/>
-			Are you interested in connecting with potential future employees from a broad range of disciplines? 
-			<br/>
-			Do you want to showcase your company?
-			<br/>
-			Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for further information.
+        <p>
+          Do you work in quantum technologies?
+          <br />
+          Are you interested in connecting with potential future employees from a broad range of disciplines?
+          <br />
+          Do you want to showcase your company?
+          <br />
+          Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an
+          impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for
+          further information.
+        </p>
       </div>
     </section>
 
-	<section class="content-section3">
-		<div class="content-inner">
-			<h2>Previous Sponsors</h2>
+    <section class="content-section3">
+      <div class="content-inner">
+        <h2>Previous Sponsors</h2>
 
-			<div class="sponsor-grid" aria-label="Previous sponsors">
-			<div class="sponsor-item">
-				<Image src={LTP} alt="Light Trace Photonics logo" class="sponsor-logo" />
-			</div>
+        <div class="sponsor-grid" aria-label="Previous sponsors">
+          {previousSponsors.map((s) => (
+            <div class="sponsor-item" key={s.key}>
+              {s.url ? (
+                <a
+                  class="sponsor-link"
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${s.name} website`}
+                  title={s.name}
+                >
+                  <Image src={s.src} alt={s.alt} class="sponsor-logo" />
+                </a>
+              ) : (
+                <Image src={s.src} alt={s.alt} class="sponsor-logo" />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
 
-			<div class="sponsor-item">
-				<Image src={sparrow} alt="Sparrow logo" class="sponsor-logo" />
-			</div>
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
 
-			<div class="sponsor-item">
-				<Image src={quantinuum} alt="Quantinuum logo" class="sponsor-logo" />
-			</div>
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
+              src={QECDT}
+              alt="Centre for Doctoral Training in Quantum Engineering logo"
+              class="sponsor-logo"
+            /></a>
+          </div>
 
-			<div class="sponsor-item">
-				<Image src={phasecraft} alt="Phasecraft logo" class="sponsor-logo" />
-			</div>
-
-			<div class="sponsor-item">
-				<Image src={QETLabs} alt="QETLabs logo" class="sponsor-logo" />
-			</div>
-
-			<div class="sponsor-item">
-				<Image
-				src={QECDT}
-				alt="Centre for Doctoral Training in Quantum Engineering logo"
-				class="sponsor-logo"
-				/>
-			</div>
-
-			<div class="sponsor-item">
-				<Image src={UKRI} alt="UKRI logo" class="sponsor-logo" />
-			</div>
-
-			<div class="sponsor-item">
-				<Image src={IOP} alt="IOP Publishing logo" class="sponsor-logo" />
-			</div>
-			</div>
-		</div>
-	</section>
-
-	<section class="content-section4">
-		<div class="content-inner">
-			<h2>Affiliations</h2>
-
-			<div class="sponsor-grid" aria-label="Affiliations">
-				<div class="sponsor-item">
-					<Image src={QECDT} alt="Centre for Doctoral Training in Quantum Engineering logo" class="sponsor-logo" />
-				</div>
-
-				<div class="sponsor-item">
-					<Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" />
-				</div>
-			</div>
-		</div>
-	</section>
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <Footer />
 
@@ -160,74 +202,85 @@ import UoB from '../assets/sponsor_logos/UoB.svg';
       }
 
       .content-section {
-        background-color: hsl(192, 100%, 15%); /* change as desired */
+        background-color: hsl(192, 100%, 15%);
         padding: 4rem 1.5rem;
       }
 
-	  .content-section2 {
-        background-color: #87a5ad; /* change as desired */
+      .content-section2 {
+        background-color: #87a5ad;
         padding: 4rem 1.5rem;
       }
 
-	  .content-section3 {
-        background-color: #00bcae; /* change as desired */
+      .content-section3 {
+        background-color: #00bcae;
         padding: 4rem 1.5rem;
       }
 
-	  .content-section4 {
-		background-color: #000000ff; /* change as desired */
-		padding: 4rem 1.5rem;
-	  }
+      .content-section4 {
+        background-color: #000000ff;
+        padding: 4rem 1.5rem;
+      }
 
       .content-inner {
         max-width: 900px;
         margin: 0 auto;
       }
-	  /* Sponsor logo grid */
-	.sponsor-grid {
-	display: grid;
-	gap: 1.5rem;
-	margin-top: 2rem;
 
-	/* Responsive columns: grows/shrinks automatically */
-	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-	align-items: center;
-	}
+      /* Sponsor logo grid */
+      .sponsor-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        align-items: center;
+      }
 
-	.sponsor-item {
-	/* Center each logo in its cell */
-	display: flex;
-	align-items: center;
-	justify-content: center;
+      .sponsor-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 110px;
+        padding: 0.5rem 0.75rem;
+      }
 
-	/* Give consistent vertical space per logo */
-	height: 110px;            /* adjust to taste */
-	padding: 0.5rem 0.75rem;
-	}
+      .sponsor-logo {
+        max-height: 100%;
+        width: 100%;
+        object-fit: contain;
+        max-width: 240px;
+      }
 
-	.sponsor-logo {
-	/* Constrain vertical size, preserve aspect ratio */
-	max-height: 100%;
-	width: 100%;
-	object-fit: contain;
+      .sponsor-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        text-decoration: none;
+        outline: none;
+      }
 
-	/* Optional: prevent huge logos from stretching too wide */
-	max-width: 240px;
-	}
+      .sponsor-link:focus-visible {
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45);
+      }
 
-	/* Slightly taller rows on larger screens (optional) */
-	@media (min-width: 768px) {
-	.sponsor-item {
-		height: 130px;
-	}
-	}
-	.partner-line {
-		margin-top: -0.5rem;
-		display: inline-flex;
-		align-items: center;   /* vertical centering */
-		gap: 0.8rem;           /* space between text and logo */
-	}
+      .sponsor-link:hover .sponsor-logo {
+        filter: brightness(0.95);
+      }
 
+      @media (min-width: 768px) {
+        .sponsor-item {
+          height: 130px;
+        }
+      }
+
+      .partner-line {
+        margin-top: -0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
     </style>
   </body>
 </html>

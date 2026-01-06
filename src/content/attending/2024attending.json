@@ -1,0 +1,114 @@
+{
+  "qontrol": {
+    "name": "Qontrol",
+    "url": "https://qontrol.co.uk/"
+  },
+  "qet-labs": {
+    "name": "QET Labs",
+    "url": "https://www.ltphotonics.co.uk/"
+  },
+  "iop-publishing": {
+    "name": "IOP Publishing",
+    "url": "https://www.ltphotonics.co.uk/"
+  },
+  "quix-quantum": {
+    "name": "Quix Quantum",
+    "url": "https://www.ltphotonics.co.uk/"
+  },
+  "qcs-hub": {
+    "name": "QCS Hub",
+    "url": "https://www.qcshub.org/"
+  },
+  "nqcc": {
+    "name": "NQCC",
+    "url": "https://www.nqcc.ac.uk/"
+  },
+  "optica": {
+    "name": "Optica",
+    "url": "https://www.ltphotonics.co.uk/"
+  },
+  "light-trace-photonics": {
+    "name": "Light Trace Photonics",
+    "url": "https://www.ltphotonics.co.uk/"
+  },
+  "vector-photonics": {
+    "name": "Vector Photonics",
+    "url": "https://www.vectorphotonics.co.uk/"
+  },
+  "duality-quantum-photonics": {
+    "name": "Duality Quantum Photonics",
+    "url": "https://www.dualityqp.com/"
+  },
+  "phasecraft": {
+    "name": "Phasecraft",
+    "url": "https://www.phasecraft.io/"
+  },
+  "qlm": {
+    "name": "QLM",
+    "url": "https://www.qlmtec.com/"
+  },
+  "csa-catapult": {
+    "name": "CSA Catapult",
+    "url": "https://csa.catapult.org.uk/"
+  },
+  "wave-photonics": {
+    "name": "Wave Photonics",
+    "url": "https://wavephotonics.com/"
+  },
+  "quantum-diamonds": {
+    "name": "Quantum Diamonds",
+    "url": "https://www.quantumdiamonds.de/"
+  },
+  "creator-fund": {
+    "name": "Creator Fund",
+    "url": "https://thecreatorfund.com/"
+  },
+  "quantinuum": {
+    "name": "Quantinuum",
+    "url": "https://www.quantinuum.com/"
+  },
+  "quantum-motion": {
+    "name": "Quantum Motion",
+    "url": "https://quantummotion.tech/"
+  },
+  "orca-computing": {
+    "name": "ORCA Computing",
+    "url": "https://orcacomputing.com/"
+  },
+  "bt-group": {
+    "name": "BT Group",
+    "url": "https://www.bt.com/about"
+  },
+  "sparrow-quantum": {
+    "name": "Sparrow Quantum",
+    "url": "https://sparrowquantum.com/"
+  },
+  "aegiq": {
+    "name": "Aegiq",
+    "url": "https://aegiq.com/"
+  },
+  "oxford-quantum-circuits": {
+    "name": "Oxford Quantum Circuits",
+    "url": null
+  },
+  "siloton": {
+    "name": "Siloton",
+    "url": "https://www.siloton.com/"
+  },
+  "universal-quantum": {
+    "name": "Universal Quantum",
+    "url": "https://universalquantum.com/"
+  },
+  "rhea-space-activity": {
+    "name": "Rhea Space Activity",
+    "url": "https://www.rheaspaceactivity.com/"
+  },
+  "crypto-quantique": {
+    "name": "Crypto Quantique",
+    "url": "https://www.cryptoquantique.com/"
+  },
+  "bristol-qe-cdt": {
+    "name": "Bristol QE-CDT",
+    "url": "https://www.bristol.ac.uk/quantum-engineering/"
+  }
+}

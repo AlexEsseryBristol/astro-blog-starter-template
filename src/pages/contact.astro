@@ -20,7 +20,7 @@ import UoB from '../assets/sponsor_logos/UoB.svg';
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title="Contact" description="Contact page for Careers in Quantum." />
   </head>
 
   <body>
@@ -30,26 +30,30 @@ import UoB from '../assets/sponsor_logos/UoB.svg';
       <div class="content-inner">
         <h2>Contact Us</h2>
         <p>
-            The contact form is still under development. You can make an inquiry directly at <a href="mailto:ciq-2025@bristol.ac.uk">ciq-2025@bristol.ac.uk</a>.
+            The contact form is still under development. You can make an inquiry directly at <a href="mailto:ciq-cdt@bristol.ac.uk">ciq-cdt@bristol.ac.uk</a>.
         </p>
       </div>
     </section>
 
-	<section class="content-section4">
-		<div class="content-inner">
-			<h2>Affiliations</h2>
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
 
-			<div class="sponsor-grid" aria-label="Affiliations">
-				<div class="sponsor-item">
-					<Image src={QECDT} alt="Centre for Doctoral Training in Quantum Engineering logo" class="sponsor-logo" />
-				</div>
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
+              src={QECDT}
+              alt="Centre for Doctoral Training in Quantum Engineering logo"
+              class="sponsor-logo"
+            /></a>
+          </div>
 
-				<div class="sponsor-item">
-					<Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" />
-				</div>
-			</div>
-		</div>
-	</section>
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <Footer />
 

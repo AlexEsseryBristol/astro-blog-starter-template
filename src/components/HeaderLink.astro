@@ -8,18 +8,31 @@ const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
 const subpath = pathname.match(/[^\/]+/g);
 const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 ---
+
 <div class="header_body">
 	<a href={href} class:list={[className, { active: isActive }]} {...props}>
 		<slot />
 	</a>
 </div>
+
 <style>
 	a {
-		display: inline-block;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
 		text-decoration: none;
 	}
+
+	/* Active = visually heavier WITHOUT changing layout metrics */
 	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
+		text-decoration: none;
+		font-weight: inherit; /* critical: no weight change -> no jitter */
+		/* “Fake bold” using stacked shadows */
+		text-shadow:
+			0.015em 0 currentColor,
+			-0.015em 0 currentColor,
+			0 0.015em currentColor,
+			0 -0.015em currentColor;
 	}
 </style>
+	 	

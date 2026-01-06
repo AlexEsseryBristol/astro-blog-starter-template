@@ -1,0 +1,279 @@
+---
+import BaseHead from "./BaseHead.astro";
+import Header from "./Header.astro";
+import Footer from "./Footer.astro";
+import { Image } from "astro:assets";
+
+import QECDT from "../assets/company_logos/QECDTlogo.webp";
+import UoB from "../assets/company_logos/UoB.svg";
+
+export interface Props {
+  title: string;
+  description: string;
+  website?: string;
+  logo: any; // imported image module (webp/svg/etc)
+
+  backHref?: string; // defaulted below
+  prevHref?: string | null; // allow null to mean "no button"
+  nextHref?: string | null; // allow null to mean "no button"
+}
+
+const {
+  title,
+  description,
+  website,
+  logo,
+  backHref,
+  prevHref,
+  nextHref,
+} = Astro.props;
+
+// IMPORTANT: defaults must NOT override null from generated pages
+const back = backHref ?? "/archive-sponsors-2024";
+const prev = typeof prevHref === "string" && prevHref.trim().length ? prevHref : null;
+const next = typeof nextHref === "string" && nextHref.trim().length ? nextHref : null;
+
+const titleHref = typeof website === "string" && website.trim().length ? website : null;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`${title} 2024`}
+      description={`Archive of sponsor page for ${title} at CiQ 2024.`}
+    />
+  </head>
+
+  <body>
+    <Header />
+
+    <section class="content-section">
+      <div class="content-inner content-inner--back">
+        <a href={back} class="btn">← Back to CiQ 2024 Sponsors</a>
+      </div>
+    </section>
+
+    <section class="content-section2">
+      <div class="content-inner">
+        <div class="title-row">
+          {titleHref ? (
+            <a
+              href={titleHref}
+              class="btn-title"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open ${title} website`}
+            >
+              {title}
+            </a>
+          ) : (
+            <h2 class="title">{title}</h2>
+          )}
+        </div>
+
+        <div class="two-col">
+          <div class="col-left">
+            <p class="desc">{description}</p>
+          </div>
+
+          <div class="col-right">
+            <Image src={logo} alt={`${title} logo`} class="sponsor-logo-top" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section3">
+      <div class="content-inner">
+        <nav class="nav-row" aria-label="Sponsor pagination">
+          {prev ? (
+            <a href={prev} class="btn btn-fixed">← Previous</a>
+          ) : (
+            <span class="nav-spacer" aria-hidden="true"></span>
+          )}
+
+          {next ? (
+            <a href={next} class="btn btn-fixed">Next →</a>
+          ) : (
+            <span class="nav-spacer" aria-hidden="true"></span>
+          )}
+        </nav>
+      </div>
+    </section>
+
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
+
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/">
+              <Image
+                src={QECDT}
+                alt="Centre for Doctoral Training in Quantum Engineering logo"
+                class="sponsor-logo"
+              />
+            </a>
+          </div>
+
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk">
+              <Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+
+    <style>
+      /* Sections */
+      .content-section { background-color: hsl(192, 100%, 15%); padding: 1rem 1.5rem; }
+      .content-section2 { background-color: #87a5ad; padding: 2rem 1.5rem; }
+      .content-section3 { background-color: #00bcae; padding: 2rem 1.5rem; }
+      .content-section4 { background-color: #000; padding: 4rem 1.5rem; }
+
+      /* Layout */
+      .content-inner { max-width: 900px; margin: 0 auto; }
+      .content-inner--back { margin: 0; max-width: 900px; }
+
+      /* Title */
+      .title-row {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .title {
+        margin: 0;
+        line-height: 1.15;
+        white-space: nowrap;
+      }
+
+      .btn-title {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0rem 3rem;
+        border-radius: 999px;
+        background: rgb(var(--white));
+        color: hsl(192, 100%, 15%);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 2rem;
+        line-height: 3;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        white-space: nowrap;
+        max-width: 100%;
+      }
+
+      .btn-title:hover { filter: brightness(0.95); }
+
+      /* Body two column */
+      .two-col {
+        margin-top: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2rem;
+        align-items: center;
+      }
+
+      .desc { margin: 1rem 0 0 0; }
+
+      .col-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .sponsor-logo-top {
+        width: auto;
+        max-width: 90%;
+        height: auto;
+        object-fit: contain;
+        display: block;
+      }
+
+      /* Pagination */
+      .nav-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .btn-fixed {
+        width: 320px;
+        justify-content: center;
+        text-align: center;
+      }
+
+      /* Invisible placeholder so single button stays left/right */
+      .nav-spacer {
+        width: 320px; /* match .btn-fixed */
+        height: 1px;  /* exists for layout, visually negligible */
+        opacity: 0;
+      }
+
+      /* Affiliations grid */
+      .sponsor-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 0rem;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        align-items: center;
+      }
+
+      .sponsor-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 110px;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .sponsor-logo {
+        max-height: 100%;
+        width: 100%;
+        object-fit: contain;
+        max-width: 240px;
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0rem 2rem;
+        border-radius: 999px;
+        background: rgb(var(--white));
+        color: hsl(192, 100%, 15%);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.35rem;
+        line-height: 4;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+
+      .btn:hover { filter: brightness(0.95); }
+
+      @media (max-width: 740px) {
+        .nav-row { flex-direction: column; align-items: stretch; }
+        .btn-fixed { width: 100%; }
+        .nav-spacer { display: none; } /* on mobile, just hide the placeholder */
+      }
+
+      @media (max-width: 640px) {
+        .two-col { grid-template-columns: 1fr; row-gap: 1rem; }
+        .col-right { justify-content: flex-start; }
+        .title { white-space: normal; text-align: center; }
+        .btn-title { white-space: normal; text-align: center; }
+      }
+    </style>
+  </body>
+</html>

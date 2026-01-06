@@ -1,0 +1,10 @@
+{
+  "01 LTP": { "name": "Light Trace Photonics", "url": "https://lighttracephotonics.com/" },
+  "02 sparrow": { "name": "Sparrow", "url": "https://sparrowquantum.com/" },
+  "03 quantinuum": { "name": "Quantinuum", "url": "https://www.quantinuum.com/" },
+  "04 phasecraft": { "name": "Phasecraft", "url": "https://www.phasecraft.io/" },
+  "05 QETLabs": { "name": "QET Labs", "url": "https://www.qetlabs.com/" },
+  "06 QECDTlogo": { "name": "QECDT", "url": "https://www.bristol.ac.uk/quantum-engineering/" },
+  "07 UKRI": { "name": "UKRI", "url": "https://www.ukri.org/" },
+  "08 IOP": { "name": "IOP Publishing", "url": "https://ioppublishing.org/" }
+}

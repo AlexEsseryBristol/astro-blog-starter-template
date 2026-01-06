@@ -1,0 +1,30 @@
+{
+  "01 Qontrol": {
+    "name": "Qontrol",
+    "href": "/2024/qontrol"
+  },
+  "02 QET Labs": {
+    "name": "QET Labs",
+    "href": "/2024/qet-labs"
+  },
+  "03 IOP Publishing": {
+    "name": "IOP Publishing",
+    "href": "2024/iop-publishing"
+  },
+  "04 Quix Quantum": {
+    "name": "Quix Quantum",
+    "href": "2024/quix-quantum"
+  },
+  "05 QCS Hub": {
+    "name": "QCS Hub",
+    "href": "2024/qcs-hub"
+  },
+  "06 NQCC": {
+    "name": "NQCC",
+    "href": "2024/nqcc"
+  },
+  "07 Optica": {
+    "name": "Optica",
+    "href": "2024/optica"
+  }
+}

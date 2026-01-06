@@ -4,18 +4,18 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ScheduleGrid from "../components/Schedule.astro";
 import { Image } from 'astro:assets';
-import LTP from '../assets/sponsor_logos/LTP.webp';
-import sparrow from '../assets/sponsor_logos/sparrow.webp';
-import qontrol from '../assets/sponsor_logos/qontrol.webp';
-import phasecraft from '../assets/sponsor_logos/phasecraft.webp';
-import riverlane from '../assets/sponsor_logos/riverlane.png';
-import QECDT from '../assets/sponsor_logos/QECDTlogo.webp';
-import UKRI from '../assets/sponsor_logos/UKRI.webp';
-import DSIT from '../assets/sponsor_logos/DSIT.svg';
-import UoB from '../assets/sponsor_logos/UoB.svg';
-import KETS from '../assets/sponsor_logos/KETS.png';
-import BT from '../assets/sponsor_logos/BT.png';
-import zeroPointMotion from '../assets/sponsor_logos/zeroPointMotion.png';
+import LTP from '../assets/company_logos/LTP.webp';
+import sparrow from '../assets/company_logos/sparrow.webp';
+import qontrol from '../assets/company_logos/qontrol.webp';
+import phasecraft from '../assets/company_logos/phasecraft.webp';
+import riverlane from '../assets/company_logos/riverlane.png';
+import QECDT from '../assets/company_logos/QECDTlogo.webp';
+import UKRI from '../assets/company_logos/UKRI.webp';
+import DSIT from '../assets/company_logos/DSIT.svg';
+import UoB from '../assets/company_logos/UoB.svg';
+import KETS from '../assets/company_logos/KETS.png';
+import BT from '../assets/company_logos/BT.png';
+import zeroPointMotion from '../assets/company_logos/zeroPointMotion.png';
 
 type ScheduleItemType =
   | "Talk"
@@ -45,7 +45,7 @@ type ScheduleDay = {
 
 const days = [
   {
-    dateLabel: "Thursday 5 March 2026",
+    dateLabel: "Friday 4 April 2025",
     items: [
       {
         start: "09:00",
@@ -198,7 +198,7 @@ const days = [
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title="Schedule" description="Event schedule for CiQ 2026." />
+    <BaseHead title="Schedule" description="Event schedule for Careers in Quantum." />
   </head>
   <body>
     <Header />
@@ -208,11 +208,13 @@ const days = [
 		<center>
 			<h1>Schedule</h1>
 			<h5>The schedule for CiQ 2026 is still under construction</h5>
-			<p>See below for the schedule for CiQ 2025</p>
+			</br>
+			<h5>Check out the schedule from last year to get an idea of what to expect:</h5>
+      <a href="/archive-schedule-2025?from=schedule" class="btn">CiQ 2025 Schedule</a>
 		</center>
       </main>
     </section>
-
+<!--
     <section class="content-section2">
         <main>
 		<center>
@@ -249,22 +251,26 @@ const days = [
         <ScheduleGrid days={days} />
       </div>
     </section>
+-->
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
 
-	<section class="content-section4">
-		<div class="content-inner">
-			<h2>Affiliations</h2>
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
+              src={QECDT}
+              alt="Centre for Doctoral Training in Quantum Engineering logo"
+              class="sponsor-logo"
+            /></a>
+          </div>
 
-			<div class="sponsor-grid" aria-label="Affiliations">
-				<div class="sponsor-item">
-					<Image src={QECDT} alt="Centre for Doctoral Training in Quantum Engineering logo" class="sponsor-logo" />
-				</div>
-
-				<div class="sponsor-item">
-					<Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" />
-				</div>
-			</div>
-		</div>
-	</section>
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <Footer />
 
@@ -350,7 +356,28 @@ const days = [
         .schedule-margin {
             margin: 0rem 3rem;              /* top/bottom */
         }
+        .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0rem 2rem;
+        border-radius: 999px;
+        background: rgb(var(--white));
+        color: hsl(192, 100%, 15%);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.5rem;
+        line-height: 2;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        white-space: nowrap;
+        margin: 0.5rem 2.5rem 0.5rem 2.5rem; /* top/right/bottom/left */
+        vertical-align: middle;
 
+      }
+
+      .btn:hover {
+        filter: brightness(0.95);
+      }
     </style>
   </body>
 </html>

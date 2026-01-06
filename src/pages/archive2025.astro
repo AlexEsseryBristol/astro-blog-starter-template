@@ -1,0 +1,308 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+import { Image, getImage } from "astro:assets";
+
+import bg from "../assets/background/bg.webp";
+
+import QECDT from "../assets/company_logos/QECDTlogo.webp";
+import UoB from "../assets/company_logos/UoB.svg";
+
+import { Carousel } from "astro-carousel";
+import type { ComponentProps } from "astro/types";
+
+/**
+ * 1) Import gallery images as real Astro asset modules (NOT strings).
+ *    The key fix is: import: "default"
+ */
+const galleryModules = import.meta.glob(
+  "../assets/2025/gallery/*.{avif,webp,png,JPG,jpeg,svg}",
+  {
+    eager: true,
+    import: "default",
+  }
+);
+
+// Type for imported assets from astro:assets
+type GalleryAsset = {
+  src: string;      // original source reference (not for <img> directly in your case)
+  width: number;
+  height: number;
+  format?: string;
+};
+
+const sortedGallery = Object.entries(galleryModules).sort(([a], [b]) =>
+  a.localeCompare(b)
+);
+
+/**
+ * 2) Produce URLs via getImage() so Carousel/thumbs receive valid URLs,
+ *    and we never end up with /@fs/... paths.
+ */
+const images = await Promise.all(
+  sortedGallery.map(async ([path, asset]) => {
+    const mod = asset as unknown as GalleryAsset;
+
+    const filename = path.split("/").pop() ?? "";
+    const altFromName = filename
+      .replace(/\.[^.]+$/, "")
+      .replace(/[-_]+/g, " ")
+      .trim();
+
+    // Generate a reasonably sized image for carousel usage.
+    // If you prefer "original" size, omit width and only set format/quality.
+    const processed = await getImage({
+      src: asset as any,          // IMPORTANT: pass the imported module, not a string
+      width: Math.min(mod.width ?? 1600, 1600),
+      format: "webp",
+      quality: 80,
+    });
+
+    return {
+      src: processed.src,         // safe URL string for <img> + Carousel
+      alt: altFromName,
+      width: mod.width,
+      height: mod.height,
+    };
+  })
+) satisfies ComponentProps<typeof Carousel>["images"];
+
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="CiQ 2025 Archive" description="Archive for Careers in Quantum 2025." />
+  </head>
+
+  <body>
+    <div
+      class="index-bg"
+      style={`background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url(${bg.src});
+      `}
+    >
+      <Header />
+
+      <main class="hero-content">
+        <center>
+          <h1>Careers in Quantum 2025</h1>
+          <h5>A student-led quantum careers fair</h5>
+          <p>
+            Organised by the Quantum Engineering Centre for Doctoral Training in partnership with
+            IOP Publishing and the NQCC
+          </p>
+        </center>
+      </main>
+    </div>
+
+    <section class="content-section">
+      <div class="content-inner">
+        <h2>Gallery</h2>
+
+        <ul id="carouselTargetList" class="thumbs">
+          {images.map((img, index) => (
+            <li class="thumb">
+              <a
+                class="thumbLink"
+                href={`${path}?image=${index}`}
+                data-carousel-index={index}
+                aria-label={`Open image ${index + 1}`}
+              >
+                <img
+                  class="thumbImg"
+                  src={img.src}
+                  alt={img.alt ?? ""}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <Carousel images={images} />
+      </div>
+    </section>
+
+    <section class="content-section2">
+      <div class="content-inner">
+        <h2>The Event</h2>
+        <p>
+            CiQ 2025 brought together professionals from industry and academia to engage with students and early-stage researchers on the variety and types of careers available in the quantum industry. 
+            <br/>
+            We aimed to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to the opportunities within the rapidly growing quantum technology sector.
+            <br/>
+            The event focused around a careers fair with a breakout room for more in-depth discussion and panels. 
+            <br/>
+            This one day, in-person careers event was hosted on the 4 April 2025, at the Mercure Bristol Grand Hotel.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section3">
+      <div class="content-inner">
+        <center>
+        <a href="/archive-sponsors-2025" class="btn">CiQ 2025 Sponsors & Exhibitors</a>
+        <a href="/archive-schedule-2025" class="btn">CiQ 2025 Schedule</a>
+        </center>
+      </div>
+    </section>
+
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
+
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
+              src={QECDT}
+              alt="Centre for Doctoral Training in Quantum Engineering logo"
+              class="sponsor-logo"
+            /></a>
+          </div>
+
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+
+    <style>
+      .thumbs {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1rem 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .thumb {
+        margin: 0;
+      }
+
+      .thumbLink {
+        display: block;
+        border-radius: 12px;
+        overflow: hidden;
+        text-decoration: none;
+      }
+
+      .thumbImg {
+        display: block;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+      }
+
+      .index-bg {
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .content-section {
+        background-color: hsl(192, 100%, 15%);
+        padding: 4rem 1.5rem;
+      }
+
+      .content-section2 {
+        background-color: #87a5ad;
+        padding: 4rem 1.5rem;
+      }
+
+      .content-section3 {
+        background-color: #00bcae;
+        padding: 2rem 1.5rem;
+      }
+
+      .content-section4 {
+        background-color: #000000ff;
+        padding: 4rem 1.5rem;
+      }
+
+      .content-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .sponsor-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        align-items: center;
+      }
+
+      .sponsor-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 110px;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .sponsor-logo {
+        max-height: 100%;
+        width: 100%;
+        object-fit: contain;
+        max-width: 240px;
+      }
+
+      @media (min-width: 768px) {
+        .sponsor-item {
+          height: 130px;
+        }
+      }
+
+      .partner-line {
+        margin-top: -0.5rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0rem 2rem;
+        border-radius: 999px;
+        background: rgb(var(--white));
+        color: hsl(192, 100%, 15%);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 2rem;
+        line-height: 4;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        white-space: nowrap;
+        margin: 0.5rem 2.5rem 0.5rem 2.5rem; /* top/right/bottom/left */
+        vertical-align: middle;
+
+      }
+
+      .btn:hover {
+        filter: brightness(0.95);
+      }
+    </style>
+  </body>
+</html>

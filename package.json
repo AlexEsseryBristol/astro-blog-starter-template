@@ -17,10 +17,12 @@
 		"@astrojs/rss": "4.0.14",
 		"@astrojs/sitemap": "3.6.0",
 		"astro": "5.16.2",
+		"astro-carousel": "^3.0.3",
 		"nodemailer": "^7.0.12",
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
+		"sass": "^1.97.1",
 		"wrangler": "4.56.0"
 	},
 	"private": true,

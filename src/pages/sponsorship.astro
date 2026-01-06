@@ -1,0 +1,174 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { Image } from 'astro:assets';
+import Logo from '../assets/logo/QECDTlogo.webp';
+import bg from '../assets/background/richmond_building.webp';
+import LTP from '../assets/company_logos/LTP.webp';
+import sparrow from '../assets/company_logos/sparrow.webp';
+import quantinuum from '../assets/company_logos/quantinuum.webp';
+import phasecraft from '../assets/company_logos/phasecraft.webp';
+import QETLabs from '../assets/company_logos/QETLabs.png';
+import QECDT from '../assets/company_logos/QECDTlogo.webp';
+import UKRI from '../assets/company_logos/UKRI.webp';
+import IOP from '../assets/company_logos/IOP.webp';
+import UoB from '../assets/company_logos/UoB.svg';
+import SponsorshipTable from "../components/SponsorshipTable.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Sponsorship" description="Sponsorship information for Careers in Quantum." />
+  </head>
+
+  <body>
+    <Header />
+
+    <section class="content-section">
+      <div class="content-inner">
+        <center>
+        <h2>Sponsorship</h2>
+        </center>
+        <p>
+            We are looking for sponsorship to help us to put on the best event possible, as well as providing bursaries for attendees who otherwise wouldn't be able to attend.
+            <br/><br/>
+            The following packages are available, but we are also open to discussions, including alternative amounts, or sponsorship of particular sections of the event.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section2">
+      <div class="content-inner">
+        <center>
+        <h2>Sponsorship Packages</h2>
+        </center>
+      </div>
+      <div class="schedule-margin">
+        <SponsorshipTable />
+      </div>
+
+    </section>
+
+    <section class="content-section3">
+        <div class="content-inner">
+        <h2>Alternative Sponsorship</h2>
+        <p>
+            Sponsorship may also be provided for specific parts of the event. 
+        </br></br>
+            In particular, we are looking for sponsors to cover travel reimbursement for attendees that need it, lunch, and a drinks reception to provide networking opportunities. 
+        </br></br>
+            If there is specific part of the event that you would like to sponsor <a href="/contact">Contact Us</a> for more information.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
+
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
+              src={QECDT}
+              alt="Centre for Doctoral Training in Quantum Engineering logo"
+              class="sponsor-logo"
+            /></a>
+          </div>
+
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+
+    <style>
+      .index-bg {
+        min-height: 60vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .content-section {
+        background-color: hsl(192, 100%, 15%); /* change as desired */
+        padding: 4rem 1.5rem;
+      }
+
+	  .content-section2 {
+        background-color: #87a5ad; /* change as desired */
+        padding: 2rem 1.5rem 4rem;
+      }
+
+	  .content-section3 {
+        background-color: #00bcae; /* change as desired */
+        padding: 4rem 1.5rem 4rem;
+      }
+
+	  .content-section4 {
+		background-color: #000000ff; /* change as desired */
+		padding: 4rem 1.5rem;
+	  }
+
+      .content-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+	  /* Sponsor logo grid */
+	.sponsor-grid {
+	display: grid;
+	gap: 1.5rem;
+	margin-top: 2rem;
+
+	/* Responsive columns: grows/shrinks automatically */
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	align-items: center;
+	}
+
+	.sponsor-item {
+	/* Center each logo in its cell */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	/* Give consistent vertical space per logo */
+	height: 110px;            /* adjust to taste */
+	padding: 0.5rem 0.75rem;
+	}
+
+	.sponsor-logo {
+	/* Constrain vertical size, preserve aspect ratio */
+	max-height: 100%;
+	width: 100%;
+	object-fit: contain;
+
+	/* Optional: prevent huge logos from stretching too wide */
+	max-width: 240px;
+	}
+
+	/* Slightly taller rows on larger screens (optional) */
+	@media (min-width: 768px) {
+	.sponsor-item {
+		height: 130px;
+	}
+	}
+    .schedule-margin {
+            margin: 0rem 3rem;              /* top/bottom */
+    }
+    </style>
+  </body>
+</html>

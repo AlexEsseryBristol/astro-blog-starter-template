@@ -6,8 +6,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Image } from 'astro:assets';
 import Logo from '../assets/logo/QECDTlogo.webp';
 import PanelGrid from "../components/PanelGrid.astro";
-import QECDT from '../assets/sponsor_logos/QECDTlogo.webp';
-import UoB from '../assets/sponsor_logos/UoB.svg';
+import QECDT from '../assets/company_logos/QECDTlogo.webp';
+import UoB from '../assets/company_logos/UoB.svg';
 import zoeDavidson from '../assets/speaker_headshots/zoe-davidson.webp';
 import andrewMartin from '../assets/speaker_headshots/andrew-martin.jpg';
 import daisyShearer from '../assets/speaker_headshots/daisy-shearer.webp';
@@ -83,7 +83,7 @@ const speakers2 = [
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title="Panels" description="Panels for CiQ 2026." />
+    <BaseHead title="Panels" description="Panels for Careers in Quantum." />
   </head>
 
   <body>
@@ -94,11 +94,14 @@ const speakers2 = [
 		<center>
 			<h1>Panels</h1>
 			<h5>Panels for CiQ 2026 are still under construction</h5>
-			<p>See below for the panels on offer at CiQ 2025</p>
+      </br>
+			<h5>Check out the panels from last year to get an idea of what to expect:</h5>
+      <a href="/archive-panel1-2025?from=panels" class="btn">What does the future of quantum look like?</a>
+      <a href="/archive-panel2-2025?from=panels" class="btn">What does a career in quantum look like?</a>
 		</center>
       </main>
     </section>
-
+<!--
 	<section class="content-section2">
       <div class="content-inner">
         <h2>What does the future of quantum look like?</h2>
@@ -112,22 +115,26 @@ const speakers2 = [
 		    <PanelGrid speakers={speakers2} />
       </div>
   </section>
+-->
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
 
-	<section class="content-section4">
-		<div class="content-inner">
-			<h2>Affiliations</h2>
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
+              src={QECDT}
+              alt="Centre for Doctoral Training in Quantum Engineering logo"
+              class="sponsor-logo"
+            /></a>
+          </div>
 
-			<div class="sponsor-grid" aria-label="Affiliations">
-				<div class="sponsor-item">
-					<Image src={QECDT} alt="Centre for Doctoral Training in Quantum Engineering logo" class="sponsor-logo" />
-				</div>
-
-				<div class="sponsor-item">
-					<Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" />
-				</div>
-			</div>
-		</div>
-	</section>
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <Footer />
 
@@ -210,7 +217,28 @@ const speakers2 = [
 		height: 130px;
 	}
 	}
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0rem 2rem;
+    border-radius: 999px;
+    background: rgb(var(--white));
+    color: hsl(192, 100%, 15%);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 2;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    white-space: nowrap;
+    margin: 0.5rem 2.5rem 0.5rem 2.5rem; /* top/right/bottom/left */
+    vertical-align: middle;
 
+  }
+
+  .btn:hover {
+    filter: brightness(0.95);
+  }
     </style>
   </body>
 </html>
