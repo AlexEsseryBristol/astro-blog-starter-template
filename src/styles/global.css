@@ -160,3 +160,35 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
+/* Global pill buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0rem 2rem;
+  border-radius: 999px;
+
+  background: rgb(var(--white));
+  color: hsl(192, 100%, 15%);
+
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.35rem;
+  line-height: 4;
+
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  white-space: nowrap;
+  vertical-align: middle;
+
+  cursor: pointer;
+}
+
+.btn:hover {
+  filter: brightness(0.95);
+}
+
+.btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.35);
+  outline-offset: 2px;
+}

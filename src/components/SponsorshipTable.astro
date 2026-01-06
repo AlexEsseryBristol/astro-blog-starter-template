@@ -1,13 +1,5 @@
 ---
-type Tier = {
-  name: string;
-  highlight?: boolean;
-};
-
-type Benefit = {
-  label: string;
-  tiers: (boolean | string)[];
-};
+import type { Benefit, Tier } from "../types/sponsorship";
 
 type Props = {
   title?: string;
@@ -24,36 +16,45 @@ const {
 const tiers: Tier[] =
   tiersProp ?? [
     { name: "Silver (£250)" },
-    { name: "Gold (£500)"},
+    { name: "Gold (£500)" },
     { name: "Platinum (£1000)" },
   ];
 
 const benefits: Benefit[] =
   benefitsProp ?? [
     { label: "Advertisement in brochure", tiers: ["Half Page", "Full Page", "Double Page"] },
-    { label: "Stall in exhibition room, opportunity to be chosen to give a talk or speak on a panel", tiers: [true, true, true] },
+    {
+      label: "Stall in exhibition room, opportunity to be chosen to give a talk or speak on a panel",
+      tiers: [true, true, true],
+    },
     { label: "Company description in exhibitors list in brochure", tiers: [true, true, true] },
     { label: "Logo on event website, on event signage, and in brochure", tiers: [true, true, true] },
     { label: "Guaranteed talk", tiers: [false, true, true] },
     { label: "Guaranteed panel placement", tiers: [false, false, true] },
     { label: "Choice of stall location in exhibition room", tiers: [false, false, true] },
-    { label: "Sponsored material displayed at registration table, sponsor slide displayed on screen in presentation room between talks and during breaks", tiers: [false, false, true] }
-
+    {
+      label:
+        "Sponsored material displayed at registration table, sponsor slide displayed on screen in presentation room between talks and during breaks",
+      tiers: [false, false, true],
+    },
   ];
 
-// Defensive: ensure all benefit.tiers lengths match tier count
+// Ensure each benefit has exactly N tier cells.
+// Missing values become false.
 const colCount = tiers.length;
 const normBenefits = benefits.map((b) => ({
   ...b,
   tiers: Array.from({ length: colCount }, (_, i) => {
     const v = b.tiers?.[i];
-    return typeof v === "string" ? v : Boolean(v);
+    if (typeof v === "string") return v;
+    return Boolean(v);
   }),
 }));
 ---
 
 <section class="sponsorship-grid" aria-label="Sponsorship tiers comparison">
   <header class="sponsorship-header">
+    <h3 class="sponsorship-title">{title}</h3>
   </header>
 
   <div class="sponsorship-card">
@@ -74,18 +75,13 @@ const normBenefits = benefits.map((b) => ({
           {normBenefits.map((b) => (
             <tr>
               <td class="benefit-cell">{b.label}</td>
-              {b.tiers.map((enabled, idx) => (
-                <td
-                  class:list={[
-                    "tier-cell",
-                    tiers[idx]?.highlight && "tier-highlight",
-                  ]}
-                >
-                    {typeof enabled === "string" ? (
-                    <span class="tier-text">{enabled}</span>
-                    ) : (
-                    enabled && <span class="tick">✓</span>
-                    )}
+              {b.tiers.map((cell, idx) => (
+                <td class:list={["tier-cell", tiers[idx]?.highlight && "tier-highlight"]}>
+                  {typeof cell === "string" ? (
+                    <span class="tier-text">{cell}</span>
+                  ) : (
+                    cell && <span class="tick" aria-label="Included">✓</span>
+                  )}
                 </td>
               ))}
             </tr>
@@ -114,7 +110,6 @@ const normBenefits = benefits.map((b) => ({
     text-align: center;
   }
 
-  /* Card styling aligned with your speaker cards */
   .sponsorship-card {
     padding: 1rem;
     border-radius: 14px;
@@ -129,7 +124,7 @@ const normBenefits = benefits.map((b) => ({
   .sponsorship-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 560px; /* prevents cramped columns on desktop */
+    min-width: 560px;
   }
 
   .sponsorship-table th,
@@ -145,17 +140,16 @@ const normBenefits = benefits.map((b) => ({
     font-weight: 750;
   }
 
-  .benefit-col {
+  .benefit-col,
+  .benefit-cell {
     text-align: left;
   }
 
   .benefit-cell {
-    text-align: left;
     font-weight: 600;
     line-height: 1.25;
   }
 
-  /* Keep tiers visually consistent with your frosted panels */
   .tier-col {
     width: 18%;
     white-space: nowrap;
@@ -165,7 +159,6 @@ const normBenefits = benefits.map((b) => ({
     height: 2.6rem;
   }
 
-  /* Subtle highlight (similar spirit to your card borders) */
   .tier-highlight {
     background: rgba(255, 255, 255, 0.18);
   }
@@ -177,10 +170,8 @@ const normBenefits = benefits.map((b) => ({
     width: 1.8rem;
     height: 1.8rem;
     border-radius: 12px;
-
     background: rgba(255, 255, 255, 0.18);
     border: 1px solid rgba(255, 255, 255, 0.22);
-
     font-size: 1.1rem;
     font-weight: 850;
     line-height: 1;
@@ -192,7 +183,6 @@ const normBenefits = benefits.map((b) => ({
     white-space: nowrap;
   }
 
-  /* Mobile: slightly tighter paddings; allow scroll if needed */
   @media (max-width: 600px) {
     .sponsorship-card {
       padding: 0.9rem;

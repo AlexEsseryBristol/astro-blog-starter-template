@@ -1,0 +1,108 @@
+---
+// src/components/archive/ArchiveSponsorsPage.astro
+import BaseHead from "../BaseHead.astro";
+import Header from "../Header.astro";
+import Footer from "../Footer.astro";
+import SponsorGrid from "../SponsorGrid.astro";
+import Affiliations from "./Affiliations.astro";
+import BackLink from "../ui/BackLink.astro";
+
+import sponsors2024 from "../../content/sponsors/2024sponsors.json";
+import sponsors2025 from "../../content/sponsors/2025sponsors.json";
+import attending2024 from "../../content/attending/2024attending.json";
+import attending2025 from "../../content/attending/2025attending.json";
+
+import {
+  buildSponsorItems,
+  buildAttendingItems,
+  type SponsorMetaMap,
+  type AttendingMetaMap,
+} from "../../lib/sponsor-items";
+
+type Props = { year: "2024" | "2025" };
+const { year } = Astro.props as Props;
+
+const sponsorsMeta = (year === "2024" ? sponsors2024 : sponsors2025) as SponsorMetaMap;
+const attendingMeta = (year === "2024" ? attending2024 : attending2025) as AttendingMetaMap;
+
+// Vite requires static glob strings.
+const sponsorModules2024 = import.meta.glob("../../assets/2024/sponsors/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+const sponsorModules2025 = import.meta.glob("../../assets/2025/sponsors/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+
+const attendingModules2024 = import.meta.glob("../../assets/2024/attending/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+const attendingModules2025 = import.meta.glob("../../assets/2025/attending/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+
+const sponsorModules = year === "2024" ? sponsorModules2024 : sponsorModules2025;
+const attendingModules = year === "2024" ? attendingModules2024 : attendingModules2025;
+
+const sponsors = buildSponsorItems(sponsorModules, sponsorsMeta);
+const exhibitors = buildAttendingItems(attendingModules, attendingMeta);
+
+const pageTitle = `CiQ ${year} Sponsors & Attending Companies`;
+const pageDesc = `Archive of CiQ ${year} sponsors and attending companies.`;
+const backHref = `/archive/${year}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={pageTitle} description={pageDesc} />
+  </head>
+
+  <body>
+    <Header />
+
+    <section class="topbar">
+      <div class="inner">
+        <BackLink defaultHref={backHref} defaultLabel={`← Back to CiQ ${year} Archive`} />
+      </div>
+    </section>
+
+    <section class="sponsors">
+      <div class="inner">
+        <SponsorGrid title={`CiQ ${year} Sponsors`} ariaLabel={`CiQ ${year} sponsors`} items={sponsors} />
+      </div>
+    </section>
+
+    <section class="exhibitors">
+      <div class="inner">
+        <SponsorGrid title={`CiQ ${year} Exhibitors`} ariaLabel={`CiQ ${year} exhibitors`} items={exhibitors} />
+      </div>
+    </section>
+
+    <Affiliations />
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .topbar {
+    background-color: hsl(192, 100%, 15%);
+    padding: 1rem 1.5rem;
+  }
+  .sponsors {
+    background-color: #a0bec6ff;
+    padding: 2rem 1.5rem;
+  }
+  .exhibitors {
+    background-color: #00bcae;
+    padding: 2rem 1.5rem;
+  }
+  .inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+</style>

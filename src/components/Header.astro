@@ -9,9 +9,17 @@ const path = norm(pathname);
 
 const isExact = (href: string) => norm(href) === path;
 
-const isArchive2024 = isExact('/archive2024');
-const isArchive2025 = isExact('/archive2025');
-const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchive2024 || isArchive2025;
+// Canonical year pages
+const isArchive2024 = isExact('/archive/2024') || isExact('/archive2024');
+const isArchive2025 = isExact('/archive/2025') || isExact('/archive2025');
+
+// Any archive page (canonical hierarchy or legacy)
+const isArchive =
+	path.startsWith('/archive/') ||
+	isArchive2024 ||
+	isArchive2025 ||
+	isExact('/archive2024') ||
+	isExact('/archive2025');
 ---
 
 <header class="header" data-header>
@@ -43,20 +51,22 @@ const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchi
 				<HeaderLink href="/sponsorship" aria-current={isExact('/sponsorship') ? 'page' : undefined}>Sponsorship</HeaderLink>
 
 				<div class="nav-item has-dropdown">
-					<button
-					type="button"
-					class:list={['archive-link', isArchive && 'is-archive-active']}
-					aria-haspopup="true"
-					aria-expanded="false"
+					<span
+						class:list={['archive-link', isArchive && 'is-archive-active']}
+						tabindex="0"
+						role="button"
+						aria-haspopup="true"
+						aria-expanded="false"
 					>
-					<span class="navlabel">Archive</span>
-					<span class="chev" aria-hidden="true">▾</span>
-					</button>
+						<span class="navlabel">Archive</span>
+						<span class="chev" aria-hidden="true">▾</span>
+					</span>
+
 					<div class="dropdown" role="menu" aria-label="Archive menu">
 						<a
 							class:list={['dropdown-link', isArchive2024 && 'is-active']}
 							role="menuitem"
-							href="/archive2024"
+							href="/archive/2024"
 							aria-current={isArchive2024 ? 'page' : undefined}
 						>
 							CiQ 2024
@@ -64,7 +74,7 @@ const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchi
 						<a
 							class:list={['dropdown-link', isArchive2025 && 'is-active']}
 							role="menuitem"
-							href="/archive2025"
+							href="/archive/2025"
 							aria-current={isArchive2025 ? 'page' : undefined}
 						>
 							CiQ 2025
@@ -125,20 +135,21 @@ const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchi
 		<HeaderLink href="/sponsorship" aria-current={isExact('/sponsorship') ? 'page' : undefined}>Sponsorship</HeaderLink>
 
 		<div class="archive-popout-item" aria-label="Archive submenu (desktop)">
-			<a
+			<span
 				class:list={['archive-parent', isArchive && 'is-archive-active']}
-				href="/archive"
-				aria-current={isArchive ? 'page' : undefined}
+				tabindex="0"
+				role="button"
+				aria-haspopup="true"
 			>
 				<span class="navlabel">Archive</span>
 				<span class="chev" aria-hidden="true">▸</span>
-			</a>
+			</span>
 
 			<div class="archive-popout" role="menu" aria-label="Archive years">
 				<a
 					class:list={['dropdown-link', isArchive2024 && 'is-active']}
 					role="menuitem"
-					href="/archive2024"
+					href="/archive/2024"
 					aria-current={isArchive2024 ? 'page' : undefined}
 				>
 					CiQ 2024
@@ -146,7 +157,7 @@ const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchi
 				<a
 					class:list={['dropdown-link', isArchive2025 && 'is-active']}
 					role="menuitem"
-					href="/archive2025"
+					href="/archive/2025"
 					aria-current={isArchive2025 ? 'page' : undefined}
 				>
 					CiQ 2025
@@ -167,8 +178,8 @@ const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchi
 			</button>
 
 			<div id="archive-sub" class="archive-sub" hidden data-archive-sub>
-				<HeaderLink href="/archive2024" aria-current={isArchive2024 ? 'page' : undefined}>CiQ 2024</HeaderLink>
-				<HeaderLink href="/archive2025" aria-current={isArchive2025 ? 'page' : undefined}>CiQ 2025</HeaderLink>
+				<HeaderLink href="/archive/2024" aria-current={isArchive2024 ? 'page' : undefined}>CiQ 2024</HeaderLink>
+				<HeaderLink href="/archive/2025" aria-current={isArchive2025 ? 'page' : undefined}>CiQ 2025</HeaderLink>
 			</div>
 		</div>
 
@@ -420,6 +431,8 @@ const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchi
 		white-space: nowrap;
 		border: 1px solid transparent;
 		padding-right: 1.55rem;
+		cursor: default;
+		user-select: none;
 	}
 	.archive-link .chev {
 		position: absolute;
@@ -446,7 +459,7 @@ const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchi
 	}
 
 	.nav-item.has-dropdown {
-    transform: translateX(-0.6rem);
+		transform: translateX(-0.6rem);
 	}
 
 	.has-dropdown::after {
@@ -591,6 +604,7 @@ const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchi
 		padding: 0.5rem 0.75rem;
 		border-radius: 10px;
 		border: 1px solid transparent;
+		user-select: none;
 	}
 
 	.archive-parent .navlabel { grid-column: 2; justify-self: center; }
@@ -779,32 +793,31 @@ const isArchive = isExact('/archive') || path.startsWith('/archive/') || isArchi
 		line-height: var(--mobile-row-line);
 		min-height: unset;
 	}
+
 	.archive-link {
-	all: unset;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.35rem;           /* spacing between text and chevron */
-	padding: 0.45rem 0.65rem;
-	border-radius: 12px;
-	cursor: pointer;
-	color: inherit;
-	font: inherit;
-	line-height: 1;
-	white-space: nowrap;
-	border: 1px solid transparent;
+		all: unset;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		padding: 0.45rem 0.65rem;
+		border-radius: 12px;
+		color: inherit;
+		font: inherit;
+		line-height: 1;
+		white-space: nowrap;
+		border: 1px solid transparent;
 	}
 
 	.archive-link .chev {
-	position: static;       /* undo absolute */
-	transform: none;
-	font-size: 0.85em;
-	opacity: 0.9;
-	pointer-events: none;
+		position: static;
+		transform: none;
+		font-size: 0.85em;
+		opacity: 0.9;
+		pointer-events: none;
 	}
 
 	.archive-link:focus-visible {
-	outline: 2px solid rgba(255,255,255,0.35);
-	outline-offset: 2px;
+		outline: 2px solid rgba(255,255,255,0.35);
+		outline-offset: 2px;
 	}
-
 </style>

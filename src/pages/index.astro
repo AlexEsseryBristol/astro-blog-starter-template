@@ -1,286 +1,141 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { Image } from "astro:assets";
 
 import Logo from "../assets/logo/QECDTlogo.webp";
 import bg from "../assets/background/bg.webp";
 
-// Affiliations (keep explicit, or folder-drive later if you want)
-import QECDT from "../assets/company_logos/QECDTlogo.webp";
-import UoB from "../assets/company_logos/UoB.svg";
-
-// Previous sponsors metadata (name + optional url)
-import sponsorsMeta from "../content/sponsors/2025sponsors.json";
-
-// Folder-driven previous sponsors
-const sponsorModules = import.meta.glob(
-  "../assets/sponsor_logos/*.{avif,webp,png,jpg,jpeg,svg}",
-  { eager: true, import: "default" }
-);
-
-type AssetModule = {
-  src: string;
-  width: number;
-  height: number;
-  format?: string;
-};
-
-type SponsorMeta = { name?: string; url?: string };
-type SponsorMetaMap = Record<string, SponsorMeta>;
-
-const meta = sponsorsMeta as SponsorMetaMap;
-
-function basenameNoExt(path: string) {
-  const file = path.split("/").pop() ?? "";
-  return file.replace(/\.[^.]+$/, "");
-}
-
-function humanizeFromFilename(stem: string) {
-  // Removes leading "01_", "02-", etc; then replaces separators with spaces
-  const noPrefix = stem.replace(/^\d+[-_ ]*/, "");
-  return noPrefix.replace(/[-_]+/g, " ").trim();
-}
-
-const previousSponsors = Object.entries(sponsorModules)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([path, mod]) => {
-    const stem = basenameNoExt(path);
-    const fallbackName = humanizeFromFilename(stem);
-    const m = meta[stem] ?? {};
-
-    const name = m.name?.trim() || fallbackName;
-    const url = m.url?.trim();
-
-    return {
-      key: stem,
-      src: mod as unknown as AssetModule,
-      name,
-      alt: `${name} logo`,
-      url: url && url.length ? url : undefined,
-    };
-  });
+import LogoGrid from "../components/ui/LogoGrid.astro";
+import { previousSponsors } from "../data/previous-sponsors";
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
+<SiteLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <div
+    class="index-bg"
+    style={`background-image:
+      linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+      url(${bg.src});
+    `}
+  >
+    <section class="hero-content">
+      <center>
+        <h1>Careers in Quantum</h1>
+        <h5>A student-led quantum careers fair</h5>
+        <p>Organised by the Quantum Engineering Centre for Doctoral Training</p>
+        <p>📅 5 March 2026, 9am to 5pm</p>
+        <p>📌 Richmond Building, Queen’s Road, Bristol, BS8 1LN</p>
 
-  <body>
-    <div
-      class="index-bg"
-      style={`background-image:
-        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-        url(${bg.src});
-      `}
-    >
-      <Header />
+        <p class="partner-line">
+          <span>In partnership with</span>
+          <a href="/" class="logo-link">
+            <Image src={Logo} alt="QECDT logo" class="logo" />
+          </a>
+        </p>
+      </center>
+    </section>
+  </div>
 
-      <main class="hero-content">
-        <center>
-          <h1>Careers in Quantum</h1>
-          <h5>A student-led quantum careers fair</h5>
-          <p>Organised by the Quantum Engineering Centre for Doctoral Training</p>
-          <p>📅 5 March 2026, 9am to 5pm</p>
-          <p>📌 Richmond Building, Queen’s Road, Bristol, BS8 1LN</p>
-
-          <p class="partner-line">
-            <span>In partnership with</span>
-            <a href="/" class="logo-link">
-              <Image src={Logo} alt="Site logo" class="logo" />
-            </a>
-          </p>
-        </center>
-      </main>
+  <section class="content-section">
+    <div class="content-inner">
+      <h2>About the Event</h2>
+      <p>
+        Every year <b>Careers in Quantum</b> brings together professionals from industry and academia to engage
+        with students and early-stage researchers on the variety and types of careers available in the quantum
+        industry.
+        <br />
+        We aim to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to
+        the opportunities within the rapidly growing quantum technology sector.
+        <br />
+        The event focuses around a careers fair with a breakout room for more in-depth talks and panel
+        discussions.
+        <br />
+        This year, <b>Careers in Quantum</b> will be held from 9am to 5pm on <b>Thursday 5 March 2026</b> at
+        <b> Richmond Building, Queen’s Road, Bristol, BS8 1LN</b>.
+      </p>
     </div>
+  </section>
 
-    <section class="content-section">
-      <div class="content-inner">
-        <h2>About the Event</h2>
-        <p>
-          Every year <b>Careers in Quantum</b> brings together professionals from industry and
-          academia to engage with students and early-stage researchers on the variety and types of
-          careers available in the quantum industry.
-          <br />
-          We aim to introduce undergraduate students, career-minded PhD students and postdoctoral
-          researchers to the opportunities within the rapidly growing quantum technology sector.
-          <br />
-          The event focuses around a careers fair with a breakout room for more in-depth talks and
-          panel discussions.
-          <br />
-          This year, <b>Careers in Quantum</b> will be held from 9am to 5pm on <b>Thursday 5 March 2026</b> at
-          <b>Richmond Building, Queen’s Road, Bristol, BS8 1LN</b>.
-        </p>
-      </div>
-    </section>
+  <section class="content-section2">
+    <div class="content-inner">
+      <h2>Sponsorship</h2>
+      <p>
+        Do you work in quantum technologies?
+        <br />
+        Are you interested in connecting with potential future employees from a broad range of disciplines?
+        <br />
+        Do you want to showcase your company?
+        <br />
+        Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an
+        impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for
+        further information.
+      </p>
+    </div>
+  </section>
 
-    <section class="content-section2">
-      <div class="content-inner">
-        <h2>Sponsorship</h2>
-        <p>
-          Do you work in quantum technologies?
-          <br />
-          Are you interested in connecting with potential future employees from a broad range of disciplines?
-          <br />
-          Do you want to showcase your company?
-          <br />
-          Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an
-          impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for
-          further information.
-        </p>
-      </div>
-    </section>
+  <section class="content-section3">
+    <div class="content-inner">
+      <h2>Previous Sponsors</h2>
+      <LogoGrid items={previousSponsors} ariaLabel="Previous sponsors" />
+    </div>
+  </section>
 
-    <section class="content-section3">
-      <div class="content-inner">
-        <h2>Previous Sponsors</h2>
+  <style>
+    .index-bg {
+      min-height: 100vh;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      flex-direction: column;
+    }
 
-        <div class="sponsor-grid" aria-label="Previous sponsors">
-          {previousSponsors.map((s) => (
-            <div class="sponsor-item" key={s.key}>
-              {s.url ? (
-                <a
-                  class="sponsor-link"
-                  href={s.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Open ${s.name} website`}
-                  title={s.name}
-                >
-                  <Image src={s.src} alt={s.alt} class="sponsor-logo" />
-                </a>
-              ) : (
-                <Image src={s.src} alt={s.alt} class="sponsor-logo" />
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    .hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
 
-    <section class="content-section4">
-      <div class="content-inner">
-        <h2>Affiliations</h2>
+    .content-section {
+      background-color: hsl(192, 100%, 15%);
+      padding: 4rem 1.5rem;
+    }
 
-        <div class="sponsor-grid" aria-label="Affiliations">
-          <div class="sponsor-item">
-            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
-              src={QECDT}
-              alt="Centre for Doctoral Training in Quantum Engineering logo"
-              class="sponsor-logo"
-            /></a>
-          </div>
+    .content-section2 {
+      background-color: #87a5ad;
+      padding: 4rem 1.5rem;
+    }
 
-          <div class="sponsor-item">
-            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
-          </div>
-        </div>
-      </div>
-    </section>
+    .content-section3 {
+      background-color: #00bcae;
+      padding: 4rem 1.5rem;
+    }
 
-    <Footer />
+    .content-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-    <style>
-      .index-bg {
-        min-height: 100vh;
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        flex-direction: column;
-      }
+    .partner-line {
+      margin-top: -0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
 
-      .hero-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-      }
+    .logo-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
 
-      .content-section {
-        background-color: hsl(192, 100%, 15%);
-        padding: 4rem 1.5rem;
-      }
-
-      .content-section2 {
-        background-color: #87a5ad;
-        padding: 4rem 1.5rem;
-      }
-
-      .content-section3 {
-        background-color: #00bcae;
-        padding: 4rem 1.5rem;
-      }
-
-      .content-section4 {
-        background-color: #000000ff;
-        padding: 4rem 1.5rem;
-      }
-
-      .content-inner {
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      /* Sponsor logo grid */
-      .sponsor-grid {
-        display: grid;
-        gap: 1.5rem;
-        margin-top: 2rem;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        align-items: center;
-      }
-
-      .sponsor-item {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 110px;
-        padding: 0.5rem 0.75rem;
-      }
-
-      .sponsor-logo {
-        max-height: 100%;
-        width: 100%;
-        object-fit: contain;
-        max-width: 240px;
-      }
-
-      .sponsor-link {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        border-radius: 12px;
-        text-decoration: none;
-        outline: none;
-      }
-
-      .sponsor-link:focus-visible {
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.45);
-      }
-
-      .sponsor-link:hover .sponsor-logo {
-        filter: brightness(0.95);
-      }
-
-      @media (min-width: 768px) {
-        .sponsor-item {
-          height: 130px;
-        }
-      }
-
-      .partner-line {
-        margin-top: -0.5rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.8rem;
-      }
-    </style>
-  </body>
-</html>
+    .logo {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+  </style>
+</SiteLayout>

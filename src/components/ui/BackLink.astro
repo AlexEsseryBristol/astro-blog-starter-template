@@ -1,0 +1,59 @@
+---
+// src/components/ui/BackLink.astro
+type Props = {
+  defaultHref: string;
+  defaultLabel: string;
+  fromParam?: string;
+  fromValue?: string;
+  alternateHref?: string;
+  alternateLabel?: string;
+  className?: string;
+};
+
+const {
+  defaultHref,
+  defaultLabel,
+  fromParam = "from",
+  fromValue,
+  alternateHref,
+  alternateLabel,
+  className = "btn",
+} = Astro.props as Props;
+---
+
+<a
+  href={defaultHref}
+  class={className}
+  data-back
+  data-default-href={defaultHref}
+  data-default-label={defaultLabel}
+  data-from-param={fromParam}
+  data-from-value={fromValue ?? ""}
+  data-alt-href={alternateHref ?? ""}
+  data-alt-label={alternateLabel ?? ""}
+>
+  {defaultLabel}
+</a>
+
+<script is:inline>
+  (() => {
+    const a = document.currentScript?.previousElementSibling;
+    if (!(a instanceof HTMLAnchorElement)) return;
+
+    const fromParam = a.getAttribute("data-from-param") || "from";
+    const fromValue = a.getAttribute("data-from-value") || "";
+    const altHref = a.getAttribute("data-alt-href") || "";
+    const altLabel = a.getAttribute("data-alt-label") || "";
+
+    const url = new URL(window.location.href);
+    const from = url.searchParams.get(fromParam);
+
+    if (fromValue && from === fromValue && altHref && altLabel) {
+      a.href = altHref;
+      a.textContent = altLabel;
+    } else {
+      a.href = a.getAttribute("data-default-href") || a.href;
+      a.textContent = a.getAttribute("data-default-label") || a.textContent;
+    }
+  })();
+</script>

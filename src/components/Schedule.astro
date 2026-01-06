@@ -1,53 +1,5 @@
 ---
-/**
- * <ScheduleGrid days={days} />
- *
- * days: Array<{
- *   dateLabel: string;   // e.g. "Thursday 5 March 2026"
- *   items: Array<{
- *     start: string;     // "09:00"
- *     end?: string;      // "09:30"
- *     title: string;
- *     type?: "Talk" | "Panel" | "Break" | "Workshop" | "Keynote" | "Registration" | "Other";
- *     location?: string;
- *     speakers?: string; // short list: "Alice Example; Ben Example"
- *     description?: string;
- *     links?: { label: string; href: string }[];
- *     companyLogo?: { src: string; alt: string };
- *   }>;
- * }>
- */
-
-type ScheduleItemType =
-  | "Talk"
-  | "Panel"
-  | "Break"
-  | "Workshop"
-  | "Keynote"
-  | "Registration"
-  | "Other";
-
-type LogoRef = {
-  src: string;   // e.g. SomeLogo.src
-  alt: string;   // e.g. "Company name logo"
-};
-
-type ScheduleItem = {
-  start: string;
-  end?: string;
-  title: string;
-  type?: ScheduleItemType;
-  location?: string;
-  speakers?: string;
-  description?: string;
-  links?: { label: string; href: string }[];
-  companyLogo?: LogoRef;
-};
-
-type ScheduleDay = {
-  dateLabel: string;
-  items: ScheduleItem[];
-};
+import type { ScheduleDay } from "../types/schedule";
 
 type Props = {
   days: ScheduleDay[];
@@ -69,7 +21,6 @@ const sortedDays = sort
     <div class="day">
       <h2 class="day-title">{day.dateLabel}</h2>
 
-      <!-- Desktop table -->
       <div class="table-wrap" role="region" aria-label={`Schedule for ${day.dateLabel}`}>
         <table class="schedule-table">
           <thead>
@@ -91,7 +42,6 @@ const sortedDays = sort
 
                 <td class="session">
                   <div class="session-top">
-                    <!-- Header: left text, right logo (same outer padding) -->
                     <div class="session-head">
                       <div class="session-left">
                         <div class="title-row">
@@ -105,7 +55,7 @@ const sortedDays = sort
                       </div>
 
                       {item.companyLogo ? (
-                        <div class="logo-slot" aria-label="Company logo">
+                        <div class="logo-slot">
                           <img
                             class="company-logo"
                             src={item.companyLogo.src}
@@ -135,7 +85,6 @@ const sortedDays = sort
         </table>
       </div>
 
-      <!-- Mobile cards (left-justified) -->
       <div class="cards" aria-label={`Schedule cards for ${day.dateLabel}`}>
         {day.items.map((item) => (
           <article class="card">
@@ -151,7 +100,6 @@ const sortedDays = sort
               ) : null}
             </div>
 
-            <!-- Header inside card: left text, right logo (same outer padding) -->
             <div class="card-top">
               <div class="card-top-left">
                 <div class="card-title">{item.title}</div>
@@ -159,7 +107,7 @@ const sortedDays = sort
               </div>
 
               {item.companyLogo ? (
-                <div class="logo-slot" aria-label="Company logo">
+                <div class="logo-slot">
                   <img
                     class="company-logo"
                     src={item.companyLogo.src}
@@ -210,7 +158,6 @@ const sortedDays = sort
     text-align: center;
   }
 
-  /* Desktop table */
   .table-wrap {
     overflow-x: auto;
     border-radius: 14px;
@@ -249,17 +196,14 @@ const sortedDays = sort
   .t { font-variant-numeric: tabular-nums; }
   .dash { margin: 0 0.35rem; opacity: 0.8; }
 
-  /* Header split (desktop) */
   .session-head {
     display: grid;
-    grid-template-columns: 1fr max-content; /* tight logo column */
+    grid-template-columns: 1fr max-content;
     align-items: start;
     column-gap: 0.75rem;
   }
 
-  .session-left {
-    min-width: 0;
-  }
+  .session-left { min-width: 0; }
 
   .title-row {
     display: flex;
@@ -280,8 +224,6 @@ const sortedDays = sort
     min-width: 0;
   }
 
-  /* Logo slot: guarantees same outer padding as text because it's in same grid row.
-     Removes baseline whitespace so it sits snug to the grid cell edges. */
   .logo-slot {
     justify-self: end;
     align-self: start;
@@ -307,11 +249,8 @@ const sortedDays = sort
     line-height: 1.45;
   }
 
-  .location {
-    opacity: 0.95;
-  }
+  .location { opacity: 0.95; }
 
-  /* Pills */
   .pill {
     display: inline-flex;
     align-items: center;
@@ -324,7 +263,6 @@ const sortedDays = sort
     white-space: nowrap;
   }
 
-  /* Links */
   .links {
     margin-top: 0.5rem;
     display: flex;
@@ -349,7 +287,6 @@ const sortedDays = sort
     background: color-mix(in srgb, var(--schedule-link-bg) 60%, white 10%);
   }
 
-  /* Mobile cards */
   .cards { display: none; }
 
   .card {
@@ -376,7 +313,6 @@ const sortedDays = sort
     font-variant-numeric: tabular-nums;
   }
 
-  /* Header split (mobile) */
   .card-top {
     width: 100%;
     display: grid;
@@ -385,9 +321,7 @@ const sortedDays = sort
     column-gap: 0.75rem;
   }
 
-  .card-top-left {
-    min-width: 0;
-  }
+  .card-top-left { min-width: 0; }
 
   .card-title {
     font-weight: 800;

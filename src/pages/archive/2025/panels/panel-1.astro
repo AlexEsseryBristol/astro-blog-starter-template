@@ -1,0 +1,40 @@
+---
+import ArchivePanelPage from "../../../../components/archive/ArchivePanelPage.astro";
+
+import zoeDavidson from "../../../../assets/speaker_headshots/zoe-davidson.webp";
+import andrewMartin from "../../../../assets/speaker_headshots/andrew-martin.jpg";
+import daisyShearer from "../../../../assets/speaker_headshots/daisy-shearer.webp";
+import samMorleyShort from "../../../../assets/speaker_headshots/sam-morley-short.webp";
+
+const speakers = [
+  {
+    name: "Zoe Davidson",
+    company: "BT",
+    role: "Research Specialist",
+    bio: "Zoe Davidson joined BT as a Specialist Research Professional for the Optical Networks and Quantum Research team in the Network Strategy and Research department in 2022. Zoe received her Bachelor of Technology 1st(Hons) in Optoelectronics from the University of Auckland, New Zealand, and her PhD in Electronic and Electrical Engineering at the University of Bristol, UK. Zoe’s research focus at BT is on Photonic Integrated Circuits for use in both classical and quantum networks. Zoe's background is on semiconductor compounds for energy efficient emission in the O- and C-bands, and telecommunications fibre optic network design and deployment.",
+    photo: zoeDavidson,
+  },
+  {
+    name: "Andrew Martin",
+    company: "DSIT",
+    role: "Skills Policy Lead",
+    bio: "Andrew leads on skills policy in the Office for Quantum, part of the Department for Science, Innovation and Technology. He has over a decade of experience in UK Government across policy and finance roles, including in the Cabinet Office, HM Treasury, and Home Office.",
+    photo: andrewMartin,
+  },
+  {
+    name: "Sam Morley-Short",
+    company: "PsiQuantum",
+    role: "Senior Manager",
+    bio: "For the last 3 years, Sam Morley-Short has been the lead for PsiQuantum’s Quantum Applications Software Team, which is developing an advanced software development toolkit specifically focussed on the design, analysis, and optimisation of fault-tolerant quantum computer (FTQC) applications. Before this position he worked at PsiQuantum since 2018 as a Quantum Architect, where he worked on the implementation of PsiQuantum’s internal quantum architecture simulation stack. Before joining PsiQuantum Sam gained his PhD at University of Bristol’s Quantum Engineering Centre of Doctoral Training, where his research focussed on the design and simulation of photonic FTQC architectures.",
+    photo: samMorleyShort,
+  },
+  {
+    name: "Daisy Shearer",
+    company: "NQCC",
+    role: "Quantum Computing Outreach and Education Lead",
+    bio: "Daisy Shearer is the Quantum Computing Outreach and Education Lead at the National Quantum Computing Centre. They are a passionate science communicator and educator with a drive to make STEM more accessible and inclusive, particularly for disabled and neurodivergent people. Daisy previously worked as a researcher at the University of Surrey's Advanced Technology Institute working on experimental condensed matter physics. Daisy combines a technical knowledge of quantum technology with a passion for teaching and public engagement to translate quantum computing concepts for a variety of audiences.",
+    photo: daisyShearer,
+  },
+];
+---
+<ArchivePanelPage title="What does the future of quantum look like?" speakers={speakers} />

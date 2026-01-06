@@ -1,0 +1,41 @@
+---
+// src/components/ui/Section.astro
+type Props = {
+  as?: "section" | "div" | "main";
+  className?: string;
+  innerClassName?: string;
+  background?: string; // e.g. "hsl(192, 100%, 15%)" or "#00bcae"
+  padding?: string;    // e.g. "2rem 1.5rem"
+  maxWidth?: string;   // e.g. "900px"
+};
+
+const {
+  as = "section",
+  className = "",
+  innerClassName = "",
+  background,
+  padding,
+  maxWidth = "900px",
+} = Astro.props as Props;
+
+const Tag = as;
+const styleParts: string[] = [];
+if (background) styleParts.push(`background:${background};`);
+if (padding) styleParts.push(`padding:${padding};`);
+const styleAttr = styleParts.length ? styleParts.join("") : undefined;
+---
+
+<Tag class={`section ${className}`} style={styleAttr}>
+  <div class={`inner ${innerClassName}`} style={`max-width:${maxWidth};`}>
+    <slot />
+  </div>
+</Tag>
+
+<style>
+  .section {
+    width: 100%;
+  }
+  .inner {
+    margin: 0 auto;
+  }
+</style>

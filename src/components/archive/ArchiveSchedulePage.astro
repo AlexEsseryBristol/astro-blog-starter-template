@@ -1,0 +1,121 @@
+---
+// src/components/archive/ArchiveSchedulePage.astro
+import BaseHead from "../BaseHead.astro";
+import Header from "../Header.astro";
+import Footer from "../Footer.astro";
+import ScheduleGrid from "../Schedule.astro";
+import Affiliations from "./Affiliations.astro";
+import BackLink from "../ui/BackLink.astro";
+
+type ScheduleItemType =
+  | "Talk"
+  | "Panel"
+  | "Break"
+  | "Workshop"
+  | "Keynote"
+  | "Registration"
+  | "Other";
+
+type ScheduleItem = {
+  start: string;
+  end?: string;
+  title: string;
+  type?: ScheduleItemType;
+  location?: string;
+  speakers?: string;
+  description?: string;
+  links?: { label: string; href: string }[];
+  companyLogo?: { src: string; alt: string };
+};
+
+type ScheduleDay = {
+  dateLabel: string;
+  items: ScheduleItem[];
+};
+
+type Props = {
+  year: "2024" | "2025";
+  heading: string;
+  locationLine: string;
+  days: ScheduleDay[];
+};
+
+const { year, heading, locationLine, days } = Astro.props as Props;
+
+const pageTitle = `CiQ ${year} Schedule`;
+const pageDesc = `Archive of CiQ ${year} schedule.`;
+
+const backHref = `/archive/${year}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={pageTitle} description={pageDesc} />
+  </head>
+
+  <body>
+    <Header />
+
+    <section class="topbar">
+      <div class="inner">
+        <BackLink defaultHref={backHref} defaultLabel={`← Back to CiQ ${year} Archive`} />
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="inner">
+        <h1>{heading}</h1>
+        <p>{locationLine}</p>
+      </div>
+    </section>
+
+    <section class="schedule">
+      <div class="scheduleMargin">
+        <ScheduleGrid days={days} />
+      </div>
+    </section>
+
+    <Affiliations />
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .topbar {
+    background-color: hsl(192, 100%, 15%);
+    padding: 1rem 1.5rem;
+  }
+  .hero {
+    background-color: #87a5ad;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  .schedule {
+    background-color: #00bcae;
+    padding: 2rem 1.5rem 4rem;
+  }
+  .inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    margin: 0 0 0.35rem 0;
+    color: rgb(var(--black));
+  }
+  p {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.78);
+  }
+
+  .scheduleMargin {
+    margin: 0rem 3rem;
+  }
+
+  @media (max-width: 700px) {
+    .scheduleMargin {
+      margin: 0;
+    }
+  }
+</style>

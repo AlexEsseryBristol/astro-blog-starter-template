@@ -1,0 +1,121 @@
+---
+// src/components/archive/ArchiveYearPage.astro
+import BaseHead from "../BaseHead.astro";
+import Header from "../Header.astro";
+import Footer from "../Footer.astro";
+import Gallery from "../media/Gallery.astro";
+
+type Props = {
+  year: "2024" | "2025";
+  title: string;
+  description: string;
+};
+
+const { year, title, description } = Astro.props as Props;
+
+// Vite requires the glob string to be static (no template literals).
+const galleryModules2024 = import.meta.glob("../../assets/2024/gallery/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
+
+const galleryModules2025 = import.meta.glob("../../assets/2025/gallery/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+}) as Record<string, any>;
+
+const galleryModules = year === "2024" ? galleryModules2024 : galleryModules2025;
+
+const base = `/archive/${year}`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+
+  <body>
+    <Header />
+
+    <section class="content-section">
+      <div class="content-inner">
+        <h1 class="page-title">{title}</h1>
+        <p class="page-subtitle">{description}</p>
+
+        <div class="archive-actions">
+          <a class="btn" href={`${base}/sponsors`}>Sponsors</a>
+          <a class="btn" href={`${base}/schedule`}>Schedule</a>
+
+          {year === "2025" && (
+            <>
+              <a class="btn" href={`${base}/panels/panel-1`}>Panel 1</a>
+              <a class="btn" href={`${base}/panels/panel-2`}>Panel 2</a>
+            </>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section2">
+      <div class="content-inner">
+        <Gallery title={`${year} Photo Gallery`} modules={galleryModules} columns={4} />
+      </div>
+    </section>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .content-section {
+    padding: 4rem 1.5rem 2rem;
+    background: rgb(10, 16, 28);
+  }
+  .content-section2 {
+    padding: 2.5rem 1.5rem 4rem;
+    background: rgb(10, 16, 28);
+  }
+
+  .content-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .page-title {
+    margin: 0 0 0.5rem 0;
+    color: rgb(var(--white));
+    font-size: clamp(2rem, 3vw, 2.7rem);
+    letter-spacing: -0.03em;
+  }
+  .page-subtitle {
+    margin: 0 0 1.25rem 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 1.06rem;
+    max-width: 70ch;
+  }
+
+  .archive-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.1rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgb(var(--white));
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+</style>

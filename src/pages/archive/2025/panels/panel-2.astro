@@ -1,0 +1,40 @@
+---
+import ArchivePanelPage from "../../../../components/archive/ArchivePanelPage.astro";
+
+import lauraCaune from "../../../../assets/speaker_headshots/laura-caune.webp";
+import brianFlynn from "../../../../assets/speaker_headshots/brian-flynn.webp";
+import dominicSulway from "../../../../assets/speaker_headshots/dominic-sulway.jpg";
+import carrieWeidner from "../../../../assets/speaker_headshots/carrie-weidner.jpg";
+
+const speakers = [
+  {
+    name: "Laura Caune",
+    company: "Riverlane",
+    role: "Senior Quantum Scientist",
+    bio: "Laura is a Senior Quantum Scientist at Riverlane. Before joining Riverlane, she earned a BSc in Mathematics and an MSc in Computing. At Riverlane, Laura has worked on quantum error correction (QEC) experiments on superconducting qubit devices, developed software for testing QEC codes and decoders, and implemented error mitigation techniques.",
+    photo: lauraCaune,
+  },
+  {
+    name: "Brian Flynn",
+    company: "Phasecraft",
+    role: "Quantum Software Researcher",
+    bio: "Brian is a graduate of the QECDT at the University of Bristol, where he worked on machine learning algorithms for the characterisation of quantum systems. He has been working at Phasecraft for four years, developing software to support research efforts in near term quantum algorithms.",
+    photo: brianFlynn,
+  },
+  {
+    name: "Dominic Sulway",
+    company: "Light Trace Photonics",
+    role: "Co-Founder & CTO",
+    bio: "Dr. Dominic A. Sulway is the CTO and Co-Founder of Light Trace Photonics, a  Bristol-based start-up developing a range of products and services to facilitate rapid, low-risk photonic integrated circuit (PIC) product development. Dominic is an expert in photonic integrated circuit PIC design, simulation and characterisation, with a wealth of experience in PIC post-processing and packaging, nonlinear optics, quantum optics, and thermo/electro-optics. He received his PhD from the University of Bristol, where he was part of the Quantum Engineering Centre for Doctoral Training.",
+    photo: dominicSulway,
+  },
+  {
+    name: "Carrie Weidner",
+    company: "University of Bristol",
+    role: "Senior Lecturer",
+    bio: "Dr Carrie Weidner is a Senior Lecturer in Quantum Engineering Technologies at the University of Bristol. Weidner did her PhD in JILA at the University of Colorado Boulder on inertial sensors using atoms trapped in optical lattice potentials. Weidner then moved to Aarhus University, DK to work on quantum simulation using quantum gas microscopy. Since moving to Bristol in 2022, her work focuses on (mostly) experimental quantum sensing, simulation, and information with atoms in optical lattice potentials. Dr Weidner also works in robust quantum control, quantum physics education, and is increasingly interested in the interplay between atomic physics and integrated optics.",
+    photo: carrieWeidner,
+  },
+];
+---
+<ArchivePanelPage title="What does a career in quantum look like?" speakers={speakers} />
