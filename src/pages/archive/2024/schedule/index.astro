@@ -1,12 +1,8 @@
 ---
-import BaseHead from "../../../../components/BaseHead.astro";
-import Header from "../../../../components/Header.astro";
-import Footer from "../../../../components/Footer.astro";
+import SiteLayout from "../../../../layouts/SiteLayout.astro";
 import ScheduleGrid from "../../../../components/Schedule.astro";
 import { Image } from "astro:assets";
 
-import QECDT from "../../../../assets/company_logos/QECDTlogo.webp";
-import UoB from "../../../../assets/company_logos/UoB.svg";
 
 type ScheduleItemType =
   | "Talk"
@@ -171,6 +167,12 @@ const days = [
   },
 ] satisfies ScheduleDay[];
 ---
+
+<SiteLayout
+  title="CiQ 2024 Schedule"
+  description="Archive schedule for CiQ 2024."
+>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -200,27 +202,6 @@ const days = [
         <ScheduleGrid days={days} />
       </div>
     </section>
-
-    <section class="content-section4">
-      <div class="content-inner">
-        <h2>Affiliations</h2>
-
-        <div class="sponsor-grid" aria-label="Affiliations">
-          <div class="sponsor-item">
-            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
-              src={QECDT}
-              alt="Centre for Doctoral Training in Quantum Engineering logo"
-              class="sponsor-logo"
-            /></a>
-          </div>
-
-          <div class="sponsor-item">
-            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <Footer />
 
     <style>
@@ -341,3 +322,5 @@ const days = [
     </style>
   </body>
 </html>
+
+</SiteLayout>

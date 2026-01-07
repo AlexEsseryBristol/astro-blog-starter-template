@@ -1,13 +1,9 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import SiteLayout from "../../../../layouts/SiteLayout.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Image } from 'astro:assets';
 import Logo from '../assets/logo/QECDTlogo.webp';
 import PanelGrid from "../../../../components/PanelGrid.astro";
-import QECDT from '../assets/company_logos/QECDTlogo.webp';
-import UoB from '../assets/company_logos/UoB.svg';
 import zoeDavidson from '../assets/speaker_headshots/zoe-davidson.webp';
 import andrewMartin from '../assets/speaker_headshots/andrew-martin.jpg';
 import daisyShearer from '../assets/speaker_headshots/daisy-shearer.webp';
@@ -86,14 +82,11 @@ const speakers2 = [
 ];
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title="Panels" description="Panels for Careers in Quantum." />
-  </head>
+<SiteLayout
+  title="CiQ 2025 Panel 1"
+  description="Archive of CiQ 2025 Panel 1."
+>
 
-  <body>
-      <Header />
 
   <section class="content-section">
       <div class="content-inner-no-margin">
@@ -134,129 +127,5 @@ const speakers2 = [
 		    <PanelGrid speakers={speakers1} />
       </div>
     </section>
-
-    <section class="content-section4">
-      <div class="content-inner">
-        <h2>Affiliations</h2>
-
-        <div class="sponsor-grid" aria-label="Affiliations">
-          <div class="sponsor-item">
-            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
-              src={QECDT}
-              alt="Centre for Doctoral Training in Quantum Engineering logo"
-              class="sponsor-logo"
-            /></a>
-          </div>
-
-          <div class="sponsor-item">
-            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <Footer />
-
-    <style>
-      .index-bg {
-        min-height: 100vh;
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .hero-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-      }
-
-      .content-section {
-        background-color: hsl(192, 100%, 15%); /* change as desired */
-        padding: 1rem 1.5rem;
-      }
-
-	  .content-section2 {
-        background-color: #87a5ad; /* change as desired */
-        padding: 4rem 1.5rem;
-      }
-
-	  .content-section3 {
-        background-color: #00bcae; /* change as desired */
-        padding: 4rem 1.5rem;
-      }
-
-	  .content-section4 {
-		background-color: #000000ff; /* change as desired */
-		padding: 4rem 1.5rem;
-	  }
-
-      .content-inner {
-        max-width: 900px;
-        margin: 0 auto;
-      }
-	  /* Sponsor logo grid */
-	.sponsor-grid {
-	display: grid;
-	gap: 1.5rem;
-	margin-top: 2rem;
-
-	/* Responsive columns: grows/shrinks automatically */
-	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-	align-items: center;
-	}
-
-	.sponsor-item {
-	/* Center each logo in its cell */
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	/* Give consistent vertical space per logo */
-	height: 110px;            /* adjust to taste */
-	padding: 0.5rem 0.75rem;
-	}
-
-	.sponsor-logo {
-	/* Constrain vertical size, preserve aspect ratio */
-	max-height: 100%;
-	width: 100%;
-	object-fit: contain;
-
-	/* Optional: prevent huge logos from stretching too wide */
-	max-width: 240px;
-	}
-
-	/* Slightly taller rows on larger screens (optional) */
-	@media (min-width: 768px) {
-	.sponsor-item {
-		height: 130px;
-	}
-	}
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0rem 2rem;
-        border-radius: 999px;
-        background: rgb(var(--white));
-        color: hsl(192, 100%, 15%);
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 1.35rem;
-        line-height: 4;
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        white-space: nowrap;
-        vertical-align: middle;
-
-    }
-
-    .btn:hover {
-        filter: brightness(0.95);
-    }
-    </style>
-  </body>
-</html>
+    
+</SiteLayout>
