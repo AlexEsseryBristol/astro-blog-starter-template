@@ -1,10 +1,5 @@
 ---
-import ArchiveSchedulePage from "../components/archive/ArchiveSchedulePage.astro";
-import { schedule2024 } from "../data/archive/2024/schedule";
+import Redirect from "../components/Redirect.astro";
 ---
-<ArchiveSchedulePage
-  year="2024"
-  heading="CiQ 2024 Schedule"
-  locationLine="Location: Richmond Building, Bristol BS8 1LN, UK"
-  days={schedule2024 as unknown as any}
-/>
+
+<Redirect to="/archive/2024/schedule" title="CiQ 2024 Schedule" />

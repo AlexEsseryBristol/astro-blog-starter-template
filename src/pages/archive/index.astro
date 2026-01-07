@@ -1,0 +1,73 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+import bg from "../../assets/background/bg.webp";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="CiQ Archive" description="Archive of previous Careers in Quantum events." />
+  </head>
+
+  <body>
+    <div
+      class="index-bg"
+      style={`background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url(${bg.src});
+      `}
+    >
+      <Header />
+
+      <main class="hero-content">
+        <center>
+          <h1>Archive</h1>
+          <h5>Previous Careers in Quantum events</h5>
+        </center>
+      </main>
+    </div>
+
+    <section class="content-section">
+      <div class="content-inner">
+        <center>
+          <a class="btn" href="/archive/2024">CiQ 2024</a>
+          <a class="btn" href="/archive/2025">CiQ 2025</a>
+        </center>
+      </div>
+    </section>
+
+    <Footer />
+
+    <style>
+      .index-bg {
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 0 1.5rem;
+      }
+
+      .content-section {
+        background-color: #00bcae;
+        padding: 4rem 1.5rem;
+      }
+
+      .content-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+    </style>
+  </body>
+</html>

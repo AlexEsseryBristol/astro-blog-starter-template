@@ -1,0 +1,410 @@
+---
+import BaseHead from "../../../../components/BaseHead.astro";
+import Header from "../../../../components/Header.astro";
+import Footer from "../../../../components/Footer.astro";
+import ScheduleGrid from "../../../../components/Schedule.astro";
+import { Image } from "astro:assets";
+
+import LTP from "../../../../assets/company_logos/LTP.webp";
+import sparrow from "../../../../assets/company_logos/sparrow.webp";
+import qontrol from "../../../../assets/company_logos/qontrol.webp";
+import phasecraft from "../../../../assets/company_logos/phasecraft.webp";
+import riverlane from "../../../../assets/company_logos/riverlane.png";
+import QECDT from "../../../../assets/company_logos/QECDTlogo.webp";
+import UKRI from "../../../../assets/company_logos/UKRI.webp";
+import DSIT from "../../../../assets/company_logos/DSIT.svg";
+import UoB from '../../../../assets/company_logos/UoB.svg';
+import KETS from '../../../../assets/company_logos/KETS.png';
+import BT from '../../../../assets/company_logos/BT.png';
+import zeroPointMotion from '../../../../assets/company_logos/zeroPointMotion.png';
+
+type ScheduleItemType =
+  | "Talk"
+  | "Panel"
+  | "Break"
+  | "Workshop"
+  | "Keynote"
+  | "Registration"
+  | "Other";
+
+type ScheduleItem = {
+  start: string;
+  end?: string;
+  title: string;
+  type?: ScheduleItemType;
+  location?: string;
+  speakers?: string;
+  description?: string;
+  links?: { label: string; href: string }[];
+  companyLogo?: { src: string; alt: string };
+};
+
+type ScheduleDay = {
+  dateLabel: string;
+  items: ScheduleItem[];
+};
+const days = [
+  {
+    dateLabel: "Friday 4 April 2025",
+    items: [
+      {
+        start: "09:00",
+        end: "09:45",
+        title: "Coffee Break",
+        location: "Wessex Suite",
+      },
+      {
+        start: "09:45",
+        end: "10:00",
+        title: "Welcome and Introduction",
+        location: "Wessex Suite",
+      },
+      {
+        start: "10:00",
+        end: "10:20",
+        title: "Quantum Skills Taskforce: meeting the skills needs of the quantum sector",
+        location: "Panel Room",
+        speakers: "Andrew Martin (DSIT)",
+        companyLogo: { src: DSIT.src, alt: "DSIT Logo"},
+      },
+      {
+        start: "10:20",
+        end: "10:40",
+        title: "The Future is Light: Careers in Photonic Quantum Technology",
+        location: "Panel Room",
+        speakers: "Carlos Faurby (Sparrow Quantum)",
+        description: "At Sparrow Quantum we produce nothing more and nothing less than one single particle of light, exactly when you need it. This challenging feat is the result of decades of research in light-matter interaction and photonic engineering and is readily compatible with multiple applications within photonic quantum information processing. In this talk we will take a brief look at the field of photonic quantum technologies and how they can benefit from high quality single-photon sources. We explain how these sources are created, and how you can help us make them even better by joining the Sparrow flock.",
+        companyLogo: { src: sparrow.src, alt: "Sparrow Quantum Logo"},
+      },
+      {
+        start: "10:40",
+        end: "11:00",
+        title: "Neuroinclusion in quantum",
+        location: "Panel Room",
+        speakers: "Daisy Shearer (NQCC)",
+        description: "How can we create working environments that are inclusive for neurodivergent physicists? Recent research indicates that the neurodivergent population is drawn to STEM fields, meaning that a larger proportion of the STEM workforce falls under this umbrella. Despite this, many neurodivergent individuals encounter challenges that cause them to leave academic and research roles despite their potential to greatly contribute to research and innovation. In this talk, you will learn about neurodiversity and the many ways that neurodivergent individuals demonstrate strengths and encounter challenges in the physics workplace. We will then explore ways in which we can break down barriers for neurodivergent people in physics, focusing on cultivating a culture of neuroinclusion in your own working practices and how you can encourage colleagues to follow your lead.",
+        companyLogo: { src: UKRI.src, alt: "UKRI Logo"},
+      },
+      {
+        start: "11:00",
+        end: "11:20",
+        title: "Crafting phases for quantum simulation",
+        location: "Panel Room",
+        speakers: "Jan Lukas Bosse (Phasecraft)",
+        description: "As an introduction I will recapitulate the career path that led me to do a PhD in quantum computation in Bristol and start working at Phasecraft. Following that I will give a glimpse into my work at Phasecraft and what working in industry on near-term quantum algorithms looks like.",
+        companyLogo: { src: phasecraft.src, alt: "Phasecraft Logo"},
+      },
+      {
+        start: "11:20",
+        end: "12:00",
+        title: "Panel: What does the future of quantum look like?",
+        location: "Panel Room",
+        description: "This panel will examine the future of quantum science and technology from the perspectives of industry and government experts. Panellists will discuss anticipated developments, key challenges, and important considerations for the future impact of the field. The discussion will cover the evolving role of policy, investment, and workforce development.",
+        links: [{ label: "Panel details", href: "/archive-panel1-2025" }],
+      },
+      {
+        start: "12:00",
+        end: "13:00",
+        title: "Lunch",
+        location: "Wessex Suite",
+        description: "(vegetarian, vegan, gluten free)"
+      },
+      {
+        start: "13:00",
+        end: "13:20",
+        title: "Transforming Sensing with Silicon Photonics: Building the Future of Quantum-Enabled Consumer Sensors",
+        location: "Panel Room",
+        speakers: "Lia Li (Zero Point Motion)",
+        description: "What if we could transform every semiconductor sensor with silicon photonics, bringing the precision of Nobel Prize-winning gravitational wave detection—and eventually, quantum effects—to everyday consumer devices? Our team is pioneering this vision by leveraging breakthroughs in cavity optomechanics, silicon photonics, and MEMS to create a new generation of optical sensors that deliver unprecedented performance at consumer scale.We’re actively seeking photonics, software and machine learning engineers to join us on this journey—come meet the team at the talk to learn how you can be part of redefining what’s possible in sensing.",
+        companyLogo: { src: zeroPointMotion.src, alt: "Zero Point Motion Logo"},
+      },
+      {
+        start: "13:20",
+        end: "13:40",
+        title: "Light Trace Photonics",
+        location: "Panel Room",
+        speakers: "Dominic Sulway (Light Trace Photonics)",
+        description: "Light Trace Photonics is a Bristol-based start-up focused on advancing rapid, low-risk photonic integrated circuit (PIC) development. We have created a cutting-edge pipeline designed to accelerate the development of PIC products, offering comprehensive support through technical feasibility studies, proven component IP, and circuit-on-a-chip evaluation modules. In this talk, I will introduce Light Trace Photonics, share our mission, and highlight the progress we've made so far.",
+        companyLogo: { src: LTP.src, alt: "Light Trace Photonics Logo"},
+      },
+      {
+        start: "13:40",
+        end: "14:00",
+        title: "Enabling Useful Quantum Computing",
+        location: "Panel Room",
+        speakers: "Matthew Stafford (Riverlane)",
+        description: "Riverlane's mission is to make quantum computing useful, sooner. We achieve this by building the quantum error correction (QEC) stack. In this talk we will discuss the need for QEC and our roadmap to unlocking the MegaQuop: the one million reliable quantum operations needed for useful quantum computing. We will highlight some recent key advancements we have made in the field on this journey. Finally, we will discuss life at Riverlane and how to come work with us.",
+        companyLogo: { src: riverlane.src, alt: "Riverlane Logo"},
+      },
+      {
+        start: "14:00",
+        end: "15:00",
+        title: "Panel: What does a career in quantum look like?",
+        location: "Panel Room",
+        description: "This panel will explore the various career paths available to PhD students in quantum science and technology. Panellists from academia, industry, and startups will discuss the types of roles in their respective sectors, the skills and experience that are valuable in the field, and the transitions from PhD research to different career opportunities. The session will provide insights into the current quantum job market and considerations for those looking to pursue careers in this evolving area.",
+        links: [{ label: "Panel details", href: "/archive-panel2-2025" }],
+      },
+      {
+        start: "15:00",
+        end: "15:30",
+        title: "Coffee Break",
+        location: "Wessex Suite",
+      },
+      {
+        start: "15:30",
+        end: "15:50",
+        title: "BT's Quantum Approach",
+        speakers: "Emilio Hugues Salas (BT)",
+        description: "BT’s approach to quantum involves building a “network for quantum” while adopting “quantum for networks”. We achieve this by delivering R&D that started with secure quantum communications. In this talk, we will describe our current quantum activities and we will briefly discuss a view of the future quantum internet.",
+        location: "Panel Room",
+        companyLogo: { src: BT.src, alt: "BT Logo"},
+      },
+      {
+        start: "15:50",
+        end: "16:10",
+        title: "Careers in Quantum without a Quantum Background",
+        speakers: "Charles Shaw (KETS)",
+        description: "As quantum technologies advance, opportunities are emerging for professionals from diverse fields to contribute to the growing quantum industry. While quantum computing, sensing, and communication are often associated with physics and advanced mathematics, many roles in this field do not require a deep background in quantum mechanics. Engineers, software developers, project managers, and business strategists can all play essential roles in quantum-focused organizations. In this talk I will be talking about the journey of an FPGA engineer at KETS, a cutting edge quantum cryptography startup.",
+        location: "Panel Room",
+        companyLogo: { src: KETS.src, alt: "KETS Logo"},
+      },
+      {
+        start: "16:10",
+        end: "16:30",
+        title: "Powering large-scale photonics",
+        speakers: "Jeremy Adcock (Qontrol)",
+        description: "Qontrol has been at the forefront of complexity in photonic integrated circuits for the best part of a decade. Our controllers - made in Bristol - have been used to drive the some of the most powerful photonic devices out there, from LIDAR systems to neuromorphic photonics. Here, I will talk about Qontrol's journey in powering photonic chips, from building quantum computers at the University of Bristol to developing our own silicon to power the next generation of speed, scale and complexity in photonics.",
+        location: "Panel Room",
+        companyLogo: { src: qontrol.src, alt: "Qontrol Logo"},
+      },
+      {
+        start: "16:45",
+        end: "17:00",
+        title: "Closing Remarks",
+        location: "Panel Room",
+        speakers: "Jorge Barreto (QECDT/QIST)",
+      },
+      {
+        start: "17:00",
+        end: "19:00",
+        title: "Drinks Reception",
+        location: "Wessex Suite",
+      },
+    ],
+  },
+] satisfies ScheduleDay[];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="CiQ 2025 Schedule" description="Archive of CiQ 2025 schedule." />
+  </head>
+
+  <body>
+    <Header/>
+
+    <section class="content-section">
+      <div class="content-inner-no-margin">
+        <a
+          href="/archive/2025"
+          class="btn"
+          data-back-default-href="/archive/2025"
+          data-back-default-label="← Back to CiQ 2025 Archive"
+          data-back-schedule-href="/schedule"
+          data-back-schedule-label="← Back to Schedule"
+          data-back
+        >
+          ← Back to CiQ 2025 Archive
+        </a>
+        <script is:inline>
+              (() => {
+                const a = document.querySelector('[data-back]');
+                if (!(a instanceof HTMLAnchorElement)) return;
+
+                const url = new URL(window.location.href);
+                const from = url.searchParams.get('from');
+
+                if (from === 'schedule') {
+                  a.href = a.getAttribute('data-back-schedule-href') || '/schedule';
+                  a.textContent = a.getAttribute('data-back-schedule-label') || '← Back to Schedule';
+                } else {
+                  a.href = a.getAttribute('data-back-default-href') || '/archive2025';
+                  a.textContent = a.getAttribute('data-back-default-label') || '← Back to CiQ 2025 Archive';
+                }
+              })();
+          </script>
+      </div>
+	</section>
+
+    <section class="content-section2">
+      <main class="hero-content">
+        <center>
+			<h1>Friday 4 April 2025</h1>
+            <p>
+                Location: Mercure Bristol Grand Hotel, Broad St, Bristol, BS1 2EL
+            </p>
+            <p>
+                Rooms: Wessex Suite & Marlborough Suite
+            </p>
+            <h2>
+                Important Information
+            </h2>
+        </center>
+            <p>
+                The main exhibition will run throughout the day from 9:00 to 17:00 in the Wessex Suite.
+                <br/>
+                Meanwhile, the talks and panel discussions will take place in the Marlborough Suite.
+                <br/>
+                The Marlborough Suite has limited capacity, and the day has also been deliberately scheduled to be tight. It is not expected for attendees to sit through all talks. We strongly encourage attendees to attend some, and then use the remaining time to interact with the exhibitors while talks are running in parallel. 
+                <br/>
+                Each talk session will consist of 15 minutes of the talk and then 5 minute of one or two Q&A and change over.
+            </p>
+      </main>
+    </section>
+
+    <section class="content-section3">
+      <div class="schedule-margin">
+        <ScheduleGrid days={days} />
+      </div>
+    </section>
+
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
+
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
+              src={QECDT}
+              alt="Centre for Doctoral Training in Quantum Engineering logo"
+              class="sponsor-logo"
+            /></a>
+          </div>
+
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+
+    <style>
+      .index-bg {
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .content-section {
+        background-color: hsl(192, 100%, 15%); /* change as desired */
+        padding: 1rem 1.5rem;
+      }
+
+	  .content-section2 {
+        background-color: #87a5ad; /* change as desired */
+        padding: 2rem 1.5rem;
+      }
+
+	  .content-section3 {
+        background-color: #00bcae; /* change as desired */
+        padding: 2rem 1.5rem 4rem;
+      }
+
+	  .content-section4 {
+		background-color: #000000ff; /* change as desired */
+		padding: 4rem 1.5rem;
+	  }
+
+      .content-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+    .content-inner-no-margin {
+        max-width: 900px;
+        margin: 0;
+      }
+	  /* Sponsor logo grid */
+	.sponsor-grid {
+	display: grid;
+	gap: 1.5rem;
+	margin-top: 0rem;
+
+	/* Responsive columns: grows/shrinks automatically */
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	align-items: center;
+	}
+
+	.sponsor-item {
+	/* Center each logo in its cell */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	/* Give consistent vertical space per logo */
+	height: 110px;            /* adjust to taste */
+	padding: 0.5rem 0.75rem;
+	}
+
+	.sponsor-logo {
+	/* Constrain vertical size, preserve aspect ratio */
+	max-height: 100%;
+	width: 100%;
+	object-fit: contain;
+
+	/* Optional: prevent huge logos from stretching too wide */
+	max-width: 240px;
+	}
+
+	/* Slightly taller rows on larger screens (optional) */
+	@media (min-width: 768px) {
+	.sponsor-item {
+		height: 130px;
+	}
+	}
+	.partner-line {
+		margin-top: -0.5rem;
+		display: inline-flex;
+		align-items: center;   /* vertical centering */
+		gap: 0.8rem;           /* space between text and logo */
+	}
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0rem 2rem;
+        border-radius: 999px;
+        background: rgb(var(--white));
+        color: hsl(192, 100%, 15%);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.35rem;
+        line-height: 4;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        white-space: nowrap;
+        vertical-align: middle;
+
+    }
+
+    .btn:hover {
+        filter: brightness(0.95);
+    }
+        .schedule-margin {
+            margin: 0rem 3rem;              /* top/bottom */
+        }
+    </style>
+  </body>
+</html>

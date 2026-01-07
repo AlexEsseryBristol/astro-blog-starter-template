@@ -1,0 +1,138 @@
+---
+import BaseHead from "../../../../components/BaseHead.astro";
+import Header from "../../../../components/Header.astro";
+import Footer from "../../../../components/Footer.astro";
+import { Image } from "astro:assets";
+
+import SponsorGrid from "../../../../components/SponsorGrid.astro";
+
+import QECDT from "../../../../assets/company_logos/QECDTlogo.webp";
+import UoB from "../../../../assets/company_logos/UoB.svg";
+
+import sponsorsMeta from "../../../../content/sponsors/2024sponsors.json";
+import attendingMeta from "../../../../content/attending/2024attending.json";
+
+import { buildSponsorGridItems, buildAttendingGridItems } from "../../../../lib/sponsors/gridItems";
+
+const sponsorModules = import.meta.glob("../../../../assets/2024/sponsors/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+
+const attendingModules = import.meta.glob("../../../../assets/2024/attending/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+
+const sponsors = buildSponsorGridItems(sponsorModules, sponsorsMeta as Record<string, { name?: string; href?: string }>);
+const attendingItems = buildAttendingGridItems(
+  attendingModules,
+  attendingMeta as Record<string, { name: string; url?: string }>,
+);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="CiQ 2024 Sponsors & Attending Companies" description="Archive of CiQ 2024 sponsors and attending companies." />
+  </head>
+
+  <body>
+    <Header />
+
+    <section class="content-section">
+      <div class="content-inner content-inner--back">
+        <a href="/archive/2024" class="btn">← Back to CiQ 2024 Archive</a>
+      </div>
+    </section>
+
+    <section class="content-section2">
+      <div class="content-inner">
+        <SponsorGrid title="CiQ 2024 Sponsors" ariaLabel="CiQ 2024 sponsors" items={sponsors} />
+      </div>
+    </section>
+
+    <section class="content-section3">
+      <div class="content-inner">
+        <SponsorGrid title="CiQ 2024 Exhibitors" ariaLabel="CiQ 2024 exhibitors" items={attendingItems} />
+      </div>
+    </section>
+
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
+
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/">
+              <Image src={QECDT} alt="Centre for Doctoral Training in Quantum Engineering logo" class="sponsor-logo" />
+            </a>
+          </div>
+
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk">
+              <Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+
+    <style>
+      .content-section {
+        background-color: hsl(192, 100%, 15%);
+        padding: 1rem 1.5rem;
+      }
+
+      .content-section2 {
+        background-color: #a0bec6ff;
+        padding: 2rem 1.5rem;
+      }
+
+      .content-section3 {
+        background-color: #00bcae;
+        padding: 2rem 1.5rem;
+      }
+
+      .content-section4 {
+        background-color: #000000ff;
+        padding: 4rem 1.5rem;
+      }
+
+      .content-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .content-inner--back {
+        margin: 0;
+        max-width: 900px;
+      }
+
+      .sponsor-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 0rem;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        align-items: center;
+      }
+
+      .sponsor-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 110px;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .sponsor-logo {
+        max-height: 100%;
+        width: 100%;
+        object-fit: contain;
+        max-width: 240px;
+      }
+    </style>
+  </body>
+</html>

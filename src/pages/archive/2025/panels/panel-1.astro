@@ -1,16 +1,33 @@
 ---
-import ArchivePanelPage from "../../../../components/archive/ArchivePanelPage.astro";
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { Image } from 'astro:assets';
+import Logo from '../assets/logo/QECDTlogo.webp';
+import PanelGrid from "../../../../components/PanelGrid.astro";
+import QECDT from '../assets/company_logos/QECDTlogo.webp';
+import UoB from '../assets/company_logos/UoB.svg';
+import zoeDavidson from '../assets/speaker_headshots/zoe-davidson.webp';
+import andrewMartin from '../assets/speaker_headshots/andrew-martin.jpg';
+import daisyShearer from '../assets/speaker_headshots/daisy-shearer.webp';
+import samMorleyShort from '../assets/speaker_headshots/sam-morley-short.webp';
+import carrieWeidner from '../assets/speaker_headshots/carrie-weidner.jpg';
+import dominicSulway from '../assets/speaker_headshots/dominic-sulway.jpg';
+import brianFlynn from '../assets/speaker_headshots/brian-flynn.webp';
+import lauraCaune from '../assets/speaker_headshots/laura-caune.webp';
 
-import zoeDavidson from "../../../../assets/speaker_headshots/zoe-davidson.webp";
-import andrewMartin from "../../../../assets/speaker_headshots/andrew-martin.jpg";
-import daisyShearer from "../../../../assets/speaker_headshots/daisy-shearer.webp";
-import samMorleyShort from "../../../../assets/speaker_headshots/sam-morley-short.webp";
+const from = Astro.url.searchParams.get("from") ?? "";
+const cameFromPanels = from === "panels";
 
-const speakers = [
+const backHref = cameFromPanels ? "/panels" : "/archive/2025/schedule";
+const backLabel = cameFromPanels ? "← Back to Panels" : "← Back to CiQ 2025 Schedule";
+
+const speakers1 = [
   {
     name: "Zoe Davidson",
     company: "BT",
-    role: "Research Specialist",
+	  role: "Research Specialist",
     bio: "Zoe Davidson joined BT as a Specialist Research Professional for the Optical Networks and Quantum Research team in the Network Strategy and Research department in 2022. Zoe received her Bachelor of Technology 1st(Hons) in Optoelectronics from the University of Auckland, New Zealand, and her PhD in Electronic and Electrical Engineering at the University of Bristol, UK. Zoe’s research focus at BT is on Photonic Integrated Circuits for use in both classical and quantum networks. Zoe's background is on semiconductor compounds for energy efficient emission in the O- and C-bands, and telecommunications fibre optic network design and deployment.",
     photo: zoeDavidson,
   },
@@ -21,14 +38,14 @@ const speakers = [
     bio: "Andrew leads on skills policy in the Office for Quantum, part of the Department for Science, Innovation and Technology. He has over a decade of experience in UK Government across policy and finance roles, including in the Cabinet Office, HM Treasury, and Home Office.",
     photo: andrewMartin,
   },
-  {
+{
     name: "Sam Morley-Short",
     company: "PsiQuantum",
     role: "Senior Manager",
     bio: "For the last 3 years, Sam Morley-Short has been the lead for PsiQuantum’s Quantum Applications Software Team, which is developing an advanced software development toolkit specifically focussed on the design, analysis, and optimisation of fault-tolerant quantum computer (FTQC) applications. Before this position he worked at PsiQuantum since 2018 as a Quantum Architect, where he worked on the implementation of PsiQuantum’s internal quantum architecture simulation stack. Before joining PsiQuantum Sam gained his PhD at University of Bristol’s Quantum Engineering Centre of Doctoral Training, where his research focussed on the design and simulation of photonic FTQC architectures.",
     photo: samMorleyShort,
   },
-  {
+{
     name: "Daisy Shearer",
     company: "NQCC",
     role: "Quantum Computing Outreach and Education Lead",
@@ -36,5 +53,210 @@ const speakers = [
     photo: daisyShearer,
   },
 ];
+
+const speakers2 = [
+  {
+    name: "Laura Caune",
+    company: "Riverlane",
+	  role: "Senior Quantum Scientist",
+    bio: "Laura is a Senior Quantum Scientist at Riverlane. Before joining Riverlane, she earned a BSc in Mathematics and an MSc in Computing. At Riverlane, Laura has worked on quantum error correction (QEC) experiments on superconducting qubit devices, developed software for testing QEC codes and decoders, and implemented error mitigation techniques.",
+    photo: lauraCaune,
+  },
+  {
+    name: "Brian Flynn",
+    company: "Phasecraft",
+    role: "Quantum Software Researcher",
+    bio: "Brian is a graduate of the QECDT at the University of Bristol, where he worked on machine learning algorithms for the characterisation of quantum systems. He has been working at Phasecraft for four years, developing software to support research efforts in near term quantum algorithms.",
+    photo: brianFlynn,
+  },
+{
+    name: "Dominic Sulway",
+    company: "Light Trace Photonics",
+    role: "Co-Founder & CTO",
+    bio: "Dr. Dominic A. Sulway is the CTO and Co-Founder of Light Trace Photonics, a  Bristol-based start-up developing a range of products and services to facilitate rapid, low-risk photonic integrated circuit (PIC) product development. Dominic is an expert in photonic integrated circuit PIC design, simulation and characterisation, with a wealth of experience in PIC post-processing and packaging, nonlinear optics, quantum optics, and thermo/electro-optics. He received his PhD from the University of Bristol, where he was part of the Quantum Engineering Centre for Doctoral Training.",
+    photo: dominicSulway,
+  },
+{
+    name: "Carrie Weidner",
+    company: "University of Bristol",
+    role: "Senior Lecturer",
+    bio: "Dr Carrie Weidner is a Senior Lecturer in Quantum Engineering Technologies at the University of Bristol. Weidner did her PhD in JILA at the University of Colorado Boulder on inertial sensors using atoms trapped in optical lattice potentials. Weidner then moved to Aarhus University, DK to work on quantum simulation using quantum gas microscopy. Since moving to Bristol in 2022, her work focuses on (mostly) experimental quantum sensing, simulation, and information with atoms in optical lattice potentials. Dr Weidner also works in robust quantum control, quantum physics education, and is increasingly interested in the interplay between atomic physics and integrated optics.",
+    photo: carrieWeidner,
+  },
+];
 ---
-<ArchivePanelPage title="What does the future of quantum look like?" speakers={speakers} />
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="Panels" description="Panels for Careers in Quantum." />
+  </head>
+
+  <body>
+      <Header />
+
+  <section class="content-section">
+      <div class="content-inner-no-margin">
+        <a
+          href="/archive/2025/schedule"
+          class="btn"
+          data-back-default-href="/archive/2025/schedule"
+          data-back-default-label="← Back to CiQ 2025 Schedule"
+          data-back-panels-href="/panels"
+          data-back-panels-label="← Back to Panels"
+          data-back
+        >
+          ← Back to CiQ 2025 Schedule
+        </a>
+        <script is:inline>
+              (() => {
+                const a = document.querySelector('[data-back]');
+                if (!(a instanceof HTMLAnchorElement)) return;
+
+                const url = new URL(window.location.href);
+                const from = url.searchParams.get('from');
+
+                if (from === 'panels') {
+                  a.href = a.getAttribute('data-back-panels-href') || '/panels';
+                  a.textContent = a.getAttribute('data-back-panels-label') || '← Back to Panels';
+                } else {
+                  a.href = a.getAttribute('data-back-default-href') || '/archive/2025/schedule';
+                  a.textContent = a.getAttribute('data-back-default-label') || '← Back to CiQ 2025 Schedule';
+                }
+              })();
+          </script>
+      </div>
+	</section>
+
+	<section class="content-section2">
+      <div class="content-inner">
+        <h2>What does the future of quantum look like?</h2>
+		    <PanelGrid speakers={speakers1} />
+      </div>
+    </section>
+
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
+
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
+              src={QECDT}
+              alt="Centre for Doctoral Training in Quantum Engineering logo"
+              class="sponsor-logo"
+            /></a>
+          </div>
+
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+
+    <style>
+      .index-bg {
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .content-section {
+        background-color: hsl(192, 100%, 15%); /* change as desired */
+        padding: 1rem 1.5rem;
+      }
+
+	  .content-section2 {
+        background-color: #87a5ad; /* change as desired */
+        padding: 4rem 1.5rem;
+      }
+
+	  .content-section3 {
+        background-color: #00bcae; /* change as desired */
+        padding: 4rem 1.5rem;
+      }
+
+	  .content-section4 {
+		background-color: #000000ff; /* change as desired */
+		padding: 4rem 1.5rem;
+	  }
+
+      .content-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+	  /* Sponsor logo grid */
+	.sponsor-grid {
+	display: grid;
+	gap: 1.5rem;
+	margin-top: 2rem;
+
+	/* Responsive columns: grows/shrinks automatically */
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	align-items: center;
+	}
+
+	.sponsor-item {
+	/* Center each logo in its cell */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	/* Give consistent vertical space per logo */
+	height: 110px;            /* adjust to taste */
+	padding: 0.5rem 0.75rem;
+	}
+
+	.sponsor-logo {
+	/* Constrain vertical size, preserve aspect ratio */
+	max-height: 100%;
+	width: 100%;
+	object-fit: contain;
+
+	/* Optional: prevent huge logos from stretching too wide */
+	max-width: 240px;
+	}
+
+	/* Slightly taller rows on larger screens (optional) */
+	@media (min-width: 768px) {
+	.sponsor-item {
+		height: 130px;
+	}
+	}
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0rem 2rem;
+        border-radius: 999px;
+        background: rgb(var(--white));
+        color: hsl(192, 100%, 15%);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.35rem;
+        line-height: 4;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        white-space: nowrap;
+        vertical-align: middle;
+
+    }
+
+    .btn:hover {
+        filter: brightness(0.95);
+    }
+    </style>
+  </body>
+</html>

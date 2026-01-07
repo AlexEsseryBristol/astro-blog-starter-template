@@ -143,6 +143,23 @@ hr {
 	}
 }
 
+/*
+  Layout wrapper
+  --------------
+  This project’s marketing pages (home, archive, sponsorship, etc.) use full-width
+  color sections that must span the viewport. The default Bear Blog `main` styles
+  (fixed width + padding) would incorrectly constrain those sections.
+
+  `SiteLayout.astro` applies `layout-main` to its wrapper to opt out of the default
+  constraints while preserving the starter’s defaults for any other `main` tags.
+*/
+main.layout-main {
+	width: 100%;
+	max-width: none;
+	margin: 0;
+	padding: 0;
+}
+
 .sr-only {
 	border: 0;
 	padding: 0;

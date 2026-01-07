@@ -1,10 +1,225 @@
 ---
-// src/pages/archive/2025/index.astro
-import ArchiveYearPage from "../../../components/archive/ArchiveYearPage.astro";
+import BaseHead from "../../../components/BaseHead.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+
+import { Image } from "astro:assets";
+
+import bg from "../../../assets/background/bg.webp";
+
+import QECDT from "../../../assets/company_logos/QECDTlogo.webp";
+import UoB from "../../../assets/company_logos/UoB.svg";
+
+import { Carousel } from "astro-carousel";
+import type { ComponentProps } from "astro/types";
+
+import { buildCarouselImages } from "../../../lib/archive/carouselImages";
+
+const galleryModules = import.meta.glob("../../../assets/2025/gallery/*.{avif,webp,png,JPG,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+
+const images = (await buildCarouselImages(galleryModules)) satisfies ComponentProps<typeof Carousel>["images"];
+
+const path = Astro.url.pathname;
 ---
 
-<ArchiveYearPage
-  year="2025"
-  title="CiQ 2025 Archive"
-  description="Highlights and photos from CiQ 2025."
-/>
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title="CiQ 2025 Archive" description="Archive for Careers in Quantum 2025." />
+  </head>
+
+  <body>
+    <div
+      class="index-bg"
+      style={`background-image:
+        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url(${bg.src});
+      `}
+    >
+      <Header />
+
+      <main class="hero-content">
+        <center>
+          <h1>Careers in Quantum 2025</h1>
+          <h5>A student-led quantum careers fair</h5>
+          <p>
+            Organised by the Quantum Engineering Centre for Doctoral Training in partnership with IOP
+            Publishing and the NQCC
+          </p>
+        </center>
+      </main>
+    </div>
+
+    <section class="content-section">
+      <div class="content-inner">
+        <h2>Gallery</h2>
+
+        <ul id="carouselTargetList" class="thumbs">
+          {images.map((img, index) => (
+            <li class="thumb">
+              <a class="thumbLink" href={`${path}?image=${index}`} data-carousel-index={index} aria-label={`Open image ${index + 1}`}>
+                <img class="thumbImg" src={img.src} alt={img.alt ?? ""} loading="lazy" decoding="async" />
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <Carousel images={images} />
+      </div>
+    </section>
+
+    <section class="content-section2">
+      <div class="content-inner">
+        <h2>The Event</h2>
+        <p>
+          CiQ 2025 brought together professionals from industry and academia to engage with students and
+          early-stage researchers on the variety and types of careers available in the quantum industry.
+          <br />
+          We aimed to introduce undergraduate students, career-minded PhD students and postdoctoral
+          researchers to the opportunities within the rapidly growing quantum technology sector.
+          <br />
+          The event focused around a careers fair with a breakout room for more in-depth discussion and
+          panels.
+          <br />
+          This one day, in-person careers event was hosted on the 14th of March 2025 in the Richmond
+          Building, Bristol.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section3">
+      <div class="content-inner">
+        <center>
+          <a href="/archive/2025/sponsors" class="btn">CiQ 2025 Sponsors & Exhibitors</a>
+          <a href="/archive/2025/schedule" class="btn">CiQ 2025 Schedule</a>
+          <a href="/archive/2025/panels/panel-1" class="btn">CiQ 2025 Panel 1</a>
+          <a href="/archive/2025/panels/panel-2" class="btn">CiQ 2025 Panel 2</a>
+        </center>
+      </div>
+    </section>
+
+    <section class="content-section4">
+      <div class="content-inner">
+        <h2>Affiliations</h2>
+
+        <div class="sponsor-grid" aria-label="Affiliations">
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk/quantum-engineering/">
+              <Image src={QECDT} alt="Centre for Doctoral Training in Quantum Engineering logo" class="sponsor-logo" />
+            </a>
+          </div>
+
+          <div class="sponsor-item">
+            <a href="https://www.bristol.ac.uk">
+              <Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Footer />
+
+    <style>
+      .thumbs {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1rem 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.75rem;
+      }
+
+      .thumb {
+        margin: 0;
+      }
+
+      .thumbLink {
+        display: block;
+        border-radius: 12px;
+        overflow: hidden;
+        text-decoration: none;
+      }
+
+      .thumbImg {
+        display: block;
+        width: 100%;
+        height: 110px;
+        object-fit: cover;
+      }
+
+      .thumbLink:focus-visible {
+        outline: 2px solid rgba(255, 255, 255, 0.6);
+        outline-offset: 2px;
+      }
+
+      .index-bg {
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .hero-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding: 0 1.5rem;
+      }
+
+      .content-section {
+        background-color: hsl(192, 100%, 15%);
+        padding: 4rem 1.5rem;
+      }
+
+      .content-section2 {
+        background-color: #87a5ad;
+        padding: 4rem 1.5rem;
+      }
+
+      .content-section3 {
+        background-color: #00bcae;
+        padding: 4rem 1.5rem;
+      }
+
+      .content-section4 {
+        background-color: #000000ff;
+        padding: 4rem 1.5rem;
+      }
+
+      .content-inner {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .sponsor-grid {
+        display: grid;
+        gap: 1.5rem;
+        margin-top: 0rem;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        align-items: center;
+      }
+
+      .sponsor-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 110px;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .sponsor-logo {
+        max-height: 100%;
+        width: 100%;
+        object-fit: contain;
+        max-width: 240px;
+      }
+    </style>
+  </body>
+</html>
