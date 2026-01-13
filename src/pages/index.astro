@@ -151,22 +151,4 @@ const heroInnerStyle = `
       display: block;
     }
   </style>
-
-<script is:inline>
-  (() => {
-    const setHeaderHeightVar = () => {
-      const header =
-        document.querySelector("header") ||
-        document.querySelector("[data-header]") ||
-        document.querySelector(".header");
-
-      const h = header instanceof HTMLElement ? header.offsetHeight : 0;
-      document.documentElement.style.setProperty("--header-h", `${h}px`);
-    };
-
-    setHeaderHeightVar();
-    window.addEventListener("resize", setHeaderHeightVar, { passive: true });
-  })();
-</script>
-
 </SiteLayout>
