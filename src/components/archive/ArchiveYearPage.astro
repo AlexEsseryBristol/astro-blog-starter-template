@@ -49,11 +49,26 @@ const base = `/archive/${year}`;
 
           {year === "2025" && (
             <>
-              <a class="btn" href={`${base}/panels/panel-1`}>Panel 1</a>
-              <a class="btn" href={`${base}/panels/panel-2`}>Panel 2</a>
+              <a class="btn" href={`${base}/panels/panel-1`}>Panel: What does the future of quantum look like?</a>
+              <a class="btn" href={`${base}/panels/panel-2`}>Panel: What does a career in quantum look like?</a>
             </>
           )}
         </div>
+      </div>
+    </section>
+
+    <section class="content-section2">
+      <div class="content-inner">
+        <h2>The Event</h2>
+        <p>
+            CiQ 2024 brought together professionals from industry and academia to engage with students and early-stage researchers on the variety and types of careers available in the quantum industry. 
+            <br/>
+            We aimed to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to the opportunities within the rapidly growing quantum technology sector.
+            <br/>
+            The event focused around a careers fair with a breakout room for more in-depth discussion and panels. 
+            <br/>
+            This one day, in-person careers event was hosted on the 15th of March 2024 in the Richmond Building, Bristol.
+        </p>
       </div>
     </section>
 
@@ -69,7 +84,7 @@ const base = `/archive/${year}`;
 
 <style>
   .content-section {
-    padding: 4rem 1.5rem 2rem;
+    padding: 4rem 1.5rem 0rem;
     background: rgb(10, 16, 28);
   }
   .content-section2 {
@@ -85,13 +100,12 @@ const base = `/archive/${year}`;
   .page-title {
     margin: 0 0 0.5rem 0;
     color: rgb(var(--white));
-    font-size: clamp(2rem, 3vw, 2.7rem);
+    font-size: clamp(4rem, 3vw, 2.7rem);
     letter-spacing: -0.03em;
   }
   .page-subtitle {
-    margin: 0 0 1.25rem 0;
+    margin: 0 0 0rem 0;
     color: rgba(255, 255, 255, 0.78);
-    font-size: 1.06rem;
     max-width: 70ch;
   }
 
