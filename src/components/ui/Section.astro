@@ -4,9 +4,13 @@ type Props = {
   as?: "section" | "div" | "main";
   className?: string;
   innerClassName?: string;
-  background?: string; // e.g. "hsl(192, 100%, 15%)" or "#00bcae"
+
+  background?: string; // e.g. "hsl(...)" OR "linear-gradient(...), url(...)"
   padding?: string;    // e.g. "2rem 1.5rem"
   maxWidth?: string;   // e.g. "900px"
+
+  style?: string;
+  innerStyle?: string;
 };
 
 const {
@@ -16,17 +20,28 @@ const {
   background,
   padding,
   maxWidth = "900px",
+  style,
+  innerStyle,
 } = Astro.props as Props;
 
 const Tag = as;
+
 const styleParts: string[] = [];
 if (background) styleParts.push(`background:${background};`);
 if (padding) styleParts.push(`padding:${padding};`);
+if (style) styleParts.push(style);
+
 const styleAttr = styleParts.length ? styleParts.join("") : undefined;
+
+const innerStyleParts: string[] = [];
+if (maxWidth) innerStyleParts.push(`max-width:${maxWidth};`);
+if (innerStyle) innerStyleParts.push(innerStyle);
+
+const innerStyleAttr = innerStyleParts.length ? innerStyleParts.join("") : undefined;
 ---
 
 <Tag class={`section ${className}`} style={styleAttr}>
-  <div class={`inner ${innerClassName}`} style={`max-width:${maxWidth};`}>
+  <div class={`inner ${innerClassName}`} style={innerStyleAttr}>
     <slot />
   </div>
 </Tag>

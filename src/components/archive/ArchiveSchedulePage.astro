@@ -58,9 +58,16 @@ const backHref = `/archive/${year}`;
     <Header />
 
     <section class="topbar">
-      <div class="inner">
-        <BackLink defaultHref={backHref} defaultLabel={`← Back to CiQ ${year} Archive`} />
-      </div>
+        <BackLink
+        defaultHref="/archive/2025/schedule"
+        defaultLabel="← Back to CiQ 2025 Schedule"
+        fromParam="from"
+        fromValue="schedule"
+        alternateHref="/schedule"
+        alternateLabel="← Back to Schedule"
+        secondaryHref="/archive/2025"
+        secondaryLabel="Explore the rest of the CiQ 2025 Archive →"
+      />
     </section>
 
     <section class="hero">

@@ -1,24 +1,57 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+import Section from "../components/ui/Section.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { Image } from "astro:assets";
 
 import Logo from "../assets/logo/QECDTlogo.webp";
 import bg from "../assets/background/bg.webp";
 
+import sponsors2025 from "../content/sponsors/2025sponsors.json";
 import LogoGrid from "../components/ui/LogoGrid.astro";
-import { previousSponsors } from "../assets/previous-sponsors/*.{avif,webp,png,jpg,jpeg,svg}";
+import { buildSponsorItems, type SponsorMetaMap } from "../lib/sponsor-items";
+
+const previousSponsorsMeta = sponsors2025 as SponsorMetaMap;
+
+const previousSponsorModules = import.meta.glob(
+  "../assets/previous-sponsors/*.{avif,webp,png,jpg,jpeg,svg}",
+  { eager: true, import: "default" }
+);
+
+const previousSponsors = buildSponsorItems(previousSponsorModules, previousSponsorsMeta);
+
+const heroBackground = `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(${bg.src})`;
+
+const heroSectionStyle = `
+  background-image: ${heroBackground};
+  background-size: cover;
+  background-position: center;
+
+  min-height: calc(100svh - var(--header-h, 0px));
+  display: flex;
+`;
+
+const heroInnerStyle = `
+  width: 100%;
+  margin: 0 auto;
+
+  /* Keep inner aligned to the same computed height */
+  min-height: calc(100svh - var(--header-h, 0px));
+  display: flex;
+`;
 ---
 
 <SiteLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <div
-    class="index-bg"
-    style={`background-image:
-      linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-      url(${bg.src});
-    `}
+  <Section
+    as="section"
+    padding="0rem"
+    maxWidth="900px"
+    style={heroSectionStyle}
+    innerStyle={heroInnerStyle}
+    className="hero-section"
+    innerClassName="hero-inner"
   >
-    <section class="hero-content">
+    <div class="hero-content">
       <center>
         <h1>Careers in Quantum</h1>
         <h5>A student-led quantum careers fair</h5>
@@ -32,61 +65,61 @@ import { previousSponsors } from "../assets/previous-sponsors/*.{avif,webp,png,j
             <Image src={Logo} alt="QECDT logo" class="logo" />
           </a>
         </p>
+        <!--
+        Source - https://stackoverflow.com/a/16349522
+        Posted by Waqleh
+        Retrieved 2026-01-13, License - CC BY-SA 3.0
+        -->
+        <input type="button" onClick="document.getElementById('middle').scrollIntoView();" />
       </center>
-    </section>
-  </div>
-
-  <section class="content-section">
-    <div class="content-inner">
-      <h2>About the Event</h2>
-      <p>
-        Every year <b>Careers in Quantum</b> brings together professionals from industry and academia to engage
-        with students and early-stage researchers on the variety and types of careers available in the quantum
-        industry.
-        <br />
-        We aim to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to
-        the opportunities within the rapidly growing quantum technology sector.
-        <br />
-        The event focuses around a careers fair with a breakout room for more in-depth talks and panel
-        discussions.
-        <br />
-        This year, <b>Careers in Quantum</b> will be held from 9am to 5pm on <b>Thursday 5 March 2026</b> at
-        <b> Richmond Building, Queen’s Road, Bristol, BS8 1LN</b>.
-      </p>
     </div>
-  </section>
+  </Section>
 
-  <section class="content-section2">
-    <div class="content-inner">
-      <h2>Sponsorship</h2>
-      <p>
-        Do you work in quantum technologies?
-        <br />
-        Are you interested in connecting with potential future employees from a broad range of disciplines?
-        <br />
-        Do you want to showcase your company?
-        <br />
-        Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an
-        impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for
-        further information.
-      </p>
-    </div>
-  </section>
+  <Section background="hsl(192, 100%, 15%)" padding="4rem 1.5rem" maxWidth="900px">
+    <h2>About the Event</h2>
+    <p>
+      Every year <b>Careers in Quantum</b> brings together professionals from industry and academia to engage
+      with students and early-stage researchers on the variety and types of careers available in the quantum
+      industry.
+      <br />
+      We aim to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to
+      the opportunities within the rapidly growing quantum technology sector.
+      <br />
+      The event focuses around a careers fair with a breakout room for more in-depth talks and panel
+      discussions.
+      <br />
+      This year, <b>Careers in Quantum</b> will be held from 9am to 5pm on <b>Thursday 5 March 2026</b> at
+      <b> Richmond Building, Queen’s Road, Bristol, BS8 1LN</b>.
+    </p>
+  </Section>
 
-  <section class="content-section3">
-    <div class="content-inner">
-      <h2>Previous Sponsors</h2>
-      <LogoGrid items={previousSponsors} ariaLabel="Previous sponsors" />
-    </div>
-  </section>
+  <Section background="#87a5ad" padding="4rem 1.5rem" maxWidth="900px">
+    <h2>Sponsorship</h2>
+    <p>
+      Do you work in quantum technologies?
+      <br />
+      Are you interested in connecting with potential future employees from a broad range of disciplines?
+      <br />
+      Do you want to showcase your company?
+      <br />
+      Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an
+      impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for
+      further information.
+    </p>
+  </Section>
+
+  <Section background="#00bcae" padding="4rem 1.5rem" maxWidth="900px">
+    <h2>Previous Sponsors</h2>
+    <LogoGrid items={previousSponsors} ariaLabel="Previous sponsors" />
+  </Section>
 
   <style>
-    .index-bg {
-      min-height: 100vh;
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      flex-direction: column;
+    .hero-section {
+      width: 100%;
+    }
+
+    .hero-inner {
+      /* Section.astro already adds max-width via style attr; keep this class available */
     }
 
     .hero-content {
@@ -96,26 +129,6 @@ import { previousSponsors } from "../assets/previous-sponsors/*.{avif,webp,png,j
       justify-content: center;
       text-align: center;
       padding: 0 1.5rem;
-    }
-
-    .content-section {
-      background-color: hsl(192, 100%, 15%);
-      padding: 4rem 1.5rem;
-    }
-
-    .content-section2 {
-      background-color: #87a5ad;
-      padding: 4rem 1.5rem;
-    }
-
-    .content-section3 {
-      background-color: #00bcae;
-      padding: 4rem 1.5rem;
-    }
-
-    .content-inner {
-      max-width: 900px;
-      margin: 0 auto;
     }
 
     .partner-line {
@@ -138,4 +151,22 @@ import { previousSponsors } from "../assets/previous-sponsors/*.{avif,webp,png,j
       display: block;
     }
   </style>
+
+<script is:inline>
+  (() => {
+    const setHeaderHeightVar = () => {
+      const header =
+        document.querySelector("header") ||
+        document.querySelector("[data-header]") ||
+        document.querySelector(".header");
+
+      const h = header instanceof HTMLElement ? header.offsetHeight : 0;
+      document.documentElement.style.setProperty("--header-h", `${h}px`);
+    };
+
+    setHeaderHeightVar();
+    window.addEventListener("resize", setHeaderHeightVar, { passive: true });
+  })();
+</script>
+
 </SiteLayout>

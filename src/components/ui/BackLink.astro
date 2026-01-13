@@ -3,10 +3,17 @@
 type Props = {
   defaultHref: string;
   defaultLabel: string;
-  fromParam?: string;
-  fromValue?: string;
+
+  fromParam?: string;    // default "from"
+  fromValue?: string;    // e.g. "panels"
   alternateHref?: string;
   alternateLabel?: string;
+
+  // NEW: optional second button shown only in alternate mode
+  secondaryHref?: string;
+  secondaryLabel?: string;
+  secondaryClassName?: string;
+
   className?: string;
 };
 
@@ -14,46 +21,100 @@ const {
   defaultHref,
   defaultLabel,
   fromParam = "from",
-  fromValue,
-  alternateHref,
-  alternateLabel,
+  fromValue = "",
+  alternateHref = "",
+  alternateLabel = "",
   className = "btn",
+
+  secondaryHref = "",
+  secondaryLabel = "",
+  secondaryClassName = "btn",
 } = Astro.props as Props;
+
+const altKey = (fromValue || "").trim();
+
+const altAttrs: Record<string, string> = {};
+if (altKey && alternateHref) altAttrs[`data-back-${altKey}-href`] = alternateHref;
+if (altKey && alternateLabel) altAttrs[`data-back-${altKey}-label`] = alternateLabel;
+
+const hasSecondary = Boolean(secondaryHref && secondaryLabel);
 ---
 
-<a
-  href={defaultHref}
-  class={className}
-  data-back
-  data-default-href={defaultHref}
-  data-default-label={defaultLabel}
-  data-from-param={fromParam}
-  data-from-value={fromValue ?? ""}
-  data-alt-href={alternateHref ?? ""}
-  data-alt-label={alternateLabel ?? ""}
->
-  {defaultLabel}
-</a>
+<div data-back-wrap style="display:flex; gap:0.75rem; align-items:center; width:100%;">
+  <a
+    href={defaultHref}
+    class={className}
+    data-back
+    data-back-default-href={defaultHref}
+    data-back-default-label={defaultLabel}
+    data-back-param={fromParam}
+    data-back-key={altKey}
+    data-back-has-secondary={hasSecondary ? "1" : "0"}
+    {...altAttrs}
+  >
+    {defaultLabel}
+  </a>
+  <div aria-hidden="true" style="flex: 1 1 auto;"></div>
+  {hasSecondary && (
+    <a
+      href={secondaryHref}
+      class={secondaryClassName}
+      data-back-secondary
+      data-back-secondary-href={secondaryHref}
+      data-back-secondary-label={secondaryLabel}
+      hidden
+    >
+      {secondaryLabel}
+    </a>
+  )}
+</div>
 
 <script is:inline>
   (() => {
-    const a = document.currentScript?.previousElementSibling;
-    if (!(a instanceof HTMLAnchorElement)) return;
+    const script = document.currentScript;
+    const wrap = script?.previousElementSibling;
+    if (!(wrap instanceof HTMLElement) || !wrap.hasAttribute("data-back-wrap")) return;
 
-    const fromParam = a.getAttribute("data-from-param") || "from";
-    const fromValue = a.getAttribute("data-from-value") || "";
-    const altHref = a.getAttribute("data-alt-href") || "";
-    const altLabel = a.getAttribute("data-alt-label") || "";
+    const primary = wrap.querySelector('[data-back]');
+    if (!(primary instanceof HTMLAnchorElement)) return;
+
+    const secondary = wrap.querySelector('[data-back-secondary]');
 
     const url = new URL(window.location.href);
-    const from = url.searchParams.get(fromParam);
 
-    if (fromValue && from === fromValue && altHref && altLabel) {
-      a.href = altHref;
-      a.textContent = altLabel;
-    } else {
-      a.href = a.getAttribute("data-default-href") || a.href;
-      a.textContent = a.getAttribute("data-default-label") || a.textContent;
+    const paramName = primary.getAttribute("data-back-param") || "from";
+    const key = primary.getAttribute("data-back-key") || "";
+    const from = url.searchParams.get(paramName) || "";
+
+    const defaultHref = primary.getAttribute("data-back-default-href") || primary.href;
+    const defaultLabel = primary.getAttribute("data-back-default-label") || primary.textContent || "";
+
+    const inAltMode = key && from === key;
+
+    if (inAltMode) {
+      const href = primary.getAttribute(`data-back-${key}-href`);
+      const label = primary.getAttribute(`data-back-${key}-label`);
+      if (href && label) {
+        primary.href = href;
+        primary.textContent = label;
+      }
+
+      if (secondary instanceof HTMLAnchorElement) {
+        const sh = secondary.getAttribute("data-back-secondary-href") || secondary.href;
+        const sl = secondary.getAttribute("data-back-secondary-label") || secondary.textContent || "";
+        secondary.href = sh;
+        secondary.textContent = sl;
+        secondary.hidden = false;
+      }
+      return;
+    }
+
+    // Default mode
+    primary.href = defaultHref;
+    primary.textContent = defaultLabel;
+
+    if (secondary instanceof HTMLAnchorElement) {
+      secondary.hidden = true;
     }
   })();
 </script>

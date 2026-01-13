@@ -29,7 +29,7 @@ const {
 } = Astro.props;
 
 // IMPORTANT: defaults must NOT override null from generated pages
-const back = backHref ?? "/archive-sponsors-2024";
+const back = backHref ?? "/archive/2024/sponsors";
 const prev = typeof prevHref === "string" && prevHref.trim().length ? prevHref : null;
 const next = typeof nextHref === "string" && nextHref.trim().length ? nextHref : null;
 

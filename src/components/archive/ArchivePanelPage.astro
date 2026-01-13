@@ -33,16 +33,16 @@ const { title, speakers } = Astro.props as Props;
     <Header />
 
     <section class="topbar">
-      <div class="inner">
-        <BackLink
-          defaultHref="/archive-schedule-2025"
-          defaultLabel="← Back to CiQ 2025 Schedule"
-          fromParam="from"
-          fromValue="panels"
-          alternateHref="/panels"
-          alternateLabel="← Back to Panels"
-        />
-      </div>
+      <BackLink
+        defaultHref="/archive/2025/schedule"
+        defaultLabel="← Back to CiQ 2025 Schedule"
+        fromParam="from"
+        fromValue="panels"
+        alternateHref="/panels"
+        alternateLabel="← Back to Panels"
+        secondaryHref="/archive/2025"
+        secondaryLabel="Explore the rest of the CiQ 2025 Archive →"
+      />
     </section>
 
     <section class="panel">

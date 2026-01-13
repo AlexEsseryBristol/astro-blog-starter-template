@@ -14,12 +14,12 @@ type Props = {
 const { year, title, description } = Astro.props as Props;
 
 // Vite requires the glob string to be static (no template literals).
-const galleryModules2024 = import.meta.glob("../../assets/2024/gallery/*.{avif,webp,png,jpg,jpeg,svg}", {
+const galleryModules2024 = import.meta.glob("../../assets/2024/gallery/*.{avif,webp,png,jpg,JPG,jpeg,svg}", {
   eager: true,
   import: "default",
 }) as Record<string, any>;
 
-const galleryModules2025 = import.meta.glob("../../assets/2025/gallery/*.{avif,webp,png,jpg,jpeg,svg}", {
+const galleryModules2025 = import.meta.glob("../../assets/2025/gallery/*.{avif,webp,png,jpg,JPG,jpeg,svg}", {
   eager: true,
   import: "default",
 }) as Record<string, any>;
