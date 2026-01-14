@@ -27,7 +27,7 @@ const previousPartnerModules = import.meta.glob("../assets/2026/partners/*.{avif
 const previousSponsors = buildAttendingItems(previousSponsorModules, previousSponsorsMeta);
 const previousPartners = buildAttendingItems(previousPartnerModules, previousSponsorsMeta);
 
-const sponsors = [...previousSponsors, ...previousPartners];
+const sponsors = previousSponsors;
 
 const heroBackground = `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${bg.src})`;
 
