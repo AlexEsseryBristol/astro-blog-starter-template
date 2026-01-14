@@ -4,8 +4,9 @@ import BaseHead from "../BaseHead.astro";
 import Header from "../Header.astro";
 import Footer from "../Footer.astro";
 import ScheduleGrid from "../Schedule.astro";
-import Affiliations from "./Affiliations.astro";
+import Affiliations from "../site/Affiliations.astro";
 import BackLink from "../ui/BackLink.astro";
+import TicketBanner from '../site/TicketBanner.astro';
 
 type ScheduleItemType =
   | "Talk"
@@ -55,12 +56,13 @@ const backHref = `/archive/${year}`;
   </head>
 
   <body>
+    <TicketBanner />
     <Header />
 
     <section class="topbar">
         <BackLink
-        defaultHref="/archive/2025/schedule"
-        defaultLabel="← Back to CiQ 2025 Schedule"
+        defaultHref="/archive/2025"
+        defaultLabel="← Back to CiQ 2025 Archive"
         fromParam="from"
         fromValue="schedule"
         alternateHref="/schedule"
@@ -101,7 +103,7 @@ const backHref = `/archive/${year}`;
   }
   .schedule {
     background-color: #00bcae;
-    padding: 2rem 1.5rem 4rem;
+    padding: 2rem 20rem 4rem;
   }
   .inner {
     max-width: 900px;

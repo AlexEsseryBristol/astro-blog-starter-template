@@ -3,12 +3,13 @@
 import BaseHead from "../BaseHead.astro";
 import Header from "../Header.astro";
 import Footer from "../Footer.astro";
-import SponsorGrid from "../SponsorGrid.astro";
-import Affiliations from "./Affiliations.astro";
+import SponsorGrid from "../ui/LogoGrid.astro";
+import Affiliations from "../site/Affiliations.astro";
 import BackLink from "../ui/BackLink.astro";
+import TicketBanner from '../site/TicketBanner.astro';
 
 import sponsors2024 from "../../content/sponsors/2024sponsors.json";
-import sponsors2025 from "../../content/sponsors/2025sponsors.json";
+import sponsors2025 from "../../content/attending/2025sponsors.json";
 import attending2024 from "../../content/attending/2024attending.json";
 import attending2025 from "../../content/attending/2025attending.json";
 
@@ -22,7 +23,7 @@ import {
 type Props = { year: "2024" | "2025" };
 const { year } = Astro.props as Props;
 
-const sponsorsMeta = (year === "2024" ? sponsors2024 : sponsors2025) as SponsorMetaMap;
+const sponsorsMeta = (year === "2024" ? sponsors2024 : sponsors2025) as AttendingMetaMap;
 const attendingMeta = (year === "2024" ? attending2024 : attending2025) as AttendingMetaMap;
 
 // Vite requires static glob strings.
@@ -31,6 +32,14 @@ const sponsorModules2024 = import.meta.glob("../../assets/2024/sponsors/*.{avif,
   import: "default",
 });
 const sponsorModules2025 = import.meta.glob("../../assets/2025/sponsors/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+const partnerModules2024 = import.meta.glob("../../assets/2024/partners/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+const partnerModules2025 = import.meta.glob("../../assets/2025/partners/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
@@ -46,9 +55,13 @@ const attendingModules2025 = import.meta.glob("../../assets/2025/attending/*.{av
 
 const sponsorModules = year === "2024" ? sponsorModules2024 : sponsorModules2025;
 const attendingModules = year === "2024" ? attendingModules2024 : attendingModules2025;
+const partnerModules = year === "2024" ? partnerModules2024 : partnerModules2025;
 
-const sponsors = buildSponsorItems(sponsorModules, sponsorsMeta);
+const sponsorItems = buildAttendingItems(sponsorModules, sponsorsMeta);
 const exhibitors = buildAttendingItems(attendingModules, attendingMeta);
+const partnerItems = buildAttendingItems(partnerModules, sponsorsMeta);
+
+const sponsors = [...sponsorItems, ...partnerItems];
 
 const pageTitle = `CiQ ${year} Sponsors & Attending Companies`;
 const pageDesc = `Archive of CiQ ${year} sponsors and attending companies.`;
@@ -62,12 +75,11 @@ const backHref = `/archive/${year}`;
   </head>
 
   <body>
+    <TicketBanner />
     <Header />
 
     <section class="topbar">
-      <div class="inner">
         <BackLink defaultHref={backHref} defaultLabel={`← Back to CiQ ${year} Archive`} />
-      </div>
     </section>
 
     <section class="sponsors">

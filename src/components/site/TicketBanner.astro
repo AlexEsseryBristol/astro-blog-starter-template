@@ -1,0 +1,99 @@
+<style>
+  #ticketBanner {
+    display: none; /* Starts hidden to prevent returning-user flicker */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #ffcc00;
+    color: #000;
+    font-weight: bold;
+    z-index: 9999;
+    
+    /* FIXES START HERE */
+    display: flex; /* Use flexbox for layout */
+    justify-content: space-between; /* Distribute items with space in between */
+    align-items: center; /* Vertically center content */
+    padding: 0 1rem; /* Add some padding on the sides */
+    box-sizing: border-box; /* Ensures padding doesn't increase total width */
+    /* FIXES END HERE */
+
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.2s;
+  }
+
+  /* Target the text and nested button as one group */
+  .banner-content-group {
+    /* FIX: Offset text to about 1/3 in, flexible on smaller screens */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-grow: 1; /* Allow content to grow when the window is small */
+    justify-content: center; /* Center the text when window is very small */
+  }
+
+  #ticketBanner.anim-hide {
+    max-height: 0 !important;
+    opacity: 0;
+  }
+
+  .close-banner-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    color: red;
+    /* FIX: Remove auto margin here as justify-content handles positioning */
+    padding: 0; /* Already have padding on the main banner */
+  }
+
+  .btn {
+    line-height: 1rem;
+    padding: 0.5rem 0.5rem;
+    /* FIX: Remove auto margin here */
+  }
+
+  .btn:hover {color: white;}
+</style>
+
+<div id="ticketBanner" style="display: none;">
+  <!-- Wrap text and its button in a div to group them -->
+  <div class="banner-content-group">
+    <span>Registration is now open! Secure your free place at CiQ 2026 now via</span>
+    <a href="" class="btn">Eventbrite</a>
+  </div>
+  <!-- Close button naturally moves to the far right with justify-content: space-between -->
+  <button id="closeBanner" class="close-banner-btn" aria-label="Close banner">&times;</button>
+</div>
+<!-- Scripts remain unchanged -->
+<script is:inline>
+  // Immediate reveal to prevent "Down-then-Up" snap
+  (function() {
+    if (localStorage.getItem('ticketBannerClosed') !== 'true') {
+      // We set display to flex here in JS so CSS can control positioning
+      document.getElementById('ticketBanner').style.display = 'flex'; 
+    }
+  })();
+</script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const banner = document.getElementById('ticketBanner');
+    const closeBtn = document.getElementById('closeBanner');
+
+    if (closeBtn && banner) {
+      closeBtn.addEventListener('click', () => {
+        // ... (rest of your JS logic) ...
+        banner.classList.add('anim-hide');
+        document.documentElement.style.marginTop = "0px";
+        document.documentElement.classList.remove('banner-active');
+        localStorage.setItem('ticketBannerClosed', 'true');
+        setTimeout(() => {
+          banner.style.display = 'none';
+        }, 300);
+      });
+    }
+  });
+</script>

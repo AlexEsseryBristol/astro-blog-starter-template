@@ -4,6 +4,9 @@ import BaseHead from "../BaseHead.astro";
 import Header from "../Header.astro";
 import Footer from "../Footer.astro";
 import Gallery from "../media/Gallery.astro";
+import Section from "../ui/Section.astro";
+import TicketBanner from '../site/TicketBanner.astro';
+import Affiliations from "../site/Affiliations.astro";
 
 type Props = {
   year: "2024" | "2025";
@@ -13,19 +16,18 @@ type Props = {
 
 const { year, title, description } = Astro.props as Props;
 
-// Vite requires the glob string to be static (no template literals).
-const galleryModules2024 = import.meta.glob("../../assets/2024/gallery/*.{avif,webp,png,jpg,JPG,jpeg,svg}", {
-  eager: true,
-  import: "default",
-}) as Record<string, any>;
+// Vite requires static glob strings
+const galleryModules2024 = import.meta.glob(
+  "../../assets/2024/gallery/*.{avif,webp,png,jpg,JPG,jpeg,svg}",
+  { eager: true, import: "default" }
+) as Record<string, any>;
 
-const galleryModules2025 = import.meta.glob("../../assets/2025/gallery/*.{avif,webp,png,jpg,JPG,jpeg,svg}", {
-  eager: true,
-  import: "default",
-}) as Record<string, any>;
+const galleryModules2025 = import.meta.glob(
+  "../../assets/2025/gallery/*.{avif,webp,png,jpg,JPG,jpeg,svg}",
+  { eager: true, import: "default" }
+) as Record<string, any>;
 
 const galleryModules = year === "2024" ? galleryModules2024 : galleryModules2025;
-
 const base = `/archive/${year}`;
 ---
 
@@ -36,75 +38,82 @@ const base = `/archive/${year}`;
   </head>
 
   <body>
+    <TicketBanner />
     <Header />
+    <Section
+      background="rgb(10, 16, 28)"
+      padding="4rem 1.5rem 0"
+      maxWidth="1100px"
+    >
+      <h1 class="page-title">{title}</h1>
+      <p class="page-subtitle">{description}</p>
 
-    <section class="content-section">
-      <div class="content-inner">
-        <h1 class="page-title">{title}</h1>
-        <p class="page-subtitle">{description}</p>
+      <div class="archive-actions">
+        <a class="btn" href={`${base}/sponsors`}>Sponsors</a>
+        <a class="btn" href={`${base}/schedule`}>Schedule</a>
 
-        <div class="archive-actions">
-          <a class="btn" href={`${base}/sponsors`}>Sponsors</a>
-          <a class="btn" href={`${base}/schedule`}>Schedule</a>
-
-          {year === "2025" && (
-            <>
-              <a class="btn" href={`${base}/panels/panel-1`}>Panel: What does the future of quantum look like?</a>
-              <a class="btn" href={`${base}/panels/panel-2`}>Panel: What does a career in quantum look like?</a>
-            </>
-          )}
-        </div>
+        {year === "2025" && (
+          <>
+            <a class="btn" href={`${base}/panels/panel-1`}>
+              Panel: What does the future of quantum look like?
+            </a>
+            <a class="btn" href={`${base}/panels/panel-2`}>
+              Panel: What does a career in quantum look like?
+            </a>
+          </>
+        )}
       </div>
-    </section>
+    </Section>
 
-    <section class="content-section2">
-      <div class="content-inner">
-        <h2>The Event</h2>
-        <p>
-            CiQ 2024 brought together professionals from industry and academia to engage with students and early-stage researchers on the variety and types of careers available in the quantum industry. 
-            <br/>
-            We aimed to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to the opportunities within the rapidly growing quantum technology sector.
-            <br/>
-            The event focused around a careers fair with a breakout room for more in-depth discussion and panels. 
-            <br/>
-            This one day, in-person careers event was hosted on the 15th of March 2024 in the Richmond Building, Bristol.
-        </p>
-      </div>
-    </section>
+    <Section
+      background="rgb(10, 16, 28)"
+      padding="2.5rem 1.5rem"
+      maxWidth="1100px"
+    >
+      <h2>The Event</h2>
+      <p>
+        CiQ 2024 brought together professionals from industry and academia to
+        engage with students and early-stage researchers on the variety and
+        types of careers available in the quantum industry.
+        <br />
+        We aimed to introduce undergraduate students, career-minded PhD
+        students and postdoctoral researchers to the opportunities within the
+        rapidly growing quantum technology sector.
+        <br />
+        The event focused around a careers fair with a breakout room for more
+        in-depth discussion and panels.
+        <br />
+        This one day, in-person careers event was hosted on the 15th of March
+        2024 in the Richmond Building, Bristol.
+      </p>
+    </Section>
 
-    <section class="content-section2">
-      <div class="content-inner">
-        <Gallery title={`${year} Photo Gallery`} modules={galleryModules} columns={4} />
-      </div>
-    </section>
-
+    <Section
+      background="rgb(10, 16, 28)"
+      padding="0rem 1.5rem 4rem"
+      maxWidth="1100px"
+    >
+      <Gallery
+        title={`${year} Photo Gallery`}
+        modules={galleryModules}
+        columns={4}
+      />
+    </Section>
+    <Affiliations />
     <Footer />
   </body>
 </html>
 
 <style>
-  .content-section {
-    padding: 4rem 1.5rem 0rem;
-    background: rgb(10, 16, 28);
-  }
-  .content-section2 {
-    padding: 2.5rem 1.5rem 4rem;
-    background: rgb(10, 16, 28);
-  }
-
-  .content-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
   .page-title {
     margin: 0 0 0.5rem 0;
     color: rgb(var(--white));
     font-size: clamp(4rem, 3vw, 2.7rem);
     letter-spacing: -0.03em;
   }
+
   .page-subtitle {
-    margin: 0 0 0rem 0;
+    margin: 0;
     color: rgba(255, 255, 255, 0.78);
     max-width: 70ch;
   }
@@ -129,6 +138,7 @@ const base = `/archive/${year}`;
     text-decoration: none;
     font-weight: 600;
   }
+
   .btn:hover {
     background: rgba(255, 255, 255, 0.12);
   }

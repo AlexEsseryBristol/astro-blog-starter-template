@@ -8,7 +8,7 @@ type Props = {
   background?: string; // e.g. "hsl(...)" OR "linear-gradient(...), url(...)"
   padding?: string;    // e.g. "2rem 1.5rem"
   maxWidth?: string;   // e.g. "900px"
-
+  id?: string;
   style?: string;
   innerStyle?: string;
 };
@@ -22,6 +22,7 @@ const {
   maxWidth = "900px",
   style,
   innerStyle,
+  id
 } = Astro.props as Props;
 
 const Tag = as;
@@ -40,7 +41,7 @@ if (innerStyle) innerStyleParts.push(innerStyle);
 const innerStyleAttr = innerStyleParts.length ? innerStyleParts.join("") : undefined;
 ---
 
-<Tag class={`section ${className}`} style={styleAttr}>
+<Tag class={`section ${className}`} style={styleAttr} id={id}>
   <div class={`inner ${innerClassName}`} style={innerStyleAttr}>
     <slot />
   </div>

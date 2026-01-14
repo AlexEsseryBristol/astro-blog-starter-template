@@ -1,5 +1,6 @@
 ---
 // src/layouts/SiteLayout.astro
+import TicketBanner from '../components/site/TicketBanner.astro';
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -28,7 +29,9 @@ const {
     <BaseHead title={title} description={description} />
   </head>
   <body class={bodyClass}>
-    <Header />
+    <TicketBanner />
+    <Header id="siteHeader"/>
+
     <main id="main-content">
       <slot />
     </main>

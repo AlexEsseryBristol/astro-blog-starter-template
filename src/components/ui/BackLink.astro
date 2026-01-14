@@ -63,6 +63,7 @@ const hasSecondary = Boolean(secondaryHref && secondaryLabel);
       data-back-secondary-href={secondaryHref}
       data-back-secondary-label={secondaryLabel}
       hidden
+      style="display:none;"
     >
       {secondaryLabel}
     </a>
@@ -91,6 +92,24 @@ const hasSecondary = Boolean(secondaryHref && secondaryLabel);
 
     const inAltMode = key && from === key;
 
+    const hideSecondary = () => {
+      if (secondary instanceof HTMLAnchorElement) {
+        secondary.hidden = true;
+        secondary.style.display = "none";
+      }
+    };
+
+    const showSecondary = () => {
+      if (secondary instanceof HTMLAnchorElement) {
+        const sh = secondary.getAttribute("data-back-secondary-href") || secondary.href;
+        const sl = secondary.getAttribute("data-back-secondary-label") || secondary.textContent || "";
+        secondary.href = sh;
+        secondary.textContent = sl;
+        secondary.hidden = false;
+        secondary.style.display = "";
+      }
+    };
+
     if (inAltMode) {
       const href = primary.getAttribute(`data-back-${key}-href`);
       const label = primary.getAttribute(`data-back-${key}-label`);
@@ -98,23 +117,12 @@ const hasSecondary = Boolean(secondaryHref && secondaryLabel);
         primary.href = href;
         primary.textContent = label;
       }
-
-      if (secondary instanceof HTMLAnchorElement) {
-        const sh = secondary.getAttribute("data-back-secondary-href") || secondary.href;
-        const sl = secondary.getAttribute("data-back-secondary-label") || secondary.textContent || "";
-        secondary.href = sh;
-        secondary.textContent = sl;
-        secondary.hidden = false;
-      }
+      showSecondary();
       return;
     }
 
-    // Default mode
     primary.href = defaultHref;
     primary.textContent = defaultLabel;
-
-    if (secondary instanceof HTMLAnchorElement) {
-      secondary.hidden = true;
-    }
+    hideSecondary();
   })();
 </script>

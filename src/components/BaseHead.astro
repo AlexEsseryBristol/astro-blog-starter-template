@@ -2,6 +2,12 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import logoSrc from "../assets/logo/ciq_white_blue.webp";
+import bgSrc from "../assets/background/bg.webp";
+
+const optimizedLogo = await getImage({ src: logoSrc, format: 'webp' });
+const optimizedBackground = await getImage({ src: bgSrc, format: 'webp' });
 
 interface Props {
 	title: string;
@@ -14,6 +20,29 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 ---
 
+<script is:inline>
+  // Blocking check: decides layout before first paint
+  (function() {
+    const isClosed = localStorage.getItem('ticketBannerClosed') === 'true';
+    if (!isClosed) {
+      document.documentElement.classList.add('banner-active');
+    }
+  })();
+</script>
+
+<style is:global>
+  /* Push page down ONLY when banner is active */
+  .banner-active {
+    margin-top: 50px; /* Adjust to match banner height */
+  }
+  
+  /* Ensure smooth slide-up for the margin */
+  document.documentElement {
+    transition: margin-top 0.3s ease-out;
+  }
+</style>
+
+
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -23,6 +52,9 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <!-- Font preloads -->
 <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
 <link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin />
+<!-- Image preloads -->
+<link rel="preload" as="image" href={optimizedLogo.src} fetchpriority="high">
+<link rel="preload" as="image" href={optimizedBackground.src} fetchpriority="high">
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -32,16 +64,5 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+

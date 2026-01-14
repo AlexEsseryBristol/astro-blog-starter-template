@@ -1,186 +1,75 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { Image } from 'astro:assets';
-import Logo from '../assets/logo/QECDTlogo.webp';
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Section from "../components/ui/Section.astro";
+
 import bg from '../assets/background/richmond_building.webp';
-import LTP from '../assets/company_logos/LTP.webp';
-import sparrow from '../assets/company_logos/sparrow.webp';
-import quantinuum from '../assets/company_logos/quantinuum.webp';
-import phasecraft from '../assets/company_logos/phasecraft.webp';
-import QETLabs from '../assets/company_logos/QETLabs.png';
-import QECDT from '../assets/company_logos/QECDTlogo.webp';
-import UKRI from '../assets/company_logos/UKRI.webp';
-import IOP from '../assets/company_logos/IOP.webp';
-import UoB from '../assets/company_logos/UoB.svg';
+
+const heroBackground = `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${bg.src})`;
+
+const heroSectionStyle = `
+  background-image: ${heroBackground};
+  background-size: cover;
+  background-position: center;
+  height: 25vh;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
+  position: relative;
+  overflow: hidden;
+`;
+
+const heroInnerStyle = `
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+`;
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title="Code of Conduct" description="Code of Conduct for Careers in Quantum." />
-  </head>
 
-  <body>
-    <div
-      class="index-bg"
-      style={`background-image:
-        linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
-        url(${bg.src});
-      `}
+<SiteLayout title="Code of Conduct" description="Code of Conduct for Careers in Quantum.">
+  <Section
+    as="section"
+    padding="0"
+    maxWidth="100%"
+    style={heroSectionStyle}
+    innerStyle={heroInnerStyle}
+    className="hero-section"
+    innerClassName="hero-inner"
     >
-      <Header />
+    <h1 style="margin: 0; line-height: 1;">Code of Conduct</h1>
+  </Section>
 
-      <main class="hero-content">
-		<center>
-			<h1>Code of Conduct</h1>
-		</center>
-      </main>
-    </div>
 
-    <section class="content-section">
-      <div class="content-inner">
-        <h2>The Short Version</h2>
+  <Section
+    as="section"
+    background="hsl(192, 100%, 15%)"
+    padding="4rem 1.5rem"
+    maxWidth="900px"
+    id="about"
+  >
+    <h2>The Short Version</h2>
         <p>
             Careers in Quantum is dedicated to providing a harassment-free experience for everyone, regardless of gender, gender identity and expression, age, sexual orientation, disability, physical appearance, body size, race, ethnicity, religion (or lack thereof), or technology choices. We do not tolerate harassment of participants in any form. Sexual language and imagery is not appropriate for any conference venue, including talks, workshops, parties, Twitter and other online media. Participants violating these rules may be sanctioned or expelled from the conference at the discretion of the conference organisers.
         </p>
-      </div>
-    </section>
+  </Section>
 
-	<section class="content-section2">
-      <div class="content-inner">
-        <h2>The Long Version</h2>
+  <Section background="#87a5ad" padding="4rem 1.5rem" maxWidth="900px">
+    <h2>The Long Version</h2>
 		<p>
 			Harassment includes offensive verbal comments related to gender, gender identity and expression, age, sexual orientation, disability, physical appearance, body size, race, ethnicity, religion, technology choices, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention.
-            <br/>
-            Participants asked to stop any harassing behavior are expected to comply immediately.
-            <br/>
-            Sponsors and attending companies are also subject to the anti-harassment policy. In particular, sponsors and attending companies should not use sexualised images, activities, or other material. Booth staff (including volunteers) should not use sexualised clothing/uniforms/costumes, or otherwise create a sexualised environment.
-            <br/>
-            If a participant engages in harassing behavior, the event organisers may take any action they deem appropriate, including warning the offender or expulsion from the event.
-            <br/>
-            If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact a member of event staff immediately. Event staff can be identified as they'll be wearing branded clothing and/or badges.
-            <br/>
-            Event staff will be happy to help participants contact hotel/venue security or local law enforcement, provide escorts, or otherwise assist those experiencing harassment to feel safe for the duration of the conference. We value your attendance.
-            <br/>
-            We expect participants to follow these rules at conference and workshop venues and conference-related social events.
-      </div>
-    </section>
+      <br/>
+      Participants asked to stop any harassing behavior are expected to comply immediately.
+      <br/>
+      Sponsors and attending companies are also subject to the anti-harassment policy. In particular, sponsors and attending companies should not use sexualised images, activities, or other material. Booth staff (including volunteers) should not use sexualised clothing/uniforms/costumes, or otherwise create a sexualised environment.
+      <br/>
+      If a participant engages in harassing behavior, the event organisers may take any action they deem appropriate, including warning the offender or expulsion from the event.
+      <br/>
+      If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact a member of event staff immediately. Event staff can be identified as they'll be wearing branded clothing and/or badges.
+      <br/>
+      Event staff will be happy to help participants contact hotel/venue security or local law enforcement, provide escorts, or otherwise assist those experiencing harassment to feel safe for the duration of the conference. We value your attendance.
+      <br/>
+      We expect participants to follow these rules at conference and workshop venues and conference-related social events.
+    </p>
+  </Section>
 
-	<section class="content-section3">
-		<div class="content-inner">
-			<h2>Attribution</h2>
-
-			<p>
-                This Code of Conduct was adapted from <a href="confcodeofconduct.com">confcodeofconduct.com</a>.
-            </p>
-		</div>
-	</section>
-
-    <section class="content-section4">
-      <div class="content-inner">
-        <h2>Affiliations</h2>
-
-        <div class="sponsor-grid" aria-label="Affiliations">
-          <div class="sponsor-item">
-            <a href="https://www.bristol.ac.uk/quantum-engineering/"><Image
-              src={QECDT}
-              alt="Centre for Doctoral Training in Quantum Engineering logo"
-              class="sponsor-logo"
-            /></a>
-          </div>
-
-          <div class="sponsor-item">
-            <a href="https://www.bristol.ac.uk"><Image src={UoB} alt="University of Bristol logo" class="sponsor-logo" /></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <Footer />
-
-    <style>
-      .index-bg {
-        min-height: 60vh;
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .hero-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-      }
-
-      .content-section {
-        background-color: hsl(192, 100%, 15%); /* change as desired */
-        padding: 4rem 1.5rem;
-      }
-
-	  .content-section2 {
-        background-color: #87a5ad; /* change as desired */
-        padding: 4rem 1.5rem;
-      }
-
-	  .content-section3 {
-        background-color: #00bcae; /* change as desired */
-        padding: 4rem 1.5rem;
-      }
-
-	  .content-section4 {
-		background-color: #000000ff; /* change as desired */
-		padding: 4rem 1.5rem;
-	  }
-
-      .content-inner {
-        max-width: 900px;
-        margin: 0 auto;
-      }
-	  /* Sponsor logo grid */
-	.sponsor-grid {
-	display: grid;
-	gap: 1.5rem;
-	margin-top: 2rem;
-
-	/* Responsive columns: grows/shrinks automatically */
-	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-	align-items: center;
-	}
-
-	.sponsor-item {
-	/* Center each logo in its cell */
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	/* Give consistent vertical space per logo */
-	height: 110px;            /* adjust to taste */
-	padding: 0.5rem 0.75rem;
-	}
-
-	.sponsor-logo {
-	/* Constrain vertical size, preserve aspect ratio */
-	max-height: 100%;
-	width: 100%;
-	object-fit: contain;
-
-	/* Optional: prevent huge logos from stretching too wide */
-	max-width: 240px;
-	}
-
-	/* Slightly taller rows on larger screens (optional) */
-	@media (min-width: 768px) {
-	.sponsor-item {
-		height: 130px;
-	}
-	}
-
-    </style>
-  </body>
-</html>
+  </SiteLayout>

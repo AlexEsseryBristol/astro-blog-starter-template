@@ -5,17 +5,19 @@ import SponsorshipTable from "../components/SponsorshipTable.astro";
 ---
 
 <SiteLayout title="Sponsorship" description="Sponsorship information for Careers in Quantum.">
-  <Section background="hsl(192, 100%, 15%)" padding="4rem 1.5rem" maxWidth="900px">
-    <center>
-      <h2>Sponsorship</h2>
-    </center>
-    <p>
-      We are looking for sponsorship to help us to put on the best event possible, as well as providing bursaries
-      for attendees who otherwise wouldn't be able to attend.
-      <br /><br />
-      The following packages are available, but we are also open to discussions, including alternative amounts, or
-      sponsorship of particular sections of the event.
-    </p>
+  <Section background="hsl(192, 100%, 15%)" padding="2rem 1.5rem" maxWidth="900px">
+    <main class="hero-content"></main>
+      <center>
+        <h1>Sponsorship</h1>
+      </center>
+      <p>
+        We are looking for sponsorship to help us to put on the best event possible, as well as providing bursaries
+        for attendees who otherwise wouldn't be able to attend.
+        <br /><br />
+        The following packages are available, but we are also open to discussions, including alternative amounts, or
+        sponsorship of particular sections of the event.
+      </p>
+    </main>
   </Section>
 
   <Section background="#87a5ad" padding="2rem 1.5rem 4rem" maxWidth="1100px">
@@ -41,15 +43,4 @@ import SponsorshipTable from "../components/SponsorshipTable.astro";
     </p>
   </Section>
 
-  <style>
-    .table-wrap {
-      margin: 0 3rem;
-    }
-
-    @media (max-width: 768px) {
-      .table-wrap {
-        margin: 0 1rem;
-      }
-    }
-  </style>
 </SiteLayout>

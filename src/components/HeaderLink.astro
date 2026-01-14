@@ -1,38 +1,69 @@
 ---
+// src/components/HeaderLink.astro
 import type { HTMLAttributes } from 'astro/types';
 
-type Props = HTMLAttributes<'a'>;
+type Props = HTMLAttributes<'a'> & {
+  mobile?: boolean; // new flag
+};
 
-const { href, class: className, ...props } = Astro.props;
+const { href, class: className, mobile = false, ...props } = Astro.props;
+
 const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
 const subpath = pathname.match(/[^\/]+/g);
 const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 ---
-
-<div class="header_body">
-	<a href={href} class:list={[className, { active: isActive }]} {...props}>
-		<slot />
-	</a>
-</div>
+<a
+  href={href}
+  class:list={[
+    mobile ? 'btn--mobile' : 'header-link',  // add a default desktop class
+    { active: isActive }
+  ]}
+  aria-current={isActive ? 'page' : undefined}
+  {...props}
+>
+  <slot />
+</a>
 
 <style>
-	a {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		text-decoration: none;
-	}
+  a {
+	text-decoration: none;
+	color: inherit;
+	font-weight: 500;
+	padding: 0.5rem 0.75rem;
+	border-radius: 8px;
+	transition: background-color 0.2s ease-in-out;
+	font: inherit;
+	font-size: 1.35rem;
+  }
 
-	/* Active = visually heavier WITHOUT changing layout metrics */
-	a.active {
-		text-decoration: none;
-		font-weight: inherit; /* critical: no weight change -> no jitter */
-		/* “Fake bold” using stacked shadows */
-		text-shadow:
-			0.015em 0 currentColor,
-			-0.015em 0 currentColor,
-			0 0.015em currentColor,
-			0 -0.015em currentColor;
-	}
+  a.active {
+	text-shadow: 1px 0 currentColor;
+  }
+.header-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  padding: 0; /* no extra box */
+  border-radius: 0; /* no hover background */
+  line-height: 1;
+}
+
+.header-link:hover,
+.header-link:focus-visible {
+  background: none; /* remove any hover rectangle */
+  color: #00bcae;   /* optional highlight color */
+}
+  .btn--mobile {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.75rem 1rem;
+	border-radius: 12px;
+	text-align: center;
+	font-size: 1.35rem;
+  }
+
+  .btn--mobile:active{text-shadow: 0.5px 0 currentColor;}
 </style>
-	 	
