@@ -1,3 +1,7 @@
+---
+import { SITE_LINKS } from '../../lib/config.ts';
+const TICKET_URL = SITE_LINKS.ticketUrl;
+---
 <style>
   #ticketBanner {
     display: none; /* Starts hidden to prevent returning-user flicker */
@@ -80,11 +84,11 @@
   <!-- Wrap text and its button in a div to group them -->
   <div class="banner-content-group">
     <span>Registration is now open! Secure your free place at CiQ 2026 now via</span>
-    <a href="" class="btn">Eventbrite</a>
+    <a href={TICKET_URL} target="_blank" class="btn">Eventbrite</a>
   </div>
     <div class="banner-content-group-mobile">
         <span>Registration is now open!</span>
-        <a href="" class="btn">Book Now</a>
+        <a href={TICKET_URL} target="_blank" class="btn">Book Now</a>
     </div>
   <!-- Close button naturally moves to the far right with justify-content: space-between -->
   <button id="closeBanner" class="close-banner-btn" aria-label="Close banner">&times;</button>

@@ -1,6 +1,8 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import Section from "../components/ui/Section.astro";
+import { SITE_LINKS } from '../lib/config.ts';
+const TICKET_URL = SITE_LINKS.ticketUrl;
 ---
 
 <SiteLayout title="Contact" description="Contact page for Careers in Quantum.">
@@ -15,7 +17,7 @@ import Section from "../components/ui/Section.astro";
     </div>
   </p>
     <h5>Book your place now via Eventbrite:</h5>
-    <a href="" class="btn">Registration</a>
+    <a href={TICKET_URL} target="_blank" class="btn">Registration</a>
     </center>
   </Section>
 </SiteLayout>
