@@ -7,7 +7,7 @@ import PanelGrid from "../PanelGrid.astro";
 import Affiliations from "../site/Affiliations.astro";
 import BackLink from "../ui/BackLink.astro";
 import TicketBanner from '../site/TicketBanner.astro';
-
+import ScrollButton from "../ui/ScrollButton.astro";
 type Speaker = {
   name: string;
   company: string;
@@ -33,7 +33,7 @@ const { title, speakers } = Astro.props as Props;
   <body>
     <TicketBanner />
     <Header />
-
+    <ScrollButton/>
     <section class="topbar">
       <BackLink
         defaultHref="/archive/2025/schedule"
@@ -49,7 +49,7 @@ const { title, speakers } = Astro.props as Props;
 
     <section class="panel">
       <div class="inner">
-        <h2>{title}</h2>
+        <h2>2025 Panel: {title}</h2>
         <PanelGrid speakers={speakers} />
       </div>
     </section>
@@ -65,9 +65,19 @@ const { title, speakers } = Astro.props as Props;
     background-color: hsl(192, 100%, 15%);
     padding: 1rem 1.5rem;
   }
+  @media (max-width: 768px) {
+    .topbar {
+      display: none !important;
+    }
+  }
   .panel {
     background-color: #87a5ad;
     padding: 4rem 1.5rem;
+  }
+  @media (max-width: 768px) {
+    .panel {
+      padding: 2rem 1.5rem;
+    }
   }
   .inner {
     max-width: 900px;

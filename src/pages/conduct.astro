@@ -1,7 +1,7 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import Section from "../components/ui/Section.astro";
-
+import ScrollButton from "../components/ui/ScrollButton.astro";
 import bg from '../assets/background/richmond_building.webp';
 
 const heroBackground = `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${bg.src})`;
@@ -27,6 +27,7 @@ const heroInnerStyle = `
 
 
 <SiteLayout title="Code of Conduct" description="Code of Conduct for Careers in Quantum.">
+  <ScrollButton/>
   <Section
     as="section"
     padding="0"

@@ -1,22 +1,31 @@
 ---
-// src/components/HeaderLink.astro
 import type { HTMLAttributes } from 'astro/types';
 
 type Props = HTMLAttributes<'a'> & {
-  mobile?: boolean; // new flag
+  mobile?: boolean;
 };
 
 const { href, class: className, mobile = false, ...props } = Astro.props;
 
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
+// 1. Get current path
+const { pathname } = Astro.url;
+
+// 2. Normalize both paths (remove trailing slashes)
+const normalize = (p: string) => p.replace(/\/$/, "");
+const currentPath = normalize(pathname);
+const linkPath = normalize(href as string);
+
+// 3. Check for exact match OR if it's a sub-page (e.g., /archive/2024)
+// This ensures that when you're on a sub-page, the parent link also stays active.
+const isActive = currentPath === linkPath || 
+                (linkPath !== "" && linkPath !== "/" && currentPath.startsWith(linkPath));
 ---
 <a
   href={href}
   class:list={[
-    mobile ? 'btn--mobile' : 'header-link',  // add a default desktop class
-    { active: isActive }
+    mobile ? 'btn--mobile' : 'header-link',
+    className, // This allows passed classes to work
+    { active: isActive } // This is the class the parent CSS looks for
   ]}
   aria-current={isActive ? 'page' : undefined}
   {...props}
@@ -26,44 +35,53 @@ const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
 
 <style>
   a {
-	text-decoration: none;
-	color: inherit;
-	font-weight: 500;
-	padding: 0.5rem 0.75rem;
-	border-radius: 8px;
-	transition: background-color 0.2s ease-in-out;
-	font: inherit;
-	font-size: 1.35rem;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    font: inherit;
+    font-size: 1.35rem; /* Standardized size */
   }
 
-  a.active {
-	text-shadow: 1px 0 currentColor;
+  /* Desktop Link Styling */
+  .header-link {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+    padding: 0.0rem 0.0rem; /* Matches .archive-link padding */
   }
-.header-link {
-  display: inline-flex;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
-  font-weight: 500;
-  padding: 0; /* no extra box */
-  border-radius: 0; /* no hover background */
-  line-height: 1;
-}
 
-.header-link:hover,
-.header-link:focus-visible {
-  background: none; /* remove any hover rectangle */
-  color: #00bcae;   /* optional highlight color */
-}
+  /* ONLY apply hover on devices that support it (Desktop) */
+  @media (hover: hover) {
+    .header-link:hover {
+      color: #00bcae;
+    }
+    .btn--mobile:hover {
+       background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  .header-link.active {
+    text-shadow: 1px 0 currentColor;
+  }
+
+  /* Mobile Button Styling */
   .btn--mobile {
-	display: block;
-	width: 100%;
-	box-sizing: border-box;
-	padding: 0.75rem 1rem;
-	border-radius: 12px;
-	text-align: center;
-	font-size: 1.35rem;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid transparent;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .btn--mobile:active{text-shadow: 0.5px 0 currentColor;}
+/* ACTIVE STATE (Mobile) */
+  .btn--mobile.active {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    color: #00bcae !important; /* Ensure this matches your brand teal */
+    text-shadow: 0.5px 0 currentColor;
+  }
 </style>

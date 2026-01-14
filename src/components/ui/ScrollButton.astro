@@ -1,0 +1,104 @@
+<button id="scroll-button" aria-label="Back to top">
+  <i class="fa-solid fa-angle-up"></i>
+</button>
+
+<script src="https://kit.fontawesome.com/9bb5cd2a12.js" crossorigin="anonymous"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const button = document.getElementById('scroll-button');
+    if (!button) return;
+
+    const toggleButton = () => {
+      // Show button if scrolled more than 100px
+      button.classList.toggle('visible', window.scrollY > 100);
+    };
+
+    // Listen for scroll events
+    window.addEventListener('scroll', toggleButton, { passive: true });
+
+    // Scroll to top on click
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Run once on load
+    toggleButton();
+  });
+</script>
+
+<style>
+  :root {
+    --btn-size: 3.5rem;
+    --btn-color: hsl(192, 100%, 15%);
+    --btn-hover: #00bcae;
+  }
+
+  #scroll-button {
+    /* Position */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+
+    /* Size & Shape */
+    width: var(--btn-size);
+    height: var(--btn-size);
+    border-radius: 50%;
+    border: none;
+    
+    /* Visuals */
+    background-color: white;
+    color: var(--btn-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    font-size: 1.5rem;
+    cursor: pointer;
+    
+    /* Centering icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Transitions & Initial State (Hidden) */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(.25,.1,.25,1);
+    
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Visible State */
+  #scroll-button.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  /* Hover & Active Interactions */
+  @media (hover: hover) {
+    #scroll-button:hover {
+      background-color: var(--btn-hover);
+      color: white;
+      transform: translateY(-5px);
+    }
+  }
+
+  #scroll-button:active {
+    transform: scale(0.95);
+    background-color: #e5e9f0;
+  }
+
+  /* Mobile Adjustments */
+  @media (max-width: 768px) {
+    :root {
+      --btn-size: 3rem;
+    }
+    #scroll-button {
+      bottom: 15px;
+      right: 15px;
+      font-size: 1.25rem;
+    }
+  }
+</style>

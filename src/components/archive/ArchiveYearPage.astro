@@ -7,7 +7,7 @@ import Gallery from "../media/Gallery.astro";
 import Section from "../ui/Section.astro";
 import TicketBanner from '../site/TicketBanner.astro';
 import Affiliations from "../site/Affiliations.astro";
-
+import ScrollButton from "../ui/ScrollButton.astro";
 type Props = {
   year: "2024" | "2025";
   title: string;
@@ -40,9 +40,10 @@ const base = `/archive/${year}`;
   <body>
     <TicketBanner />
     <Header />
+    <ScrollButton/>
     <Section
       background="rgb(10, 16, 28)"
-      padding="4rem 1.5rem 0"
+      padding="2rem 1.5rem 2rem"
       maxWidth="1100px"
     >
       <h1 class="page-title">{title}</h1>
@@ -67,7 +68,7 @@ const base = `/archive/${year}`;
 
     <Section
       background="rgb(10, 16, 28)"
-      padding="2.5rem 1.5rem"
+      padding="2rem 1.5rem 1rem"
       maxWidth="1100px"
     >
       <h2>The Event</h2>
@@ -90,7 +91,7 @@ const base = `/archive/${year}`;
 
     <Section
       background="rgb(10, 16, 28)"
-      padding="0rem 1.5rem 4rem"
+      padding="2rem 1.5rem 2rem"
       maxWidth="1100px"
     >
       <Gallery
@@ -129,8 +130,7 @@ const base = `/archive/${year}`;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    padding: 0 14px;
+    padding: 10px 14px;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     background: rgba(255, 255, 255, 0.08);

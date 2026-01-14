@@ -33,6 +33,15 @@
     justify-content: center; /* Center the text when window is very small */
   }
 
+    .banner-content-group-mobile {
+    /* FIX: Offset text to about 1/3 in, flexible on smaller screens */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-grow: 1; /* Allow content to grow when the window is small */
+    justify-content: center; /* Center the text when window is very small */
+  }
+
   #ticketBanner.anim-hide {
     max-height: 0 !important;
     opacity: 0;
@@ -52,10 +61,19 @@
   .btn {
     line-height: 1rem;
     padding: 0.5rem 0.5rem;
-    /* FIX: Remove auto margin here */
+    font-size: 20px;
   }
 
-  .btn:hover {color: white;}
+  @media (hover: hover) {
+    .banner-content-group-mobile {display: none}
+    .btn:hover {color: white;}
+  }
+  @media (hover: none) {
+    .banner-content-group {display: none}
+    .btn {
+    font-size: 18px;
+    }
+  }
 </style>
 
 <div id="ticketBanner" style="display: none;">
@@ -64,6 +82,10 @@
     <span>Registration is now open! Secure your free place at CiQ 2026 now via</span>
     <a href="" class="btn">Eventbrite</a>
   </div>
+    <div class="banner-content-group-mobile">
+        <span>Registration is now open!</span>
+        <a href="" class="btn">Book Now</a>
+    </div>
   <!-- Close button naturally moves to the far right with justify-content: space-between -->
   <button id="closeBanner" class="close-banner-btn" aria-label="Close banner">&times;</button>
 </div>

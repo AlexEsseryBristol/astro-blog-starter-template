@@ -169,14 +169,14 @@ const normBenefits = benefits.map((b) => ({
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.18);
     border: 1px solid rgba(255, 255, 255, 0.22);
-    font-size: 1.1rem;
+    font-size: clamp(0.75rem, 1vw, 1.1rem);
     font-weight: 850;
     line-height: 1;
   }
 
   .tier-text {
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: clamp(0.75rem, 1vw, 1.2rem);
   }
 
   @media (max-width: 600px) {
@@ -190,6 +190,7 @@ const normBenefits = benefits.map((b) => ({
     .sponsorship-table th,
     .sponsorship-table td {
       padding: 0.75rem 0.75rem;
+      font-size: clamp(0.75rem, 1vw, 1rem);
     }
   }
 </style>

@@ -7,7 +7,7 @@ import SponsorGrid from "../ui/LogoGrid.astro";
 import Affiliations from "../site/Affiliations.astro";
 import BackLink from "../ui/BackLink.astro";
 import TicketBanner from '../site/TicketBanner.astro';
-
+import ScrollButton from "../ui/ScrollButton.astro";
 import sponsors2024 from "../../content/sponsors/2024sponsors.json";
 import sponsors2025 from "../../content/attending/2025sponsors.json";
 import attending2024 from "../../content/attending/2024attending.json";
@@ -77,7 +77,7 @@ const backHref = `/archive/${year}`;
   <body>
     <TicketBanner />
     <Header />
-
+    <ScrollButton/>
     <section class="topbar">
         <BackLink defaultHref={backHref} defaultLabel={`← Back to CiQ ${year} Archive`} />
     </section>
@@ -104,6 +104,11 @@ const backHref = `/archive/${year}`;
   .topbar {
     background-color: hsl(192, 100%, 15%);
     padding: 1rem 1.5rem;
+  }
+  @media (max-width: 768px) {
+    .topbar {
+      display: none !important;
+    }
   }
   .sponsors {
     background-color: #a0bec6ff;

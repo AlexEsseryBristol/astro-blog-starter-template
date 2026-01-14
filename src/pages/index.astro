@@ -5,20 +5,21 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { Image } from "astro:assets";
 
 import Logo from "../assets/logo/QECDTlogo.webp";
+import IOPLogo from "../assets/logo/IOPlogo.jpg";
 import bg from "../assets/background/bg.webp";
 
-import sponsors2025 from "../content/attending/2025sponsors.json";
+import sponsorsMeta from "../content/attending/2026sponsors.json";
 import LogoGrid from "../components/ui/LogoGrid.astro";
 import { buildAttendingItems, type AttendingMetaMap } from "../lib/sponsor-items";
 
-const previousSponsorsMeta = sponsors2025 as AttendingMetaMap;
+const previousSponsorsMeta = sponsorsMeta as AttendingMetaMap;
 
-const previousSponsorModules = import.meta.glob("../assets/2025/sponsors/*.{avif,webp,png,jpg,jpeg,svg}", {
+const previousSponsorModules = import.meta.glob("../assets/2026/sponsors/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
 
-const previousPartnerModules = import.meta.glob("../assets/2025/partners/*.{avif,webp,png,jpg,jpeg,svg}", {
+const previousPartnerModules = import.meta.glob("../assets/2026/partners/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
@@ -34,11 +35,11 @@ const heroSectionStyle = `
   background-image: ${heroBackground};
   background-size: cover;
   background-position: center;
-  height: calc(100dvh - 96px); /* initial fallback */
+  min-height: calc(100dvh - 96px);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: relative; /* for chevron absolute */
+  position: relative;
   overflow: hidden;
 `;
 
@@ -47,12 +48,13 @@ const heroInnerStyle = `
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  padding-top: 2rem; 
+  padding-bottom: 3rem; 
 `;
 ---
 
 <SiteLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
 
-  <!-- Hero Section -->
   <Section
     as="section"
     padding="0"
@@ -65,125 +67,67 @@ const heroInnerStyle = `
     <div class="hero-content">
       <h1 class="title">Careers in Quantum</h1>
       <h4>A student-led quantum careers fair</h4>
-      <p>Organised by the Quantum Engineering Centre for Doctoral Training</p>
-      <p>📅 5 March 2026, 9am to 5pm</p>
-      <p>📌 Richmond Building, Queen's Road, Bristol, BS8 1LN</p>
+      
+      <div class="hero-details">
+        <p>📅 5 March 2026, 9:30am to 6:30pm</p>
+        <p>📌 Richmond Building, Queen's Road, Bristol, BS8 1LN</p>
+      </div>
+
       <p class="partner-line">
-        <span>In partnership with</span>
-        <a href="/" class="logo-link">
-          <Image src={Logo} alt="QECDT logo" class="logo" />
-        </a>
+        <span class="partner-text">In partnership with</span>
+        <Image src={Logo} alt="QECDT Logo" ariaLabel="QECDT Logo"/>
       </p>
     </div>
   </Section>
 
-  <!-- Fixed scroll button (outside Section, at body level) -->
-  <button class="alert" id="scroll-button">
+  <button class="alert" id="scroll-button" aria-label="Scroll to content">
     <i class="fa-solid fa-angle-down" id="scroll-icon"></i>
   </button>
 
   <script src="https://kit.fontawesome.com/9bb5cd2a12.js" crossorigin="anonymous"></script>
 
   <script>
-    // Wait for DOM to be fully loaded
-    window.addEventListener('load', () => {
-      const button = document.getElementById('scroll-button');
-      const target = document.getElementById('about');
-      const hero = document.querySelector('.hero-section');
+      window.addEventListener('load', () => {
+        const button = document.getElementById('scroll-button');
+        const target = document.getElementById('about');
+        if (!button || !target) return;
 
-      if (!button) {
-        console.error('Scroll button not found');
-        return;
-      }
+        const icon = button.querySelector('i');
+        const isTouch = window.matchMedia('(pointer: coarse)').matches;
 
-      if (!target) {
-        console.error('Target about section not found');
-        return;
-      }
-
-      let isScrolledPastThreshold = false;
-      const icon = button.querySelector('#scroll-icon');
-
-      function smoothScroll(distance, duration = 500) {
-        const start = window.scrollY;
-        const end = start + distance;
-        const startTime = performance.now();
-
-        function animate(now) {
-          const elapsed = now - startTime;
-          const t = Math.min(elapsed / duration, 1);
-          const eased = t;
-          window.scrollTo(0, start + (end - start) * eased);
-          if (t < 1) requestAnimationFrame(animate);
+        // Mouse-only "Nudge" behavior (restored original logic)
+        if (!isTouch) {
+          button.addEventListener('mouseenter', () => { if (window.scrollY < 100) window.scrollBy({ top: 150, behavior: 'smooth' }); });
+          button.addEventListener('mouseleave', () => { if (window.scrollY < 305 && window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'smooth' }); });
         }
 
-        requestAnimationFrame(animate);
-      }
-
-      function updateButtonState() {
-        // Fixed scroll threshold
-        const threshold = 305;
-
-        // Only check window scroll, ignore hover transforms entirely
-        const scrolled = window.scrollY > threshold;
-
-        // Only update if the state actually changes
-        if (scrolled !== isScrolledPastThreshold) {
-          isScrolledPastThreshold = scrolled;
-
-          if (scrolled) {
-            // Bottom-right position
+        window.addEventListener('scroll', () => {
+          const scrollPos = window.scrollY;
+          
+          if (scrollPos > 300) {
             button.classList.add('scrolled');
             if (icon) icon.className = 'fa-solid fa-angle-up';
           } else {
-            // Bottom-center
             button.classList.remove('scrolled');
             if (icon) icon.className = 'fa-solid fa-angle-down';
           }
-        }
-      }
+        }, { passive: true });
 
-
-      // Check scroll position on scroll
-      window.addEventListener('scroll', updateButtonState);
-      
-      // Initial check
-      updateButtonState();
-
-      // Mouse hover effects (only when not scrolled)
-      button.addEventListener('mouseenter', () => {
-        if (!(window.scrollY > 100)) {
-          smoothScroll(200, 200);
-        }
-      });
-      
-      button.addEventListener('mouseleave', () => {
-        if (!(window.scrollY > 305)) {
-          smoothScroll(-200, 200);
-        }
-      });
-
-      // Click handler - changes behavior based on scroll position
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        
-        if (isScrolledPastThreshold) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          // Scroll to about section
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (window.scrollY > 300) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            target.scrollIntoView({ behavior: 'smooth' });
           }
-        }
+        });
       });
-    });
   </script>
 
-  <!-- About Section -->
   <Section
     as="section"
     background="hsl(192, 100%, 15%)"
-    padding="4rem 1.5rem"
+    padding="2rem 1.5rem"
     maxWidth="900px"
     id="about"
   >
@@ -192,20 +136,23 @@ const heroInnerStyle = `
       Every year <b>Careers in Quantum</b> brings together professionals from industry and academia to engage
       with students and early-stage researchers on the variety and types of careers available in the quantum
       industry.
-      <br />
+      <br /><br />
       We aim to introduce undergraduate students, career-minded PhD students and postdoctoral researchers to
       the opportunities within the rapidly growing quantum technology sector.
-      <br />
+      <br /><br />
       The event focuses around a careers fair with a breakout room for more in-depth talks and panel
       discussions.
-      <br />
-      This year, <b>Careers in Quantum</b> will be held from 9am to 5pm on <b>Thursday 5 March 2026</b> at
+      <br /><br />
+      This year, <b>Careers in Quantum</b> will be held from 9:30am to 4:30pm on <b>Thursday 5 March 2026</b> at
       <b> Richmond Building, Queen's Road, Bristol, BS8 1LN</b>.
     </p>
   </Section>
 
-  <!-- Sponsorship Section -->
-  <Section background="#87a5ad" padding="4rem 1.5rem" maxWidth="900px">
+  <Section 
+    background="#87a5ad" 
+    padding="2rem 1.5rem"
+    maxWidth="900px"
+  >
     <h2>Sponsorship</h2>
     <p>
       Do you work in quantum technologies?
@@ -213,17 +160,20 @@ const heroInnerStyle = `
       Are you interested in connecting with potential future employees from a broad range of disciplines?
       <br />
       Do you want to showcase your company?
-      <br />
+      <br /><br />
       Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an
       impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for
       further information.
     </p>
   </Section>
 
-  <!-- Previous Sponsors -->
-  <Section background="#00bcae" padding="4rem 1.5rem" maxWidth="900px">
-    <h2>Previous Sponsors</h2>
-    <LogoGrid items={sponsors} ariaLabel="Previous sponsors" />
+  <Section 
+    background="#00bcae" 
+    padding="2rem 1.5rem"
+    maxWidth="900px"
+  >
+    <h2>2026 Sponsors include...</h2>
+    <LogoGrid items={sponsors} ariaLabel="2026 Sponsors" />
   </Section>
 
   <style>
@@ -244,13 +194,26 @@ const heroInnerStyle = `
       align-items: center;
       text-align: center;
       padding: 0 1.5rem;
+      width: 100%;
+    }
+
+    .title {
+      font-size: var(--fs-hero); 
+      margin-bottom: 1rem;
+    }
+
+    .hero-details p {
+      margin: 0.5rem 0;
     }
 
     .partner-line {
-      margin-top: -0.5rem;
-      display: inline-flex;
+      margin-top: 1.5rem;
+      display: flex;
+      flex-direction: row;
       align-items: center;
-      gap: 0.8rem;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .logo-link {
@@ -260,70 +223,111 @@ const heroInnerStyle = `
       text-decoration: none;
     }
 
-    .logo { height: 100px; width: auto; display: block; }
-
-    .title{
-      font-size: 5rem;
+    .logo { 
+      height: 100px; 
+      width: auto; 
+      display: block; 
+      max-width: 80vw; 
+      object-fit: contain;
     }
 
-    /* Circular fixed button at bottom center */
- /* Circular fixed button */
-.alert {
-  position: fixed;
-  bottom: 1.5rem;
-  left: 50%;
-  width: 3.5rem;
-  height: 3.5rem;
-  padding: 0;
-  background-color: white;
-  color: hsl(192, 100%, 15%);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  /* start at bottom-center */
-  transform: translateX(-50%) translateY(0);
-  transition: transform 0.5s cubic-bezier(.25,.1,.25,1),
-              background-color 0.2s ease;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-}
+    /* --- SCROLL BUTTON (Restored Original Styles) --- */
+    .alert {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      width: 3.5rem;
+      height: 3.5rem;
+      padding: 0;
+      background-color: white;
+      color: hsl(192, 100%, 15%);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      
+      /* Initial state: Hidden and Centered */
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-50%) translateY(20px);
+      
+      transition: transform 0.5s cubic-bezier(.25,.1,.25,1),
+                  background-color 0.2s ease,
+                  opacity 0.4s ease,
+                  visibility 0.4s;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      -webkit-tap-highlight-color: transparent;
+    }
 
-/* Hover lift */
-.alert:hover {
-  transform: translateX(-50%) translateY(-3px);
-  background-color: #00bcae;
-  color: white;
-}
+    /* Shown at Top (The nudge state) */
+    .alert:not(.scrolled) {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
 
-/* Scrolled state: move right */
-.alert.scrolled {
-  /* move 1.5rem away from right edge */
-  transform: translateX(calc(50vw - 5rem)) translateY(0);
-}
+    /* Scrolled State (Moves to corner) */
+    .alert.scrolled {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(calc(50vw - 5rem)) translateY(0);
+    }
 
-/* Hover lift when scrolled */
-.alert.scrolled:hover {
-  transform: translateX(calc(50vw - 5rem)) translateY(-3px);
-}
+    /* --- HOVER INTERACTIONS --- */
+    @media (hover: hover) {
+      .alert:hover {
+        background-color: #00bcae;
+        color: white;
+        transform: translateX(-50%) translateY(-3px);
+      }
+      .alert.scrolled:hover {
+        transform: translateX(calc(50vw - 5rem)) translateY(-3px);
+      }
+    }
 
-/* Click feedback */
-.alert:active {
-  transform: translateX(-50%) translateY(-5px);
-}
+    .alert:active {
+      transform: translateX(-50%) translateY(-5px);
+      background-color: #e5e9f0;
+    }
 
-.alert.scrolled:active {
-  transform: translateX(calc(50vw - 5rem)) translateY(-5px);
-}
+    .alert.scrolled:active {
+      transform: translateX(calc(50vw - 5rem)) translateY(-5px);
+    }
 
-/* Icon rotation */
-.alert i {
-  transition: transform 0.5s cubic-bezier(.25,.1,.25,1);
-}
+    /* Mobile adjustments */
+    @media (hover: none) {
+      .partner-line { flex-direction: column; gap: 0.5rem; }
+      .logo { width: 180px; height: auto; }
 
+      .alert:not(.scrolled) {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(calc(50vw - 4rem)) translateY(0);
+      }
+      
+      .alert {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.25rem;
+        bottom: 1rem;
+        transform: translateX(calc(50vw - 4rem)) translateY(0);
+      }
+
+      .alert.scrolled {
+        transform: translateX(calc(50vw - 4rem)) translateY(0);
+      }
+
+      .alert:active {
+         transform: translateX(calc(50vw - 4rem)) translateY(-5);
+      }
+      
+      .alert.scrolled:active {
+        transform: translateX(calc(50vw - 4rem)) translateY(-5px);
+      }
+    }
   </style>
-
 </SiteLayout>

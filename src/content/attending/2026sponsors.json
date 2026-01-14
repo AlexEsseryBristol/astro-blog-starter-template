@@ -1,0 +1,26 @@
+{
+  "qecdtlogo2": {
+    "name": "QECDTlogo2",
+    "url": "https://www.bristol.ac.uk/quantum-engineering/"
+  },
+  "nqcc-logo-blue-text": {
+    "name": "NQCC+Logo+Blue+Text",
+    "url": "https://www.nqcc.ac.uk/"
+  },
+  "iop": {
+    "name": "IOP",
+    "url": "https://ioppublishing.org/"
+  },
+  "phasecraft": {
+    "name": "Phasecraft",
+    "url": "https://www.phasecraft.io/"
+  },
+  "quantum-information-science-and-technologies-centre-for-doctoral-training": {
+    "name": "Quantum Information Science and Technologies Centre for Doctoral Training",
+    "url": "https://www.qist-cdt.info/"
+  },
+  "optica": {
+    "name": "Optica",
+    "url": "https://www.optica.org/"
+  }
+}

@@ -7,7 +7,7 @@ import ScheduleGrid from "../Schedule.astro";
 import Affiliations from "../site/Affiliations.astro";
 import BackLink from "../ui/BackLink.astro";
 import TicketBanner from '../site/TicketBanner.astro';
-
+import ScrollButton from "../ui/ScrollButton.astro";
 type ScheduleItemType =
   | "Talk"
   | "Panel"
@@ -58,7 +58,7 @@ const backHref = `/archive/${year}`;
   <body>
     <TicketBanner />
     <Header />
-
+    <ScrollButton/>
     <section class="topbar">
         <BackLink
         defaultHref="/archive/2025"
@@ -96,31 +96,46 @@ const backHref = `/archive/${year}`;
     background-color: hsl(192, 100%, 15%);
     padding: 1rem 1.5rem;
   }
+  @media (max-width: 768px) {
+    .topbar {
+      display: none !important;
+    }
+  }
   .hero {
     background-color: #87a5ad;
-    padding: 2rem 1.5rem;
+    padding: 3rem 1.5rem; /* Slightly more breathing room */
     text-align: center;
+  }
+  @media (max-width: 768px) {
+    .hero {
+    background-color: #87a5ad;
+    padding: 1.5rem 1.5rem 1rem; /* Slightly more breathing room */
+    text-align: center;
+    }
   }
   .schedule {
     background-color: #00bcae;
-    padding: 2rem 20rem 4rem;
+    /* Use a responsive padding strategy */
+    padding: 2rem 1.5rem 4rem; 
   }
-  .inner {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-  h1 {
-    margin: 0 0 0.35rem 0;
-  }
-  p {
-    margin: 0;
+
+  /* Desktop-only: add the large side margins */
+  @media (min-width: 1100px) {
+    .schedule {
+      padding-left: calc(10% + 2rem);
+      padding-right: calc(10% + 2rem);
+    }
   }
 
   .scheduleMargin {
-    margin: 0rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto; /* Centers the schedule on desktop */
   }
 
   @media (max-width: 700px) {
+    .schedule {
+      padding: 1.5rem 0.75rem 3rem; /* Tighter padding for small phones */
+    }
     .scheduleMargin {
       margin: 0;
     }
