@@ -1,37 +1,36 @@
 ---
-// src/components/archive/ArchiveSponsorsPage.astro
+// src/components/archive/ArchivesponsPage.astro
 import BaseHead from "../BaseHead.astro";
 import Header from "../Header.astro";
 import Footer from "../Footer.astro";
-import SponsorGrid from "../ui/LogoGrid.astro";
+import LogoGrid from "../ui/LogoGrid.astro";
 import Affiliations from "../site/Affiliations.astro";
 import BackLink from "../ui/BackLink.astro";
 import TicketBanner from '../site/TicketBanner.astro';
 import ScrollButton from "../ui/ScrollButton.astro";
-import sponsors2024 from "../../content/sponsors/2024sponsors.json";
-import sponsors2025 from "../../content/attending/2025sponsors.json";
+import spons2024 from "../../content/spons/2024spons.json";
+import spons2025 from "../../content/attending/2025spons.json";
 import attending2024 from "../../content/attending/2024attending.json";
 import attending2025 from "../../content/attending/2025attending.json";
 
 import {
-  buildSponsorItems,
   buildAttendingItems,
   type SponsorMetaMap,
   type AttendingMetaMap,
-} from "../../lib/sponsor-items";
+} from "../../lib/spons";
 
 type Props = { year: "2024" | "2025" };
 const { year } = Astro.props as Props;
 
-const sponsorsMeta = (year === "2024" ? sponsors2024 : sponsors2025) as AttendingMetaMap;
+const sponsMeta = (year === "2024" ? spons2024 : spons2025) as AttendingMetaMap;
 const attendingMeta = (year === "2024" ? attending2024 : attending2025) as AttendingMetaMap;
 
 // Vite requires static glob strings.
-const sponsorModules2024 = import.meta.glob("../../assets/2024/sponsors/*.{avif,webp,png,jpg,jpeg,svg}", {
+const sponsorModules2024 = import.meta.glob("../../assets/2024/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
-const sponsorModules2025 = import.meta.glob("../../assets/2025/sponsors/*.{avif,webp,png,jpg,jpeg,svg}", {
+const sponsorModules2025 = import.meta.glob("../../assets/2025/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
@@ -57,14 +56,14 @@ const sponsorModules = year === "2024" ? sponsorModules2024 : sponsorModules2025
 const attendingModules = year === "2024" ? attendingModules2024 : attendingModules2025;
 const partnerModules = year === "2024" ? partnerModules2024 : partnerModules2025;
 
-const sponsorItems = buildAttendingItems(sponsorModules, sponsorsMeta);
+const sponsorItems = buildAttendingItems(sponsorModules, sponsMeta);
 const exhibitors = buildAttendingItems(attendingModules, attendingMeta);
-const partnerItems = buildAttendingItems(partnerModules, sponsorsMeta);
+const partnerItems = buildAttendingItems(partnerModules, sponsMeta);
 
-const sponsors = [...sponsorItems, ...partnerItems];
+const spons = [...sponsorItems, ...partnerItems];
 
-const pageTitle = `CiQ ${year} Sponsors & Attending Companies`;
-const pageDesc = `Archive of CiQ ${year} sponsors and attending companies.`;
+const pageTitle = `CiQ ${year} spons & Attending Companies`;
+const pageDesc = `Archive of CiQ ${year} spons and attending companies.`;
 const backHref = `/archive/${year}`;
 ---
 
@@ -82,15 +81,15 @@ const backHref = `/archive/${year}`;
         <BackLink defaultHref={backHref} defaultLabel={`← Back to CiQ ${year} Archive`} />
     </section>
 
-    <section class="sponsors">
+    <section class="spons">
       <div class="inner">
-        <SponsorGrid title={`CiQ ${year} Sponsors`} ariaLabel={`CiQ ${year} sponsors`} items={sponsors} />
+        <LogoGrid title={`CiQ ${year} spons`} ariaLabel={`CiQ ${year} spons`} items={spons} />
       </div>
     </section>
 
     <section class="exhibitors">
       <div class="inner">
-        <SponsorGrid title={`CiQ ${year} Exhibitors`} ariaLabel={`CiQ ${year} exhibitors`} items={exhibitors} />
+        <LogoGrid title={`CiQ ${year} Exhibitors`} ariaLabel={`CiQ ${year} exhibitors`} items={exhibitors} />
       </div>
     </section>
 
@@ -110,7 +109,7 @@ const backHref = `/archive/${year}`;
       display: none !important;
     }
   }
-  .sponsors {
+  .spons {
     background-color: #a0bec6ff;
     padding: 2rem 1.5rem;
   }

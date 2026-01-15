@@ -7,13 +7,13 @@ import { Image } from "astro:assets";
 import Logo from "../assets/logo/QECDTlogo.webp";
 import bg from "../assets/background/bg.webp";
 
-import sponsorsMeta from "../content/attending/2026sponsors.json";
+import sponsMeta from "../content/attending/2026spons.json";
 import LogoGrid from "../components/ui/LogoGrid.astro";
-import { buildAttendingItems, type AttendingMetaMap } from "../lib/sponsor-items";
+import { buildAttendingItems, type AttendingMetaMap } from "../lib/spons";
 
-const previousSponsorsMeta = sponsorsMeta as AttendingMetaMap;
+const previoussponsMeta = sponsMeta as AttendingMetaMap;
 
-const previousSponsorModules = import.meta.glob("../assets/2026/sponsors/*.{avif,webp,png,jpg,jpeg,svg}", {
+const previousSponModules = import.meta.glob("../assets/2026/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
@@ -23,10 +23,10 @@ const previousPartnerModules = import.meta.glob("../assets/2026/partners/*.{avif
   import: "default",
 });
 
-const previousSponsors = buildAttendingItems(previousSponsorModules, previousSponsorsMeta);
-const previousPartners = buildAttendingItems(previousPartnerModules, previousSponsorsMeta);
+const previousspons = buildAttendingItems(previousSponModules, previoussponsMeta);
+const previousPartners = buildAttendingItems(previousPartnerModules, previoussponsMeta);
 
-const sponsors = previousSponsors;
+const spons = previousspons;
 
 const heroBackground = `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${bg.src})`;
 
@@ -172,7 +172,7 @@ const heroInnerStyle = `
     maxWidth="900px"
   >
     <h2>2026 Sponsors include...</h2>
-    <LogoGrid items={sponsors} ariaLabel="2026 Sponsors" />
+    <LogoGrid items={spons} ariaLabel="2026 spons" />
   </Section>
 
   <style>
