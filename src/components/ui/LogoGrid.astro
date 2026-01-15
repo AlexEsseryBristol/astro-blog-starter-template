@@ -21,7 +21,7 @@ type Props = {
 
 const {
   title,
-  ariaLabel = title ?? "Sponsors",
+  ariaLabel = title ?? "spons",
   items,
   itemHeight = 120,
   itemWidth = 200,
@@ -32,16 +32,16 @@ const {
 {title && <h2>{title}</h2>}
 
 <div 
-  class="sponsor-grid" 
-  data-sponsor-grid 
+  class="spon-grid" 
+  data-spon-grid 
   aria-label={ariaLabel}
   style={`--item-height: ${itemHeight}px; --item-width: ${itemWidth}px; --max-logo-width: ${maxLogoWidth}px;`}
 >
   {items.map((s) => (
-    <div class="sponsor-item" data-sponsor-item key={s.key}>
+    <div class="spon-item" data-spon-item key={s.key}>
       {s.url ? (
         <a
-          class="sponsor-link"
+          class="spon-link"
           href={s.url}
           target="_blank"
           rel="noopener noreferrer"
@@ -50,14 +50,14 @@ const {
           <Image
             src={s.src}
             alt={s.alt ?? `${s.name} logo`}
-            class="sponsor-logo"
+            class="spon-logo"
           />
         </a>
       ) : (
         <Image
           src={s.src}
           alt={s.alt ?? `${s.name} logo`}
-          class="sponsor-logo"
+          class="spon-logo"
         />
       )}
     </div>
@@ -66,10 +66,10 @@ const {
 
 <script is:inline>
 (() => {
-  const grids = () => Array.from(document.querySelectorAll("[data-sponsor-grid]"));
+  const grids = () => Array.from(document.querySelectorAll("[data-spon-grid]"));
 
   const clearBreaks = (grid) => {
-    grid.querySelectorAll("[data-sponsor-break]").forEach(n => n.remove());
+    grid.querySelectorAll("[data-spon-break]").forEach(n => n.remove());
   };
 
   const countCols = (items) => {
@@ -86,7 +86,7 @@ const {
   const rebalanceOne = (grid) => {
     clearBreaks(grid);
 
-    const items = Array.from(grid.querySelectorAll("[data-sponsor-item]"));
+    const items = Array.from(grid.querySelectorAll("[data-spon-item]"));
     if (!items.length) return;
 
     const cols = countCols(items);
@@ -102,8 +102,8 @@ const {
       // We have an orphan - bring down one item to make last row have 2 items
       // This means we insert a break before the second-to-last item
       const br = document.createElement("div");
-      br.setAttribute("data-sponsor-break", "true");
-      br.className = "sponsor-break";
+      br.setAttribute("data-spon-break", "true");
+      br.className = "spon-break";
 
       const secondToLast = items[n - 2];
       if (secondToLast) {
@@ -131,7 +131,7 @@ const {
 </script>
 
 <style>
-.sponsor-grid {
+.spon-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -139,7 +139,7 @@ const {
   margin-top: 2rem;
 }
 
-.sponsor-item {
+.spon-item {
   flex: 0 1 auto;
   width: var(--item-width, 200px);
   height: var(--item-height, 120px);
@@ -150,14 +150,14 @@ const {
   box-sizing: border-box;
 }
 
-.sponsor-break {
+.spon-break {
   flex-basis: 100%;
   height: 0;
   margin: 0;
   padding: 0;
 }
 
-.sponsor-link {
+.spon-link {
   width: 100%;
   height: 100%;
   display: flex;
@@ -168,11 +168,11 @@ const {
   transition: transform 0.2s ease;
 }
 
-.sponsor-link:hover {
+.spon-link:hover {
   transform: scale(1.05);
 }
 
-.sponsor-logo {
+.spon-logo {
   width: 100%;
   max-width: var(--max-logo-width, 240px);
   max-height: 100%;
@@ -182,11 +182,11 @@ const {
 
 /* Responsive adjustments */
 @media (hover: none) {
-  .sponsor-item {
+  .spon-item {
     width: calc(var(--item-width, 200px) * 0.5);
     height: calc(var(--item-height, 120px) * 0.5);
   }
-.sponsor-grid {
+.spon-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
