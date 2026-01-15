@@ -15,7 +15,6 @@ import attending2025 from "../../content/attending/2025attending.json";
 
 import {
   buildAttendingItems,
-  type SponsorMetaMap,
   type AttendingMetaMap,
 } from "../../lib/spons";
 
@@ -26,11 +25,11 @@ const sponsMeta = (year === "2024" ? spons2024 : spons2025) as AttendingMetaMap;
 const attendingMeta = (year === "2024" ? attending2024 : attending2025) as AttendingMetaMap;
 
 // Vite requires static glob strings.
-const sponsorModules2024 = import.meta.glob("../../assets/2024/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
+const sponModules2024 = import.meta.glob("../../assets/2024/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
-const sponsorModules2025 = import.meta.glob("../../assets/2025/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
+const sponModules2025 = import.meta.glob("../../assets/2025/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
@@ -52,18 +51,18 @@ const attendingModules2025 = import.meta.glob("../../assets/2025/attending/*.{av
   import: "default",
 });
 
-const sponsorModules = year === "2024" ? sponsorModules2024 : sponsorModules2025;
+const sponModules = year === "2024" ? sponModules2024 : sponModules2025;
 const attendingModules = year === "2024" ? attendingModules2024 : attendingModules2025;
 const partnerModules = year === "2024" ? partnerModules2024 : partnerModules2025;
 
-const sponsorItems = buildAttendingItems(sponsorModules, sponsMeta);
+const sponItems = buildAttendingItems(sponModules, sponsMeta);
 const exhibitors = buildAttendingItems(attendingModules, attendingMeta);
 const partnerItems = buildAttendingItems(partnerModules, sponsMeta);
 
-const spons = [...sponsorItems, ...partnerItems];
+const spons = [...sponItems, ...partnerItems];
 
-const pageTitle = `CiQ ${year} spons & Attending Companies`;
-const pageDesc = `Archive of CiQ ${year} spons and attending companies.`;
+const pageTitle = `CiQ ${year} Sponsors & Attending Companies`;
+const pageDesc = `Archive of CiQ ${year} sponsors and attending companies.`;
 const backHref = `/archive/${year}`;
 ---
 
@@ -83,7 +82,7 @@ const backHref = `/archive/${year}`;
 
     <section class="spons">
       <div class="inner">
-        <LogoGrid title={`CiQ ${year} spons`} ariaLabel={`CiQ ${year} spons`} items={spons} />
+        <LogoGrid title={`CiQ ${year} Sponsors`} ariaLabel={`CiQ ${year} spons`} items={spons} />
       </div>
     </section>
 

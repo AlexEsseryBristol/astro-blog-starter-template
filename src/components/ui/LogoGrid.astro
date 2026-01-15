@@ -21,7 +21,7 @@ type Props = {
 
 const {
   title,
-  ariaLabel = title ?? "spons",
+  ariaLabel = title ?? "Sponsors",
   items,
   itemHeight = 120,
   itemWidth = 200,
@@ -33,12 +33,12 @@ const {
 
 <div 
   class="spon-grid" 
-  data-spon-grid 
+  data-sponsor-grid 
   aria-label={ariaLabel}
   style={`--item-height: ${itemHeight}px; --item-width: ${itemWidth}px; --max-logo-width: ${maxLogoWidth}px;`}
 >
   {items.map((s) => (
-    <div class="spon-item" data-spon-item key={s.key}>
+    <div class="spon-item" data-sponsor-item key={s.key}>
       {s.url ? (
         <a
           class="spon-link"
@@ -182,7 +182,7 @@ const {
 
 /* Responsive adjustments */
 @media (hover: none) {
-  .spon-item {
+  .sponsor-item {
     width: calc(var(--item-width, 200px) * 0.5);
     height: calc(var(--item-height, 120px) * 0.5);
   }
