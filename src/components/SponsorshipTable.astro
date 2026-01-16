@@ -15,8 +15,8 @@ const {
 
 const tiers: Tier[] =
   tiersProp ?? [
-    { name: "Silver (£250)" },
-    { name: "Gold (£500)" },
+    { name: "Silver (£500)" },
+    { name: "Gold (£750)" },
     { name: "Platinum (£1000)" },
   ];
 
@@ -30,6 +30,7 @@ const benefits: Benefit[] =
     { label: "Company description in exhibitors list in brochure", tiers: [true, true, true] },
     { label: "Logo on event website, on event signage, and in brochure", tiers: [true, true, true] },
     { label: "Guaranteed talk", tiers: [false, true, true] },
+    { label: "Recognition from host at opening and closing of event", tiers: [false, true, true] },
     { label: "Guaranteed panel placement", tiers: [false, false, true] },
     { label: "Choice of stall location in exhibition room", tiers: [false, false, true] },
     {
