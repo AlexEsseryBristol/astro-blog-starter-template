@@ -1,0 +1,30 @@
+{
+  "qontrol": {
+    "name": "Qontrol",
+    "url": "https://qontrol.co.uk/"
+  },
+  "qet-labs": {
+    "name": "QET Labs",
+    "url": "https://www.ltphotonics.co.uk/"
+  },
+  "iop-publishing": {
+    "name": "IOP Publishing",
+    "url": "https://www.ltphotonics.co.uk/"
+  },
+  "quix-quantum": {
+    "name": "Quix Quantum",
+    "url": "https://www.ltphotonics.co.uk/"
+  },
+  "qcs-hub": {
+    "name": "QCS Hub",
+    "url": "https://www.qcshub.org/"
+  },
+  "nqcc": {
+    "name": "NQCC",
+    "url": "https://www.nqcc.ac.uk/"
+  },
+  "optica": {
+    "name": "Optica",
+    "url": "https://www.ltphotonics.co.uk/"
+  }
+}
