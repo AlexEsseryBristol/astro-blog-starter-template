@@ -1,0 +1,153 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Section from "../components/ui/Section.astro";
+import ScrollButton from "../components/ui/ScrollButton.astro";
+import bg from '../assets/background/richmond_building.webp';
+
+const heroBackground = `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${bg.src})`;
+
+const heroSectionStyle = `
+  background-image: ${heroBackground};
+  background-size: cover;
+  background-position: center;
+  height: 25vh;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;     /* Center vertically */
+  position: relative;
+  overflow: hidden;
+`;
+
+const heroInnerStyle = `
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+`;
+---
+
+
+<SiteLayout title="Privacy Policy" description="Privacy policy for Careers in Quantum.">
+  <ScrollButton/>
+  <Section
+    as="section"
+    padding="0"
+    maxWidth="100%"
+    style={heroSectionStyle}
+    innerStyle={heroInnerStyle}
+    className="hero-section"
+    innerClassName="hero-inner"
+    >
+    <h1 style="margin: 0; line-height: 1;">Privacy Policy</h1>
+  </Section>
+
+
+  <Section
+    as="section"
+    background="hsl(192, 100%, 15%)"
+    padding="2rem 1.5rem"
+    maxWidth="900px"
+    id="about">
+    <p>
+        The University of Bristol (“The University”) is committed to protecting your personal data and for keeping you informed about how information about you is used.
+
+        This notice outlines how Careers in Quantum 2026 (“CiQ 2026”) process your personal data in accordance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act (2018). This notice should be read in conjunction with the University’s top level privacy notices.
+    </p>
+    <h3>Types of personal data processed</h3>
+		<p>
+		The following is a non-exhaustive list of the types of personal data that we may process about you:
+        <ul>
+            <li>Name</li>
+            <li>Contact details</li>
+            <li>Organisation</li>
+            <li>Image</li>
+            <li>Travel details</li>
+            <li>Bank details</li>
+        </ul>
+        We also need to process the following special categories of data:
+        <ul>
+            <li>Dietary requirements</li>
+            <li>Accessibility needs</li>
+            <li>Gender identity</li>
+            <li>Ethnic identity</li>
+            <li>Financial status</li>
+        </ul>
+        </p>
+    <h3>How we collect your data and how we use it</h3>
+		<p>
+        The information we process about you is collected from a number of sources, including:
+        <ul>
+            <li>Directly from you, through our ticketing platform Eventbrite, and our travel bursary application form in Microsoft Forms</li>
+            <li>From a representative of your organisation, through our company registration form in Microsoft Forms</li>
+        </ul>
+        The above information is processed in order to deliver CiQ 2026, and provide access to the event for those for which it would otherwise be difficult to attend. We will collect name, contact details, and if you choose, dietary requirements and accessibility needs, from all participants to ensure their safety and wellbeing during the event. Photographs will be taken at the event. Participants who apply for a travel bursary will additionally be required to provide travel details, and may choose to provide gender identity, ethnic identity, or financial status data. Successful applicants will be required to provide bank details.
+        <br/>
+        We will use your information to contact you about CiQ 2026, register your attendance on the day, and ensure that our staff know any specific needs. Travel bursary data will be used to assess applications, and contact details and bank details will be used to make reimbursements to successful applicants.
+        <br/>
+        We will not use your personal data for automated decision making about you or for profiling purposes.
+        <br/>
+        We will process your personal data either in ways you have consented to, or because it is otherwise necessary for a lawful purpose.
+        <br/>
+        The lawful basis for us to process your personal data for the above purposes is:
+        <ul>
+            <li>By registering for CiQ 2026, you consent to sharing your name and contact details</li>
+            <li>By registering for CiQ 2026 as a representative of your organisation, you additionally consent to sharing this affiliation</li>
+            <li>By attending CiQ 2026, you consent to having your photograph taken. If you would like to opt out of this, you may request to do so at any time</li>
+            <li>By applying for a travel bursary, you consent to sharing your travel details, and if successful, your bank details</li>
+        </ul>
+        The special category data as listed above is being processed for the above purposes under the following additional lawful basis:
+        <ul>
+            <li>By registering for CiQ 2026 and choosing to fill out the corresponding fields of the registration form, you consent to sharing dietary requirements and accessibility needs</li>
+            <li>By applying for a travel bursary and choosing to give details, you consent to sharing any or all of gender identity, ethnic identity, and financial status</li>
+        </ul>
+        </p>
+    <h3>Sharing your personal data</h3>
+        <p>
+        Your personal data will be collected and processed primarily by postgraduate researchers in the Quantum Engineering Centre for Doctoral Training.
+        <br/>
+        We may need to share your personal data with internal parties. Accessibility needs will need to be shared with the venue, and your name, contact details, travel details, and bank details may need to be shared with the University’s finance team.
+        <br/>
+        We may need to share your personal data with third parties. Your data will be collected through Eventbrite and Microsoft Forms. You can find their privacy policies at <a href="https://www.eventbrite.co.uk/help/en-gb/articles/460838/eventbrite-privacy-policy/">https://www.eventbrite.co.uk/help/en-gb/articles/460838/eventbrite-privacy-policy/</a> and <a href="https://www.microsoft.com/en-gb/privacy/privacystatement">https://www.microsoft.com/en-gb/privacy/privacystatement</a>. Dietary requirements will be anonymised before being shared with our catering suppliers. Photographs taken at CiQ 2026 may be used in advertising similar events in future years.
+        <br/>
+        We require all third parties to respect the security of your personal data and to treat it in accordance with the law. We do not allow third party service providers to use your personal data for their own purposes, we only permit them to process your personal data for specified purposes and in accordance with our instructions.
+        <br/>
+        Please note that we may need to share your personal information with a regulator or to otherwise comply with the law, and the list above is not necessarily exhaustive.
+        </p>
+    <h3>Storage and retention of personal data</h3>
+        <p>
+        The University has put in place appropriate technical and organisational security measures to prevent your personal data from being accidentally lost or used, accessed, altered or disclosed in any unauthorised way.
+            <br/>
+        Access to your personal data is limited to those that have a lawful and legitimate ned to access it.
+            <br/>
+        Your data will not be stored outside of the University’s systems.
+            <br/>
+        Your data will be processed solely within the United Kingdom.
+            <br/>
+        We will only retain your personal data for as long as necessary to fulfil the purposes we collected it for, including for the purposes of satisfying any legal, accounting, or reporting requirements. We will keep your personal data according to the University’s <a href="https://www.bristol.ac.uk/media-library/sites/secretary/documents/information-governance/records-retention-schedule.pdf">Records Retention Schedule</a>, holding it for up to three years following CiQ 2026.
+        </p>
+    <h3>Your rights</h3>
+        <p>
+        Under certain circumstances, you may have the following rights in relation to the data we process:
+        </p>
+        <ul>
+            <li>Right to request access to your personal data</li>
+            <li>Right to request correction of your personal data</li>
+            <li>Right to request erasure of your personal data</li>
+            <li>Right to object to processing of your personal data</li>
+            <li>Right to request restriction of the processing of your personal data</li>
+            <li>Right to request the transfer of your personal data</li>
+            <li>Right to withdraw consent</li>
+        </ul>
+        <p>
+        For more information on these rights please visit the University’s guidance <a href="https://www.bristol.ac.uk/secretary/data-protection/gdpr/rights-of-data-subjects/">here</a>. To exercise any of the above rights please contact the Data Protection Officer via <a href="data-protection@bristol.ac.uk">data-protection@bristol.ac.uk</a>.
+        </p>
+    <h3>Questions, comments and complaints</h3>
+        <p>
+        If you have any questions or comments regarding this Privacy Notice, please contact: <a href="mailto:ciq-cdt@bristol.ac.uk">ciq-cdt@bristol.ac.uk</a>.
+        <br/>
+        You can also contact the University’s Data Protection Officer at: <a href="mailto:data-protection@bristol.ac.uk">data-protection@bristol.ac.uk</a>.
+        <br/>
+        You can contact the <a href="https://ico.org.uk/">Information Commissioner’s Office (ICO)</a> if you’re unhappy with how we’ve handled your data.
+        </p>
+  </Section>
+
+  </SiteLayout>
