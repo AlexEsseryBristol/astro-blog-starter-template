@@ -5,11 +5,13 @@ import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import logoSrc from "../assets/logo/ciq_white_blue.webp";
 import bgSrc from "../assets/background/bg.webp";
+import smallLogoSrc from "../../public/ciq_logo_small_scaled_rounded.png";
 
 const ticketUrl = "https://www.eventbrite.co.uk/e/careers-in-quantum-2026-tickets-1980469226770?aff=oddtdtcreator";
 
 const optimizedLogo = await getImage({ src: logoSrc, format: 'webp' });
 const optimizedBackground = await getImage({ src: bgSrc, format: 'webp' });
+const optimizedSmallLogo = await getImage({ src: smallLogoSrc, format: 'png' });
 
 interface Props {
 	title: string;
@@ -58,6 +60,7 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <!-- Image preloads -->
 <link rel="preload" as="image" href={optimizedLogo.src} fetchpriority="high">
 <link rel="preload" as="image" href={optimizedBackground.src} fetchpriority="high">
+<link rel="preload" as="image" href={optimizedSmallLogo.src} fetchpriority="high">
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
