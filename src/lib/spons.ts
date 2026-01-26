@@ -1,9 +1,12 @@
 // src/lib/sponsor-items.ts
+
+import type { ImageMetadata } from "astro";
+
 export type AssetModule = { src: string; width: number; height: number; format?: string };
 
 export type SponsorGridItem = {
   key: string;
-  src: AssetModule;
+  src: ImageMetadata;
   name: string;
   url?: string;
 };
@@ -46,7 +49,7 @@ export function buildSponsorItems(
 
       return {
         key: stem,
-        src: mod as AssetModule,
+        src: mod as ImageMetadata,
         name,
         url,
       };
@@ -65,7 +68,7 @@ export function buildAttendingItems(
 
       return {
         key: slug,
-        src: mod as AssetModule,
+        src: mod as ImageMetadata,
         name: m.name,
         url: normalizeHref(m.url),
       };

@@ -38,7 +38,7 @@ const {
   style={`--item-height: ${itemHeight}px; --item-width: ${itemWidth}px; --max-logo-width: ${maxLogoWidth}px;`}
 >
   {items.map((s) => (
-    <div class="spon-item" data-sponsor-item key={s.key}>
+    <div class="spon-item" data-sponsor-item-key={s.key}>
       {s.url ? (
         <a
           class="spon-link"
