@@ -3,6 +3,26 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 import Section from "../components/ui/Section.astro";
 import SponsorshipTable from "../components/SponsorshipTable.astro";
 import ScrollButton from "../components/ui/ScrollButton.astro";
+import sponsMeta from "../content/attending/2026spons.json";
+import LogoGrid from "../components/ui/LogoGrid.astro";
+import { buildAttendingItems, type AttendingMetaMap } from "../lib/spons";
+
+const previoussponsMeta = sponsMeta as AttendingMetaMap;
+
+const previousSponModules = import.meta.glob("../assets/2026/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+
+const previousPartnerModules = import.meta.glob("../assets/2026/partners/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+
+const previousspons = buildAttendingItems(previousSponModules, previoussponsMeta);
+const previousPartners = buildAttendingItems(previousPartnerModules, previoussponsMeta);
+
+const spons = previousspons;
 ---
 
 <SiteLayout title="Sponsorship" description="Sponsorship information for Careers in Quantum.">
@@ -22,7 +42,7 @@ import ScrollButton from "../components/ui/ScrollButton.astro";
     </main>
   </Section>
 
-  <Section background="#87a5ad" padding="2rem 1.5rem 4rem" maxWidth="1100px">
+  <Section background="#87a5ad" padding="2rem 1.5rem 3rem" maxWidth="1100px">
     <center>
       <h2>Sponsorship Packages</h2>
     </center>
@@ -32,8 +52,8 @@ import ScrollButton from "../components/ui/ScrollButton.astro";
     </div>
   </Section>
 
-  <Section background="#00bcae" padding="4rem 1.5rem 4rem" maxWidth="900px">
-    <h2>Alternative Sponsorship</h2>
+  <Section background="#87a5ad" padding="0rem 1.5rem 4rem" maxWidth="900px">
+    <center><h2>Alternative Sponsorship</h2></center>
     <p>
       Sponsorship may also be provided for specific parts of the event.
       <br /><br />
@@ -44,5 +64,11 @@ import ScrollButton from "../components/ui/ScrollButton.astro";
       more information.
     </p>
   </Section>
+
+  <Section background="#00bcae" padding="4rem 1.5rem 4rem" maxWidth="900px">
+    <h2>2026 Sponsors include...</h2>
+    <LogoGrid items={spons} ariaLabel="2026 spons" />
+  </Section>
+
 
 </SiteLayout>

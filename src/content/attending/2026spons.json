@@ -22,5 +22,13 @@
   "optica": {
     "name": "Optica",
     "url": "https://www.optica.org/"
+  },
+  "sparrow": {
+    "name": "Sparrow Quantum",
+    "url": "https://sparrowquantum.com/"
+  },
+  "psi": {
+    "name": "PsiQuantum",
+    "url": "https://www.psiquantum.com/"
   }
 }
