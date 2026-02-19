@@ -1,5 +1,5 @@
 {
-  "qecdtlogo2": {
+  "qecdtlogo_alpha": {
     "name": "QECDTlogo2",
     "url": "https://www.bristol.ac.uk/quantum-engineering/"
   },
@@ -15,11 +15,11 @@
     "name": "Phasecraft",
     "url": "https://www.phasecraft.io/"
   },
-  "quantum-information-science-and-technologies-centre-for-doctoral-training": {
+  "qist": {
     "name": "Quantum Information Science and Technologies Centre for Doctoral Training",
     "url": "https://www.qist-cdt.info/"
   },
-  "optica": {
+  "optica_alpha": {
     "name": "Optica",
     "url": "https://www.optica.org/"
   },
@@ -30,5 +30,17 @@
   "psi": {
     "name": "PsiQuantum",
     "url": "https://www.psiquantum.com/"
+  },
+  "qetlabs_alpha": {
+    "name": "QETLabs",
+    "url": "https://www.bristol.ac.uk/qet-labs/"
+  },
+  "single": {
+    "name": "Single Quantum",
+    "url": "https://www.singlequantum.com/"
+  },
+  "orca": {
+    "name": "ORCA Computing",
+    "url": "https://orcacomputing.com/"
   }
 }
