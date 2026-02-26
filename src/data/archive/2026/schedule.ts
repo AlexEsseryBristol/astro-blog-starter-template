@@ -84,7 +84,7 @@ export const schedule2026 = attachLogos([
         start: "12:10",
         end: "13:10",
         title: "Lunch",
-        location: "Wessex Suite",
+        location: "Main Room",
         description: "Caribbean Cuisine by Leon's Den",
       },
       {
