@@ -1,0 +1,74 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import Section from "../components/ui/Section.astro";
+import SponsorshipTable from "../components/SponsorshipTable.astro";
+import ScrollButton from "../components/ui/ScrollButton.astro";
+import sponsMeta from "../content/attending/2026spons.json";
+import LogoGrid from "../components/ui/LogoGrid.astro";
+import { buildAttendingItems, type AttendingMetaMap } from "../lib/spons";
+
+const previoussponsMeta = sponsMeta as AttendingMetaMap;
+
+const previousSponModules = import.meta.glob("../assets/2026/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+
+const previousPartnerModules = import.meta.glob("../assets/2026/partners/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
+
+const previousspons = buildAttendingItems(previousSponModules, previoussponsMeta);
+const previousPartners = buildAttendingItems(previousPartnerModules, previoussponsMeta);
+
+const spons = previousspons;
+---
+
+<SiteLayout title="Sponsorship" description="Sponsorship information for Careers in Quantum.">
+  <ScrollButton />
+  <Section background="hsl(192, 100%, 15%)" padding="2rem 1.5rem" maxWidth="900px">
+    <main class="hero-content"></main>
+      <center>
+        <h1>Sponsorship</h1>
+      </center>
+      <p>
+        We are looking for sponsorship to help us to put on the best event possible, as well as providing bursaries
+        for attendees who otherwise wouldn't be able to attend.
+        <br /><br />
+        The following packages are available, but we are also open to discussions, including alternative amounts, or
+        sponsorship of particular sections of the event.
+      </p>
+    </main>
+  </Section>
+
+  <Section background="#87a5ad" padding="2rem 1.5rem 3rem" maxWidth="1100px">
+    <center>
+      <h2>Sponsorship Packages</h2>
+    </center>
+
+    <div class="table-wrap">
+      <SponsorshipTable />
+    </div>
+  </Section>
+
+  <Section background="#87a5ad" padding="0rem 1.5rem 4rem" maxWidth="900px">
+    <center><h2>Alternative Sponsorship</h2></center>
+    <p>
+      Sponsorship may also be provided for specific parts of the event.
+      <br /><br />
+      In particular, we are looking for sponsors to cover travel reimbursement for attendees that need it, lunch,
+      and a drinks reception to provide networking opportunities.
+      <br /><br />
+      If there is specific part of the event that you would like to sponsor <a href="/contact">Contact Us</a> for
+      more information.
+    </p>
+  </Section>
+
+  <Section background="#00bcae" padding="4rem 1.5rem 4rem" maxWidth="900px">
+    <h2>2026 Sponsors include...</h2>
+    <LogoGrid items={spons} ariaLabel="2026 spons" />
+  </Section>
+
+
+</SiteLayout>

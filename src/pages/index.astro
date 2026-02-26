@@ -7,26 +7,30 @@ import { Image } from "astro:assets";
 import Logo from "../assets/logo/QECDTlogo.webp";
 import bg from "../assets/background/bg.webp";
 
-import sponsMeta from "../content/attending/2026spons.json";
+import attendingMeta from "../content/attending/2026attending.json";
 import LogoGrid from "../components/ui/LogoGrid.astro";
 import { buildAttendingItems, type AttendingMetaMap } from "../lib/spons";
 
-const previoussponsMeta = sponsMeta as AttendingMetaMap;
+const attendingMetaMap = attendingMeta as AttendingMetaMap;
 
-const previousSponModules = import.meta.glob("../assets/2026/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
+const sponsModules = import.meta.glob("../assets/2026/spons/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
 
-const previousPartnerModules = import.meta.glob("../assets/2026/partners/*.{avif,webp,png,jpg,jpeg,svg}", {
+const exhibsModules = import.meta.glob("../assets/2026/exhibs/*.{avif,webp,png,jpg,jpeg,svg}", {
   eager: true,
   import: "default",
 });
 
-const previousspons = buildAttendingItems(previousSponModules, previoussponsMeta);
-const previousPartners = buildAttendingItems(previousPartnerModules, previoussponsMeta);
+const talksModules = import.meta.glob("../assets/2026/talks/*.{avif,webp,png,jpg,jpeg,svg}", {
+  eager: true,
+  import: "default",
+});
 
-const spons = previousspons;
+const spons = buildAttendingItems(sponsModules, attendingMetaMap);
+const exhibs = buildAttendingItems(exhibsModules, attendingMetaMap);
+const talks = buildAttendingItems(talksModules, attendingMetaMap);
 
 const heroBackground = `linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(${bg.src})`;
 
@@ -152,7 +156,7 @@ const heroInnerStyle = `
     padding="2rem 1.5rem"
     maxWidth="900px"
   >
-    <h2>2026 Sponsors</h2>
+    <h2>Sponsored by</h2>
     <LogoGrid items={spons} ariaLabel="2026 spons" />
   </Section>
 
@@ -161,21 +165,19 @@ const heroInnerStyle = `
     padding="2rem 1.5rem"
     maxWidth="900px"
   >
-    <h2>Sponsorship</h2>
-    <p>
-    <ul>
-      <li>Do you work in quantum technologies?</li>
-      <li>Are you interested in connecting with potential future employees from a broad range of disciplines?</li>
-      <li>Do you want to showcase your company?</li>
-    </ul>
-      Explore <a href="/sponsorship">Sponsorship Benefits</a> to find out more about how you can make an
-      impression on the next generation of quantum researchers, and <a href="/contact">Contact Us</a> for
-      further information.
-    </ul>
-    </p>
+    <h2>Exhibitors</h2>
+    <LogoGrid items={exhibs} ariaLabel="2026 exhibs" />
   </Section>
 
-  <style>
+    <Section 
+      background="#00bcae" 
+      padding="2rem 1.5rem"
+      maxWidth="900px"
+    >
+      <h2>Speakers and panelists from</h2>
+      <LogoGrid items={talks} ariaLabel="2026 talks" />
+    </Section>
+    <style>
     html, body {
       margin: 0;
       padding: 0;

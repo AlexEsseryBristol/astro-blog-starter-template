@@ -1,0 +1,94 @@
+{
+  "qecdtlogo_alpha": {
+    "name": "QECDTlogo2",
+    "url": "https://www.bristol.ac.uk/quantum-engineering/"
+  },
+  "nqcc-logo-blue-text": {
+    "name": "NQCC+Logo+Blue+Text",
+    "url": "https://www.nqcc.ac.uk/"
+  },
+  "iop": {
+    "name": "IOP",
+    "url": "https://ioppublishing.org/"
+  },
+  "phasecraft": {
+    "name": "Phasecraft",
+    "url": "https://www.phasecraft.io/"
+  },
+  "qist": {
+    "name": "Quantum Information Science and Technologies Centre for Doctoral Training",
+    "url": "https://www.qist-cdt.info/"
+  },
+  "optica_alpha": {
+    "name": "Optica",
+    "url": "https://www.optica.org/"
+  },
+  "sparrow": {
+    "name": "Sparrow Quantum",
+    "url": "https://sparrowquantum.com/"
+  },
+  "psi": {
+    "name": "PsiQuantum",
+    "url": "https://www.psiquantum.com/"
+  },
+  "qetlabs_alpha": {
+    "name": "QETLabs",
+    "url": "https://www.bristol.ac.uk/qet-labs/"
+  },
+  "single": {
+    "name": "Single Quantum",
+    "url": "https://www.singlequantum.com/"
+  },
+  "orca": {
+    "name": "ORCA Computing",
+    "url": "https://orcacomputing.com/"
+  },
+  "girlsin": {
+    "name": "Girls in Quantum",
+    "url": "https://www.girlsinquantum.com/"
+  },
+  "npl": {
+    "name": "The National Physics Laboratory",
+    "url": "https://www.npl.co.uk/"
+  },
+  "siloton": {
+    "name": "Siloton",
+    "url": "https://siloton.com"
+  },
+  "aqc": {
+    "name": "Applied Quantum Computing",
+    "url": "https://appliedquantumcomputing.co.uk/"
+  },
+  "qphox": {
+    "name": "QphoX",
+    "url": "https://qphox.eu/"
+  },
+  "duality": {
+    "name": "Duality Quantum Photonics",
+    "url": "https://www.dualityqp.com/"
+  },
+  "hamamatsu": {
+    "name": "Hamamatsu",
+    "url": "https://www.hamamatsu.com/jp/en.html"
+  },
+  "nu": {
+    "name": "Nu Quantum",
+    "url": "https://www.nu-quantum.com/"
+  },
+  "universal": {
+    "name": "Universal Quantum",
+    "url": "https://universalquantum.com"
+  },
+  "setsquared": {
+    "name": "SETsquared Bristol",
+    "url": "https://setsquared-bristol.co.uk/"
+  },
+  "uob": {
+    "name": "University of Bristol",
+    "url": "https://www.bristol.ac.uk/"
+  },
+  "physicsworld": {
+    "name": "Physics World",
+    "url": "https://physicsworld.com/"
+  }
+}

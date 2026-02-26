@@ -2,6 +2,41 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 import Section from "../components/ui/Section.astro";
 import ScrollButton from "../components/ui/ScrollButton.astro";
+import ScheduleGrid from "../components/Schedule.astro";
+import { schedule2026 } from "../data/archive/2026/schedule.ts"
+
+type ScheduleItemType =
+  | "Talk"
+  | "Panel"
+  | "Break"
+  | "Workshop"
+  | "Keynote"
+  | "Registration"
+  | "Other";
+
+type ScheduleItem = {
+  start: string;
+  end?: string;
+  title: string;
+  type?: ScheduleItemType;
+  location?: string;
+  speakers?: string;
+  description?: string;
+  links?: { label: string; href: string }[];
+  companyLogo?: { src: string; alt: string; url?: string};
+};
+
+type ScheduleDay = {
+  dateLabel: string;
+  items: ScheduleItem[];
+};
+
+type Props = {
+  year: "2026";
+  heading: string;
+  locationLine: string;
+  days: ScheduleDay[];
+};
 ---
 
 <SiteLayout title="Schedule" description="Event schedule for Careers in Quantum.">
@@ -10,16 +45,15 @@ import ScrollButton from "../components/ui/ScrollButton.astro";
     <main class="hero-content">
       <center>
         <h1>Schedule</h1>
-        <h5>The schedule for CiQ 2026 is still under construction</h5>
-        <br />
-        <h5>Check out the schedule from last year to get an idea of what to expect:</h5>
-
-        <div class="actions">
-          <a href="/archive/2025/schedule?from=schedule" class="btn">CiQ 2025 Schedule</a>
-        </div>
       </center>
     </main>
   </Section>
+
+  <section class="schedule">
+      <div class="scheduleMargin">
+        <ScheduleGrid days={schedule2026} />
+      </div>
+  </section>
 
   <style>
     .hero-content {
@@ -35,6 +69,34 @@ import ScrollButton from "../components/ui/ScrollButton.astro";
       display: grid;
       justify-items: center;
       margin-top: 1.25rem;
+    }
+
+    .schedule {
+      background-color: #00bcae;
+      /* Use a responsive padding strategy */
+      padding: 2rem 1.5rem 4rem; 
+    }
+
+    /* Desktop-only: add the large side margins */
+    @media (min-width: 1100px) {
+      .schedule {
+        padding-left: calc(10% + 2rem);
+        padding-right: calc(10% + 2rem);
+      }
+    }
+
+    .scheduleMargin {
+      max-width: 1100px;
+      margin: 0 auto; /* Centers the schedule on desktop */
+    }
+
+    @media (max-width: 700px) {
+      .schedule {
+        padding: 1.5rem 0.75rem 3rem; /* Tighter padding for small phones */
+      }
+      .scheduleMargin {
+        margin: 0;
+      }
     }
   </style>
 </SiteLayout>

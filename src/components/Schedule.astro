@@ -56,12 +56,23 @@ const sortedDays = sort
 
                       {item.companyLogo ? (
                         <div class="logo-slot">
-                          <img
-                            class="company-logo"
-                            src={item.companyLogo.src}
-                            alt={item.companyLogo.alt}
-                            loading="lazy"
-                          />
+                          {item.companyLogo.url ? (
+                            <a href={item.companyLogo.url} target="_blank" rel="noopener noreferrer">
+                              <img
+                                class="company-logo"
+                                src={item.companyLogo.src}
+                                alt={item.companyLogo.alt}
+                                loading="lazy"
+                              />
+                            </a>
+                          ) : (
+                            <img
+                              class="company-logo"
+                              src={item.companyLogo.src}
+                              alt={item.companyLogo.alt}
+                              loading="lazy"
+                            />
+                          )}
                         </div>
                       ) : null}
                     </div>
@@ -108,12 +119,23 @@ const sortedDays = sort
 
               {item.companyLogo ? (
                 <div class="logo-slot">
-                  <img
-                    class="company-logo"
-                    src={item.companyLogo.src}
-                    alt={item.companyLogo.alt}
-                    loading="lazy"
-                  />
+                  {item.companyLogo.url ? (
+                    <a href={item.companyLogo.url} target="_blank" rel="noopener noreferrer">
+                      <img
+                        class="company-logo"
+                        src={item.companyLogo.src}
+                        alt={item.companyLogo.alt}
+                        loading="lazy"
+                      />
+                    </a>
+                  ) : (
+                    <img
+                      class="company-logo"
+                      src={item.companyLogo.src}
+                      alt={item.companyLogo.alt}
+                      loading="lazy"
+                    />
+                  )}
                 </div>
               ) : null}
             </div>
