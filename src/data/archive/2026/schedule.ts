@@ -71,6 +71,7 @@ export const schedule2026 = attachLogos([
         location: "Panel Room",
         speakers: "Alex Clark (QET Labs)",
         companyLogo: "qetlabs_alpha",
+        description: "It is well known that integrated quantum photonics was invented here in Bristol, but how did it happen? I will discuss a short history of quantum photonics during my time as a PhD student in Bristol. I will then take you on my career journey, from my time in the Centre for Ultrahigh Bandwidth Devices for Optical Systems at the University of Sydney, through to my time in the Centre for Cold Matter at Imperial College London, and then finally my return to Bristol as a permanent academic and now Director of QET Labs. Throughout the talk, I hope to give you a flavour of what it is like working in academia."
       },
       {
         start: "11:20",
@@ -100,10 +101,11 @@ export const schedule2026 = attachLogos([
       {
         start: "13:30",
         end: "13:50",
-        title: "Title TBC",
+        title: "Beyond research: research-adjacent quantum roles",
         location: "Panel Room",
         speakers: "Daisy Shearer (NQCC)",
         companyLogo: "nqcc-logo-blue-text",
+        description: "This talk will highlight research-adjacent roles in the quantum industry, including my own journey from physics research to quantum education and outreach. Come along if you want to learn about opportunities beyond research that still sit within the research and innovation ecosystem."
       },
       {
         start: "13:50",
