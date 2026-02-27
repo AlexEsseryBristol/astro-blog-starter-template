@@ -78,7 +78,7 @@ export const schedule2026 = attachLogos([
         end: "12:10",
         title: "Panel: From Concept to Commercialisation",
         location: "Panel Room",
-        description: "This panel will examine the future of quantum science and technology from the perspectives of industry and government experts. Panellists willThis panel focuses on how quantum ideas move from the lab to the market. The panel explores different routes to commercial success and shares practical lessons on turning research into real-world impact.",
+        description: "This panel focuses on how quantum ideas move from the lab to the market. The panel explores different routes to commercial success and shares practical lessons on turning research into real-world impact.",
         links: [{ label: "Panel details", href: "../panels?from=schedule#panel1" }],
       },
       {
