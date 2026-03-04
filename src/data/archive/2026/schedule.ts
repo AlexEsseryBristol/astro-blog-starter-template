@@ -114,6 +114,7 @@ export const schedule2026 = attachLogos([
         location: "Panel Room",
         speakers: "Ben Burridge (PsiQuantum)",
         companyLogo: "psi",
+        description: "PsiQuantum’s mission is to build the first useful quantum computers—machines capable of delivering the breakthroughs the field has long promised. Since our founding in 2016, our singular focus has been to build and deploy million-qubit, fault-tolerant quantum systems. In this talk we’ll take a look at the company’s journey so far, I’ll share a little about my journey and how I ended up where I am today, and cover how you can start and progress your own journey in the field of quantum technologies."
       },
       {
         start: "14:10",
